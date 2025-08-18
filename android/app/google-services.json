@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "1036592733984",
+    "project_id": "tocamp-abf70",
+    "storage_bucket": "tocamp-abf70.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1036592733984:android:3559dfddbc9f2c1b37c145",
+        "android_client_info": {
+          "package_name": "com.du.tocamp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1036592733984-eggl315vd6s049t7c1pa3c96e8nerkno.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDwfl5_Bcr8Aeef-7gB2aQlvXD_xN9E_RM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1036592733984-eggl315vd6s049t7c1pa3c96e8nerkno.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "1036592733984-r4qp69fut9jekqm45ln3cu27ip579kkm.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.toCamp"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
