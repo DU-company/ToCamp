@@ -4,8 +4,11 @@ part 'pagination_params.g.dart';
 
 @JsonSerializable(includeIfNull: false)
 class PaginationParams {
-  final int? numOfRows;
-  final int? pageNo;
+  final int pageNo;
+  @JsonKey(name: 'numOfRows')
+  final int take;
+  @JsonKey(name: 'contentId')
+  final String? id;
   @JsonKey(toJson: numberToString, name: 'mapY')
   final double? lat;
   @JsonKey(toJson: numberToString, name: 'mapX')
@@ -15,8 +18,9 @@ class PaginationParams {
   final String? keyword;
 
   PaginationParams({
-    this.numOfRows,
-    this.pageNo,
+    required this.take,
+    required this.pageNo,
+    this.id,
     this.lat,
     this.lng,
     this.radius,

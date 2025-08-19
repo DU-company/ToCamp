@@ -14,14 +14,14 @@ class DataUtils {
 
   static Future<List<CampingModel>> distanceCompare(
     List<CampingModel> models,
-    double currentMapX,
-    double currentMapY,
+    double lng,
+    double lat,
   ) async {
     models.sort((a, b) {
-      final distanceA = Geolocator.distanceBetween(
-          currentMapY, currentMapX, double.parse(a.mapY), double.parse(a.mapX));
-      final distanceB = Geolocator.distanceBetween(
-          currentMapY, currentMapX, double.parse(b.mapY), double.parse(b.mapX));
+      final distanceA =
+          Geolocator.distanceBetween(lat, lng, a.lat, a.lng);
+      final distanceB =
+          Geolocator.distanceBetween(lat, lng, b.lat, b.lng);
 
       return distanceA.compareTo(distanceB);
     });

@@ -6,8 +6,10 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:to_camp/common/theme/service/theme_service.dart';
 import 'package:to_camp/common/utils/toast_utils.dart';
 import 'package:to_camp/common/view/default_layout.dart';
+import 'package:to_camp/features/camping/view/screen/camping_screen.dart';
 
 class RootTab extends ConsumerStatefulWidget {
+  static String get routeName => 'home';
   const RootTab({super.key});
 
   @override
@@ -16,19 +18,19 @@ class RootTab extends ConsumerStatefulWidget {
 
 class _RootTabState extends ConsumerState<RootTab>
     with SingleTickerProviderStateMixin {
-  late TabController controller;
+  late TabController tabController;
   int currentIndex = 0;
   DateTime? currentBackPressTime;
 
   @override
   void initState() {
     super.initState();
-    controller = TabController(length: 5, vsync: this);
+    tabController = TabController(length: 5, vsync: this);
   }
 
   @override
   void dispose() {
-    controller.dispose();
+    tabController.dispose();
     super.dispose();
   }
 
@@ -50,18 +52,16 @@ class _RootTabState extends ConsumerState<RootTab>
           onTap: (index) {
             setState(() {
               currentIndex = index;
-              controller.animateTo(index);
+              tabController.animateTo(index);
             });
           },
           index: currentIndex,
         ),
         child: TabBarView(
           physics: const NeverScrollableScrollPhysics(),
-          controller: controller,
+          controller: tabController,
           children: [
-            Center(
-              child: Text('홈'),
-            ),
+            CampingScreen(),
             Center(
               child: Text('검색'),
             ),
@@ -90,14 +90,14 @@ class _RootTabState extends ConsumerState<RootTab>
   likeOnPressed() {
     setState(() {
       currentIndex = 3;
-      controller.animateTo(currentIndex);
+      tabController.animateTo(currentIndex);
     });
   }
 
   locationOnPressed() {
     setState(() {
       currentIndex = 2;
-      controller.animateTo(currentIndex);
+      tabController.animateTo(currentIndex);
     });
   }
 }

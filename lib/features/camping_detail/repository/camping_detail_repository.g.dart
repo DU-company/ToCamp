@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'camping_repository.dart';
+part of 'camping_detail_repository.dart';
 
 // **************************************************************************
 // RetrofitGenerator
@@ -8,8 +8,8 @@ part of 'camping_repository.dart';
 
 // ignore_for_file: unnecessary_brace_in_string_interps,no_leading_underscores_for_local_identifiers
 
-class _CampingRepository implements CampingRepository {
-  _CampingRepository(
+class _CampingDetailRepository implements CampingDetailRepository {
+  _CampingDetailRepository(
     this._dio, {
     this.baseUrl,
   });
@@ -19,7 +19,7 @@ class _CampingRepository implements CampingRepository {
   String? baseUrl;
 
   @override
-  Future<PaginationSuccess<CampingModel>> paginate(
+  Future<PaginationSuccess<CampingImageItem>> getImages(
       PaginationParams params) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
@@ -27,14 +27,14 @@ class _CampingRepository implements CampingRepository {
     final _headers = <String, dynamic>{};
     final Map<String, dynamic>? _data = null;
     final _result = await _dio.fetch<Map<String, dynamic>>(
-        _setStreamType<PaginationSuccess<CampingModel>>(Options(
+        _setStreamType<PaginationSuccess<CampingImageItem>>(Options(
       method: 'GET',
       headers: _headers,
       extra: _extra,
     )
             .compose(
               _dio.options,
-              '/basedList',
+              '/imageList',
               queryParameters: queryParameters,
               data: _data,
             )
@@ -43,9 +43,9 @@ class _CampingRepository implements CampingRepository {
               _dio.options.baseUrl,
               baseUrl,
             ))));
-    final value = PaginationSuccess<CampingModel>.fromJson(
+    final value = PaginationSuccess<CampingImageItem>.fromJson(
       _result.data!,
-      (json) => CampingModel.fromJson(json as Map<String, dynamic>),
+      (json) => CampingImageItem.fromJson(json as Map<String, dynamic>),
     );
     return value;
   }

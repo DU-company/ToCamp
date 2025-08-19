@@ -1,10 +1,28 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'pagination_response.dart';
+part of 'pagination_model.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
+
+PaginationSuccess<T> _$PaginationSuccessFromJson<T>(
+  Map<String, dynamic> json,
+  T Function(Object? json) fromJsonT,
+) =>
+    PaginationSuccess<T>(
+      response: PaginationResponse<T>.fromJson(
+          json['response'] as Map<String, dynamic>,
+          (value) => fromJsonT(value)),
+    );
+
+Map<String, dynamic> _$PaginationSuccessToJson<T>(
+  PaginationSuccess<T> instance,
+  Object? Function(T value) toJsonT,
+) =>
+    <String, dynamic>{
+      'response': instance.response,
+    };
 
 PaginationResponse<T> _$PaginationResponseFromJson<T>(
   Map<String, dynamic> json,

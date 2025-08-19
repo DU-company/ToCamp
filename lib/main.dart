@@ -6,6 +6,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:to_camp/common/theme/service/theme_service.dart';
 import 'package:to_camp/common/view/root_tab.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:to_camp/routes/app_router.dart';
 import 'common/const/data.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
@@ -41,7 +42,8 @@ class _APP extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = ref.watch(themeDataProvider);
-    return MaterialApp(
+    final router = ref.watch(appRouterProvider);
+    return MaterialApp.router(
       debugShowCheckedModeBanner: false,
       theme: theme,
       builder: (context, child) {
@@ -51,7 +53,7 @@ class _APP extends ConsumerWidget {
           child: child!, // 이 child가 앱의 전체 위젯 트리 (ex. home 화면)
         );
       },
-      home: const RootTab(),
+      routerConfig: router,
     );
   }
 }

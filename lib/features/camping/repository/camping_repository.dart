@@ -1,9 +1,20 @@
 import 'package:dio/dio.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:retrofit/http.dart';
-import 'package:to_camp/common/model/pagination_response.dart';
+import 'package:to_camp/common/dio/dio.dart';
+import 'package:to_camp/common/model/pagination_params.dart';
+import 'package:to_camp/common/model/pagination_model.dart';
 import 'package:to_camp/features/camping/model/camping_model.dart';
 
 part 'camping_repository.g.dart';
+
+final campingRepositoryProvider = Provider<CampingRepository>(
+  (ref) {
+    final dio = ref.watch(dioProvider);
+    return CampingRepository(dio,
+        baseUrl: 'http://apis.data.go.kr/B551011/GoCamping');
+  },
+);
 
 @RestApi()
 abstract class CampingRepository {
@@ -11,5 +22,7 @@ abstract class CampingRepository {
       _CampingRepository;
 
   @GET('/basedList')
-  Future<PaginationResponse<CampingModel>> paginate();
+  Future<PaginationSuccess<CampingModel>> paginate(
+    @Queries() PaginationParams params,
+  );
 }

@@ -13,7 +13,7 @@
 ---
 
 ## 기술 스택
-- **Framework**: Flutter (3.x)
+- **Framework**: Flutter (3.23)
 - **State Management**: Riverpod
 - **Networking**: HTTP
 - **Database**: Hive(LocalDB)
