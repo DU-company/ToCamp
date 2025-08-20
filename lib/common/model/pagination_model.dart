@@ -97,7 +97,7 @@ class ResponseBody<T> {
       numOfRows: json['numOfRows'],
       pageNo: json['pageNo'],
       totalCount: json['totalCount'],
-      items: BodyItem(item: []),
+      items: BodyItem<T>(item: []),
     );
   }
 }

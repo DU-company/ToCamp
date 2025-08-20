@@ -1,0 +1,52 @@
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:geolocator/geolocator.dart';
+import 'package:to_camp/features/location/model/location_model.dart';
+
+final locationServiceProvider = Provider<LocationService>((ref) {
+  return LocationService(ref: ref);
+});
+
+class LocationService {
+  final Ref ref;
+
+  LocationService({required this.ref});
+
+  Future<Position> requestPermission() async {
+    bool isLocationEnabled;
+    LocationPermission permission;
+
+    /// GPS 사용 가능 여부 체크
+    isLocationEnabled = await Geolocator.isLocationServiceEnabled();
+    if (!isLocationEnabled) {
+      throw Exception('GPS를 사용할 수 없습니다.');
+    }
+
+    /// 위치 권한 허용 여부 체크
+    permission = await Geolocator.checkPermission();
+    if (permission == LocationPermission.denied) {
+      permission = await Geolocator.requestPermission();
+      if (permission == LocationPermission.denied) {
+        throw Exception('위치 권한이 거부되었습니다.\n위치 권한을 허가해 주세요.');
+      }
+    }
+    if (permission == LocationPermission.deniedForever) {
+      throw Exception('설정에서 위치 권한을 허가해 주세요.');
+    }
+
+    /// 위 단계를 모두 통과하면 위치 권한을 사용할 수 있는 환경임.
+    return await Geolocator.getCurrentPosition();
+  }
+
+  Future<LocationSuccess> getLocation() async {
+    try {
+      final position = await requestPermission();
+      return LocationSuccess(
+        lat: position.latitude,
+        lng: position.longitude,
+      );
+    } catch (e, s) {
+      print('$e $s');
+      rethrow;
+    }
+  }
+}

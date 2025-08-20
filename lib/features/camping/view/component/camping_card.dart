@@ -24,11 +24,11 @@ class CampingCard extends ConsumerWidget {
   final double lat;
   final String resveUrl;
   final String tel;
-  final String siteBottomCl1;
-  final String siteBottomCl2;
-  final String siteBottomCl3;
-  final String siteBottomCl4;
-  final String siteBottomCl5;
+  final String siteBottomCl1; //잔디
+  final String siteBottomCl2; //파쇄석
+  final String siteBottomCl3; //데크
+  final String siteBottomCl4; //자갈
+  final String siteBottomCl5; //흙
   final bool isDetail;
 
   const CampingCard({
@@ -93,6 +93,9 @@ class CampingCard extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = ref.watch(themeServiceProvider);
     final hasFeatures = sbrsCl.isNotEmpty || posblFcltyCl.isNotEmpty;
+    final isPetAllowed = pet.isNotEmpty && pet != '불가능';
+    final isCaravanAllowed = caravan.isNotEmpty && caravan != 'N';
+    final isFireAllowed = fire.isNotEmpty && fire != '불가능';
     return Padding(
       padding: EdgeInsets.all(isDetail ? 4 : 8),
       child: Column(
@@ -147,31 +150,48 @@ class CampingCard extends ConsumerWidget {
             ),
           ),
 
-          /// Fire, Pet, Caravan
           const SizedBox(height: 8),
-          Row(
+          Wrap(
+            crossAxisAlignment: WrapCrossAlignment.center,
+            runSpacing: 4,
+            spacing: 4,
             children: [
-              _IconWithLabel(
-                text: fire,
-                icon: PhosphorIconsFill.campfire,
-                label: '화로',
-              ),
-              if (pet != 'N' && pet != '불가능' && pet.isNotEmpty)
-                renderDot(theme),
-              _IconWithLabel(
-                text: pet,
-                icon: PhosphorIconsFill.dog,
-                label: pet,
-              ),
-              if (caravan != 'N' &&
-                  caravan != '불가능' &&
-                  caravan.isNotEmpty)
-                renderDot(theme),
-              _IconWithLabel(
-                text: caravan,
-                icon: PhosphorIconsBold.truckTrailer,
-                label: '카라반',
-              ),
+              if (isFireAllowed)
+                const _IconWithLabel(
+                  icon: PhosphorIconsBold.campfire,
+                  label: '화로',
+                ),
+
+              /// Pet
+              if (isPetAllowed) renderDot(theme),
+              if (isPetAllowed)
+                _IconWithLabel(
+                  icon: PhosphorIconsFill.dog,
+                  label: pet,
+                ),
+
+              /// Caravan
+              if (isCaravanAllowed) renderDot(theme),
+              if (isCaravanAllowed)
+                _IconWithLabel(
+                  icon: PhosphorIconsBold.truckTrailer,
+                  label: '카라반',
+                ),
+
+              if (siteBottomCl1 != '0') renderDot(theme),
+              _SiteType(siteCount: siteBottomCl1, type: '잔디'),
+
+              if (siteBottomCl2 != '0') renderDot(theme),
+              _SiteType(siteCount: siteBottomCl2, type: '파쇄석'),
+
+              if (siteBottomCl3 != '0') renderDot(theme),
+              _SiteType(siteCount: siteBottomCl3, type: '데크'),
+
+              if (siteBottomCl4 != '0') renderDot(theme),
+              _SiteType(siteCount: siteBottomCl4, type: '자갈'),
+
+              if (siteBottomCl5 != '0') renderDot(theme),
+              _SiteType(siteCount: siteBottomCl5, type: '흙'),
             ],
           ),
         ],
@@ -187,18 +207,16 @@ class CampingCard extends ConsumerWidget {
   }
 
   Text renderDot(AppTheme theme) => Text(
-    ' • ',
+    '•',
     style: theme.typo.subtitle2.copyWith(color: theme.color.primary),
   );
 }
 
 class _IconWithLabel extends ConsumerWidget {
-  final String text;
   final IconData icon;
   final String label;
   const _IconWithLabel({
     super.key,
-    required this.text,
     required this.icon,
     required this.label,
   });
@@ -206,13 +224,12 @@ class _IconWithLabel extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = ref.watch(themeServiceProvider);
-    if (text == 'N' || text == '불가능' || text.isEmpty)
-      return SizedBox();
 
     return Row(
+      mainAxisSize: MainAxisSize.min,
       children: [
         Icon(icon, color: theme.color.primary),
-        const SizedBox(width: 2),
+        const SizedBox(width: 4),
         Text(
           label,
           style: theme.typo.subtitle2.copyWith(
@@ -221,6 +238,30 @@ class _IconWithLabel extends ConsumerWidget {
           ),
         ),
       ],
+    );
+  }
+}
+
+class _SiteType extends ConsumerWidget {
+  final String siteCount;
+  final String type;
+  const _SiteType({
+    super.key,
+    required this.siteCount,
+    required this.type,
+  });
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final theme = ref.watch(themeServiceProvider);
+
+    if (siteCount == '0') return SizedBox();
+    return Text(
+      '$type $siteCount',
+      style: theme.typo.subtitle2.copyWith(
+        color: theme.color.primary,
+        fontWeight: theme.typo.semiBold,
+      ),
     );
   }
 }

@@ -6,8 +6,8 @@ plugins {
 }
 
 android {
-    namespace = "com.du.to_camp"
-    compileSdk = flutter.compileSdkVersion
+    namespace = "com.du.tocamp"
+    compileSdk = 36
     ndkVersion = flutter.ndkVersion
 
     compileOptions {
@@ -21,13 +21,13 @@ android {
 
     defaultConfig {
         // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
-        applicationId = "com.du.to_camp"
+        applicationId = "com.du.tocamp"
         // You can update the following values to match your application needs.
         // For more information, see: https://flutter.dev/to/review-gradle-config.
-        minSdk = flutter.minSdkVersion
-        targetSdk = flutter.targetSdkVersion
-        versionCode = flutter.versionCode
-        versionName = flutter.versionName
+        minSdkVersion(project.property("flutter.minSdkVersion").toString().toInt())
+        targetSdkVersion(project.property("flutter.targetSdkVersion").toString().toInt())
+        versionCode = 14
+        versionName = "1.1.4"
     }
 
     buildTypes {

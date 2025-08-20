@@ -11,11 +11,8 @@ class LoadingWidget extends ConsumerWidget {
     final theme = ref.watch(themeServiceProvider);
     return Center(
       child: SpinKitThreeInOut(
+        size: 36, // 전체 위젯 크기
         color: theme.color.primary,
-        size: 32,
-        // itemBuilder: (context, index) {
-        //
-        // },
       ),
     );
   }
