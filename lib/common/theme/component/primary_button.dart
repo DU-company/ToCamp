@@ -6,11 +6,15 @@ class PrimaryButton extends ConsumerWidget {
   final VoidCallback? onPressed;
   final String? text;
   final IconData? icon;
+  final Color? backgroundColor;
+  final Color? foregroundColor;
   const PrimaryButton({
     super.key,
     required this.onPressed,
     this.text,
     this.icon,
+    this.backgroundColor,
+    this.foregroundColor,
   });
 
   @override
@@ -18,33 +22,39 @@ class PrimaryButton extends ConsumerWidget {
     final theme = ref.watch(themeServiceProvider);
     return ElevatedButton(
       style: ElevatedButton.styleFrom(
-        backgroundColor: theme.color.primary,
-        foregroundColor: theme.color.onPrimary,
+        backgroundColor: backgroundColor ?? theme.color.primary,
+        foregroundColor: foregroundColor ?? theme.color.onPrimary,
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(8),
+          borderRadius: BorderRadius.circular(16),
         ),
-        padding: EdgeInsets.all(16),
+        padding: EdgeInsets.symmetric(horizontal: 12, vertical: 4),
         disabledBackgroundColor: theme.color.inactiveContainer,
         disabledForegroundColor: theme.color.onInactiveContainer,
         // textStyle: theme.typo.subtitle1,
       ),
       onPressed: onPressed,
       child: Row(
+        mainAxisSize: MainAxisSize.min,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          if (text != null)
-            Expanded(
-              child: Text(
-                text!,
-                style: theme.typo.subtitle2.copyWith(
-                  fontWeight: theme.typo.semiBold,
-                  color: theme.color.onPrimary,
-                ),
-                textAlign: TextAlign.center,
-              ),
+          if (icon != null)
+            Icon(
+              icon,
+              color: foregroundColor ?? theme.color.onPrimary,
             ),
 
-          if (icon != null) Icon(icon, color: theme.color.onPrimary),
+          if (text != null && icon != null) const SizedBox(width: 8),
+
+          if (text != null)
+            Text(
+              text!,
+              style: theme.typo.subtitle2.copyWith(
+                fontWeight: theme.typo.semiBold,
+                color: foregroundColor ?? theme.color.onPrimary,
+              ),
+              textAlign: TextAlign.center,
+            ),
+
           // AssetIcon(icon!, color: theme.color.onPrimary),
         ],
       ),

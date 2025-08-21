@@ -1,6 +1,6 @@
 import 'dart:io';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:platform_maps_flutter/platform_maps_flutter.dart';
 
 final SERVICE_KEY = dotenv.env['SERVICE_KEY'];
 

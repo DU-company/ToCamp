@@ -8,13 +8,13 @@ import 'package:to_camp/features/camping/model/camping_model.dart';
 
 part 'camping_repository.g.dart';
 
-final campingRepositoryProvider = Provider<CampingRepository>(
-  (ref) {
-    final dio = ref.watch(dioProvider);
-    return CampingRepository(dio,
-        baseUrl: 'http://apis.data.go.kr/B551011/GoCamping');
-  },
-);
+final campingRepositoryProvider = Provider<CampingRepository>((ref) {
+  final dio = ref.watch(dioProvider);
+  return CampingRepository(
+    dio,
+    baseUrl: 'http://apis.data.go.kr/B551011/GoCamping',
+  );
+});
 
 @RestApi()
 abstract class CampingRepository {
@@ -22,7 +22,12 @@ abstract class CampingRepository {
       _CampingRepository;
 
   @GET('/basedList')
-  Future<PaginationSuccess<CampingModel>> paginate(
+  Future<PaginationData<CampingModel>> paginate(
+    @Queries() PaginationParams params,
+  );
+
+  @GET('/locationBasedList')
+  Future<PaginationData<CampingModel>> locationBasedPaginate(
     @Queries() PaginationParams params,
   );
 }

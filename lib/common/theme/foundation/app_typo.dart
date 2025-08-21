@@ -26,7 +26,7 @@ class AppTypo {
     height: 1.3,
     fontFamily: typo.name,
     fontWeight: typo.regular,
-    fontSize: 2,
+    fontSize: 22,
     color: fontColor,
   );
   late final TextStyle headline3 = TextStyle(

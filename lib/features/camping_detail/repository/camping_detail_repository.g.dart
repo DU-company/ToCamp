@@ -19,7 +19,7 @@ class _CampingDetailRepository implements CampingDetailRepository {
   String? baseUrl;
 
   @override
-  Future<PaginationSuccess<CampingImageItem>> getImages(
+  Future<PaginationData<CampingImageItem>> getImages(
       PaginationParams params) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
@@ -27,7 +27,7 @@ class _CampingDetailRepository implements CampingDetailRepository {
     final _headers = <String, dynamic>{};
     final Map<String, dynamic>? _data = null;
     final _result = await _dio.fetch<Map<String, dynamic>>(
-        _setStreamType<PaginationSuccess<CampingImageItem>>(Options(
+        _setStreamType<PaginationData<CampingImageItem>>(Options(
       method: 'GET',
       headers: _headers,
       extra: _extra,
@@ -43,7 +43,7 @@ class _CampingDetailRepository implements CampingDetailRepository {
               _dio.options.baseUrl,
               baseUrl,
             ))));
-    final value = PaginationSuccess<CampingImageItem>.fromJson(
+    final value = PaginationData<CampingImageItem>.fromJson(
       _result.data!,
       (json) => CampingImageItem.fromJson(json as Map<String, dynamic>),
     );

@@ -7,7 +7,7 @@ import 'package:to_camp/common/theme/service/theme_service.dart';
 import 'package:to_camp/common/utils/toast_utils.dart';
 import 'package:to_camp/common/view/default_layout.dart';
 import 'package:to_camp/features/camping/view/screen/camping_screen.dart';
-import 'package:to_camp/features/location/view/screen/map_screen.dart';
+import 'package:to_camp/features/location/view/screen/location_screen.dart';
 
 class RootTab extends ConsumerStatefulWidget {
   static String get routeName => 'home';
@@ -66,7 +66,7 @@ class _RootTabState extends ConsumerState<RootTab>
             Center(
               child: Text('검색'),
             ),
-            MapScreen(),
+            LocationScreen(),
             Center(
               child: Text('찜'),
             ),

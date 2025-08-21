@@ -19,15 +19,14 @@ class _CampingRepository implements CampingRepository {
   String? baseUrl;
 
   @override
-  Future<PaginationSuccess<CampingModel>> paginate(
-      PaginationParams params) async {
+  Future<PaginationData<CampingModel>> paginate(PaginationParams params) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     queryParameters.addAll(params.toJson());
     final _headers = <String, dynamic>{};
     final Map<String, dynamic>? _data = null;
     final _result = await _dio.fetch<Map<String, dynamic>>(
-        _setStreamType<PaginationSuccess<CampingModel>>(Options(
+        _setStreamType<PaginationData<CampingModel>>(Options(
       method: 'GET',
       headers: _headers,
       extra: _extra,
@@ -43,7 +42,39 @@ class _CampingRepository implements CampingRepository {
               _dio.options.baseUrl,
               baseUrl,
             ))));
-    final value = PaginationSuccess<CampingModel>.fromJson(
+    final value = PaginationData<CampingModel>.fromJson(
+      _result.data!,
+      (json) => CampingModel.fromJson(json as Map<String, dynamic>),
+    );
+    return value;
+  }
+
+  @override
+  Future<PaginationData<CampingModel>> locationBasedPaginate(
+      PaginationParams params) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    queryParameters.addAll(params.toJson());
+    final _headers = <String, dynamic>{};
+    final Map<String, dynamic>? _data = null;
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<PaginationData<CampingModel>>(Options(
+      method: 'GET',
+      headers: _headers,
+      extra: _extra,
+    )
+            .compose(
+              _dio.options,
+              '/locationBasedList',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(
+                baseUrl: _combineBaseUrls(
+              _dio.options.baseUrl,
+              baseUrl,
+            ))));
+    final value = PaginationData<CampingModel>.fromJson(
       _result.data!,
       (json) => CampingModel.fromJson(json as Map<String, dynamic>),
     );

@@ -6,18 +6,18 @@ part of 'pagination_model.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-PaginationSuccess<T> _$PaginationSuccessFromJson<T>(
+PaginationData<T> _$PaginationDataFromJson<T>(
   Map<String, dynamic> json,
   T Function(Object? json) fromJsonT,
 ) =>
-    PaginationSuccess<T>(
+    PaginationData<T>(
       response: PaginationResponse<T>.fromJson(
           json['response'] as Map<String, dynamic>,
           (value) => fromJsonT(value)),
     );
 
-Map<String, dynamic> _$PaginationSuccessToJson<T>(
-  PaginationSuccess<T> instance,
+Map<String, dynamic> _$PaginationDataToJson<T>(
+  PaginationData<T> instance,
   Object? Function(T value) toJsonT,
 ) =>
     <String, dynamic>{

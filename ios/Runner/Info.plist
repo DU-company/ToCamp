@@ -22,19 +22,6 @@
 		<string>$(FLUTTER_BUILD_NAME)</string>
 		<key>CFBundleSignature</key>
 		<string>????</string>
-		<key>CFBundleURLTypes</key>
-		<array>
-			<dict>
-				<key>CFBundleTypeRole</key>
-				<string>Editor</string>
-				<key>CFBundleURLName</key>
-				<string>dynamic</string>
-				<key>CFBundleURLSchemes</key>
-				<array>
-					<string>tocamp.page.link</string>
-				</array>
-			</dict>
-		</array>
 		<key>CFBundleVersion</key>
 		<string>$(FLUTTER_BUILD_NUMBER)</string>
 		<key>LSApplicationCategoryType</key>
@@ -48,10 +35,6 @@
 		<true/>
 		<key>NSAppTransportSecurity</key>
 		<dict/>
-		<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-        <string>이 앱은 위치 기반 기능을 위해 항상 위치 접근 권한이 필요합니다.</string>
-        <key>NSLocationWhenInUseUsageDescription</key>
-        <string>이 앱은 지도를 사용하기 위해 위치 접근 권한이 필요합니다.</string>
 		<key>UIApplicationSupportsIndirectInputEvents</key>
 		<true/>
 		<key>UILaunchStoryboardName</key>
@@ -60,6 +43,10 @@
 		<string>Main</string>
 		<key>UIStatusBarHidden</key>
 		<false/>
+		<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+                <string>이 앱은 위치 기반 기능을 위해 항상 위치 접근 권한이 필요합니다.</string>
+                <key>NSLocationWhenInUseUsageDescription</key>
+                <string>이 앱은 지도를 사용하기 위해 위치 접근 권한이 필요합니다.</string>
 		<key>UISupportedInterfaceOrientations</key>
 		<array>
 			<string>UIInterfaceOrientationPortrait</string>

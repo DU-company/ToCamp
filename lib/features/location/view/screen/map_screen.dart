@@ -1,25 +1,105 @@
+import 'package:easy_debounce/easy_throttle.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:phosphor_flutter/phosphor_flutter.dart';
+import 'package:to_camp/common/model/pagination_model.dart';
+import 'package:to_camp/common/theme/component/error_message_widget.dart';
+import 'package:to_camp/common/theme/component/loading_widget.dart';
+import 'package:to_camp/common/theme/component/primary_button.dart';
+import 'package:to_camp/common/theme/service/theme_service.dart';
+import 'package:to_camp/features/camping/model/camping_model.dart';
+import 'package:to_camp/features/camping/service/camping_service.dart';
 import 'package:to_camp/features/location/model/location_model.dart';
-import 'package:to_camp/features/location/provider/location_provider.dart';
-import 'package:to_camp/features/location/view/screen/location_error_screen.dart';
-import 'package:to_camp/features/location/view/screen/location_loading_screen.dart';
-import 'package:to_camp/features/location/view/screen/location_success_screen.dart';
+import 'package:to_camp/features/location/provider/location_camping_provider.dart';
+import 'package:to_camp/features/location/view/component/location_camping_card.dart';
+import 'package:to_camp/features/location/view/component/platform_map_widget.dart';
+import 'package:to_camp/features/location/view/component/show_card_button.dart';
 
 class MapScreen extends ConsumerWidget {
-  const MapScreen({super.key});
+  final LocationSuccess location;
+  const MapScreen({super.key, required this.location});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final locationState = ref.watch(locationProvider);
-    if (locationState is LocationLoading) {
-      return LocationLoadingScreen();
+    final data = ref.watch(locationCampingProvider);
+    final theme = ref.watch(themeServiceProvider);
+    final locationIndex = ref.watch(locationIndexProvider);
+    final showRefreshButton = ref.watch(showRefreshProvider);
+    final showCard = ref.watch(showCardProvider);
+
+    if (data is PaginationLoading) {
+      return LoadingWidget();
     }
-    if (locationState is LocationError) {
-      return LocationErrorScreen(message: locationState.message);
+    if (data is PaginationError) {
+      return ErrorMessageWidget(
+        message: data.message,
+        onTap: () {
+          ref.read(locationCampingProvider.notifier).paginate();
+        },
+      );
     }
 
-    locationState as LocationSuccess;
-    return LocationSuccessScreen(location: locationState);
+    data as PaginationSuccess<CampingModel>;
+
+    return Stack(
+      children: [
+        PlatformMapWidget(location: location, models: data.items),
+        Positioned(
+          top: 64,
+          right: 0,
+          left: 0,
+          child: Column(
+            children: [
+              if (showRefreshButton)
+                PrimaryButton(
+                  onPressed: () {
+                    EasyThrottle.throttle(
+                      'location_pagination',
+                      Duration(seconds: 3),
+                      () {
+                        ref.read(showRefreshProvider.notifier).state =
+                            false;
+                        ref
+                            .read(locationCampingProvider.notifier)
+                            .paginate(fetchingMore: true);
+                      },
+                    );
+                  },
+                  text: '이 지역 재탐색',
+                  icon: PhosphorIconsBold.arrowClockwise,
+                  foregroundColor: theme.color.primary,
+                  backgroundColor: theme.color.surface,
+                ),
+               SizedBox(height: MediaQuery.of(context).size.height / 3),
+              if (data is PaginationFetchingMore) LoadingWidget(),
+            ],
+          ),
+        ),
+        Positioned(
+          bottom: 12,
+          right: 12,
+          left: 12,
+          child: Column(
+            children: [
+              ShowCardButton(),
+              const SizedBox(height: 4),
+              if (data.items.isNotEmpty && showCard)
+                GestureDetector(
+                  onTap: () {
+                    final currentModel = data.items[locationIndex];
+
+                    ref
+                        .read(campingServiceProvider)
+                        .onCampingCardTap(context, currentModel);
+                  },
+                  child: LocationCampingCard(
+                    model: data.items[locationIndex],
+                  ),
+                ),
+            ],
+          ),
+        ),
+      ],
+    );
   }
 }

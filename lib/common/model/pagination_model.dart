@@ -10,27 +10,50 @@ class PaginationError extends PaginationState {
   PaginationError({required this.message});
 }
 
-class PaginationErrorHasData<T> extends PaginationSuccess {
-  PaginationErrorHasData({required super.response});
+class PaginationErrorHasData<T> extends PaginationSuccess<T> {
+  PaginationErrorHasData({
+    required super.items,
+    required super.hasMore,
+  });
 }
 
-class PaginationFetchingMore<T> extends PaginationSuccess {
-  PaginationFetchingMore({required super.response});
+class PaginationFetchingMore<T> extends PaginationSuccess<T> {
+  PaginationFetchingMore({
+    required super.items,
+    required super.hasMore,
+  });
 }
 
-class PaginationReFetching<T> extends PaginationSuccess {
-  PaginationReFetching({required super.response});
+class PaginationReFetching<T> extends PaginationSuccess<T> {
+  PaginationReFetching({
+    required super.items,
+    required super.hasMore,
+  });
+}
+
+class PaginationSuccess<T> extends PaginationState {
+  final List<T> items;
+  final bool hasMore;
+
+  PaginationSuccess({required this.items, required this.hasMore});
+
+  PaginationSuccess<T> copyWith({List<T>? items, bool? hasMore}) {
+    return PaginationSuccess(
+      items: items ?? this.items,
+      hasMore: hasMore ?? this.hasMore,
+    );
+  }
 }
 
 @JsonSerializable(genericArgumentFactories: true)
-class PaginationSuccess<T> extends PaginationState {
+class PaginationData<T> {
   final PaginationResponse<T> response;
-  PaginationSuccess({required this.response});
+  PaginationData({required this.response});
 
-  factory PaginationSuccess.fromJson(
+  factory PaginationData.fromJson(
     Map<String, dynamic> json,
     T Function(Object? json) fromJsonT,
-  ) => _$PaginationSuccessFromJson(json, fromJsonT);
+  ) => _$PaginationDataFromJson(json, fromJsonT);
 }
 
 @JsonSerializable(genericArgumentFactories: true)

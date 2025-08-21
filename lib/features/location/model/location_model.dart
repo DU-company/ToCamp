@@ -1,3 +1,6 @@
+import 'package:to_camp/common/model/pagination_model.dart';
+import 'package:to_camp/features/camping/model/camping_model.dart';
+
 abstract class LocationState {}
 
 class LocationLoading extends LocationState {}
