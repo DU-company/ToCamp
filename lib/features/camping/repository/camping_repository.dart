@@ -30,4 +30,9 @@ abstract class CampingRepository {
   Future<PaginationData<CampingModel>> locationBasedPaginate(
     @Queries() PaginationParams params,
   );
+
+  @GET('/searchList')
+  Future<PaginationData<CampingModel>> searchPaginate(
+    @Queries() PaginationParams params,
+  );
 }

@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 import 'package:to_camp/common/view/root_tab.dart';
 import 'package:to_camp/features/camping_detail/view/screen/camping_detail_screen.dart';
 import 'package:to_camp/features/location/view/screen/location_camping_screen.dart';
+import 'package:to_camp/features/serach/view/search_result/screen/search_result_screen.dart';
 
 final routesProvider = Provider((ref) => GoRoutes());
 
@@ -11,7 +12,7 @@ class GoRoutes {
     GoRoute(
       path: '/',
       name: RootTab.routeName,
-      builder: (_, __) => RootTab(),
+      builder: (_, _) => RootTab(),
     ),
     GoRoute(
       path: '/detail',
@@ -24,7 +25,15 @@ class GoRoutes {
     GoRoute(
       path: '/location',
       name: LocationCampingScreen.routeName,
-      builder: (_, __) => LocationCampingScreen(),
+      builder: (_, _) => LocationCampingScreen(),
+    ),
+    GoRoute(
+      path: '/searchResult',
+      name: SearchResultScreen.routeName,
+      builder: (_, state) {
+        final keyword = state.uri.queryParameters['keyword']!;
+        return SearchResultScreen(keyword: keyword);
+      },
     ),
     // GoRoute(
     //   path: '/',

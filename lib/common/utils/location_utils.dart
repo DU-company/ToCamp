@@ -4,19 +4,17 @@ import 'package:to_camp/features/camping/model/camping_model.dart';
 class LocationUtils {
   static double radiusByZoom(double zoom) {
     if (zoom > 9.0) {
-      //
       return 30000;
     } else {
-      //max zoom일떄는 전국을 다 보려는 의도가 있기때문에 그냥 최대치로 넣어준다.
-      return 500000;
+      return 50000;
     }
   }
 
   static int takeByZoom(double zoom) {
     if (zoom > 9.0) {
-      return 50;
+      return 30;
     } else {
-      return 100;
+      return 50;
     }
   }
 
@@ -43,5 +41,4 @@ class LocationUtils {
     });
     return models;
   }
-
 }

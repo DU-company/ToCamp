@@ -2,6 +2,7 @@ import 'package:easy_debounce/easy_throttle.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
+import 'package:platform_maps_flutter/platform_maps_flutter.dart';
 import 'package:to_camp/common/model/pagination_model.dart';
 import 'package:to_camp/common/theme/component/error_message_widget.dart';
 import 'package:to_camp/common/theme/component/loading_widget.dart';
@@ -13,6 +14,7 @@ import 'package:to_camp/features/location/model/location_model.dart';
 import 'package:to_camp/features/location/provider/location_camping_provider.dart';
 import 'package:to_camp/features/location/view/component/location_camping_card.dart';
 import 'package:to_camp/features/location/view/component/platform_map_widget.dart';
+import 'package:to_camp/features/location/view/component/refresh_button.dart';
 import 'package:to_camp/features/location/view/component/show_card_button.dart';
 
 class MapScreen extends ConsumerWidget {
@@ -22,11 +24,9 @@ class MapScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final data = ref.watch(locationCampingProvider);
-    final theme = ref.watch(themeServiceProvider);
     final locationIndex = ref.watch(locationIndexProvider);
-    final showRefreshButton = ref.watch(showRefreshProvider);
     final showCard = ref.watch(showCardProvider);
-
+    print(showCard);
     if (data is PaginationLoading) {
       return LoadingWidget();
     }
@@ -50,27 +50,11 @@ class MapScreen extends ConsumerWidget {
           left: 0,
           child: Column(
             children: [
-              if (showRefreshButton)
-                PrimaryButton(
-                  onPressed: () {
-                    EasyThrottle.throttle(
-                      'location_pagination',
-                      Duration(seconds: 3),
-                      () {
-                        ref.read(showRefreshProvider.notifier).state =
-                            false;
-                        ref
-                            .read(locationCampingProvider.notifier)
-                            .paginate(fetchingMore: true);
-                      },
-                    );
-                  },
-                  text: '이 지역 재탐색',
-                  icon: PhosphorIconsBold.arrowClockwise,
-                  foregroundColor: theme.color.primary,
-                  backgroundColor: theme.color.surface,
-                ),
-               SizedBox(height: MediaQuery.of(context).size.height / 3),
+              LocationRefreshButton(),
+
+              SizedBox(
+                height: MediaQuery.of(context).size.height / 3,
+              ),
               if (data is PaginationFetchingMore) LoadingWidget(),
             ],
           ),
@@ -81,16 +65,20 @@ class MapScreen extends ConsumerWidget {
           left: 12,
           child: Column(
             children: [
-              ShowCardButton(),
+              ShowCardButton(
+                // model: data.items[locationIndex],
+                models: data.items,
+              ),
               const SizedBox(height: 4),
               if (data.items.isNotEmpty && showCard)
                 GestureDetector(
                   onTap: () {
-                    final currentModel = data.items[locationIndex];
-
                     ref
                         .read(campingServiceProvider)
-                        .onCampingCardTap(context, currentModel);
+                        .onCampingCardTap(
+                          context,
+                          data.items[locationIndex],
+                        );
                   },
                   child: LocationCampingCard(
                     model: data.items[locationIndex],

@@ -1,13 +1,11 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:to_camp/common/theme/service/theme_service.dart';
 import 'package:to_camp/common/utils/toast_utils.dart';
 import 'package:to_camp/common/view/default_layout.dart';
 import 'package:to_camp/features/camping/view/screen/camping_screen.dart';
 import 'package:to_camp/features/location/view/screen/location_screen.dart';
+import 'package:to_camp/features/serach/view/search/screen/search_screen.dart';
 
 class RootTab extends ConsumerStatefulWidget {
   static String get routeName => 'home';
@@ -63,9 +61,7 @@ class _RootTabState extends ConsumerState<RootTab>
           controller: tabController,
           children: [
             CampingScreen(),
-            Center(
-              child: Text('검색'),
-            ),
+            SearchScreen(),
             LocationScreen(),
             Center(
               child: Text('찜'),

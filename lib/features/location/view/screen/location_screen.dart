@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:to_camp/common/theme/component/error_message_widget.dart';
 import 'package:to_camp/common/theme/component/loading_widget.dart';
 import 'package:to_camp/features/location/model/location_model.dart';
 import 'package:to_camp/features/location/provider/location_provider.dart';
-import 'package:to_camp/features/location/view/screen/location_error_screen.dart';
 import 'package:to_camp/features/location/view/screen/map_screen.dart';
 
 class LocationScreen extends ConsumerWidget {
@@ -17,7 +17,12 @@ class LocationScreen extends ConsumerWidget {
       return LoadingWidget();
     }
     if (locationState is LocationError) {
-      return LocationErrorScreen(message: locationState.message);
+      return ErrorMessageWidget(
+        message: locationState.message,
+        onTap: () {
+          ref.read(locationProvider.notifier).getCurrentLocation();
+        },
+      );
     }
 
     locationState as LocationSuccess;
