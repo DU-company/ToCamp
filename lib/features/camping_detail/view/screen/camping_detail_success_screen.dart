@@ -9,6 +9,8 @@ import 'package:to_camp/common/theme/service/theme_service.dart';
 import 'package:to_camp/features/camping_detail/model/camping_detail_model.dart';
 import 'package:to_camp/features/camping_detail/view/component/detail_app_bar.dart';
 import 'package:to_camp/features/camping_detail/view/component/detail_body.dart';
+import 'package:to_camp/features/camping_detail/view/component/detail_footer.dart';
+import 'package:to_camp/features/camping_detail/view/component/detail_map.dart';
 
 class CampingDetailSuccessScreen extends ConsumerWidget {
   final CampingDetailModel detail;
@@ -18,10 +20,18 @@ class CampingDetailSuccessScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = ref.watch(themeServiceProvider);
-    return CustomScrollView(
-      slivers: [
-        DetailAppBar(detail: detail),
-        DetailBody(campingModel: detail.campingModel),
+    return Column(
+      children: [
+        Expanded(
+          child: CustomScrollView(
+            slivers: [
+              DetailAppBar(detail: detail),
+              DetailBody(campingModel: detail.campingModel),
+
+            ],
+          ),
+        ),
+        DetailFooter(),
       ],
     );
   }

@@ -20,7 +20,12 @@ class RecommendProvider
   }
 
   Future<void> getRecommendations() async {
-    final resp = await repository.getRecommendations();
-    state = resp;
+    try {
+      final resp = await repository.getRecommendations();
+      state = resp;
+    } catch (e) {
+      /// 에러 발생 시, 1개의 List를 반환
+      state = [CampingRecommendationModel(region: '에러', order: 1)];
+    }
   }
 }

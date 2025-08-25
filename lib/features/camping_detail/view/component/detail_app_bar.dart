@@ -7,6 +7,7 @@ import 'package:skeletonizer/skeletonizer.dart';
 import 'package:to_camp/common/theme/component/custom_icon_button.dart';
 import 'package:to_camp/common/theme/service/theme_service.dart';
 import 'package:to_camp/features/camping_detail/model/camping_detail_model.dart';
+import 'package:to_camp/features/like/view/component/like_button.dart';
 
 final imageIndexProvider = StateProvider.autoDispose<int>((ref) => 0);
 
@@ -26,8 +27,8 @@ class DetailAppBar extends ConsumerWidget {
     return SliverAppBar(
       automaticallyImplyLeading: false,
       titleSpacing: 8,
-      toolbarHeight: 36,
-      title: _Buttons(),
+      toolbarHeight: 42,
+      title: _Buttons(detailModel: detail),
       expandedHeight: 250,
       flexibleSpace: FlexibleSpaceBar(
         background: Stack(
@@ -83,7 +84,8 @@ class DetailAppBar extends ConsumerWidget {
 }
 
 class _Buttons extends StatelessWidget {
-  const _Buttons({super.key});
+  final CampingDetailModel detailModel;
+  const _Buttons({super.key, required this.detailModel});
 
   @override
   Widget build(BuildContext context) {
@@ -96,7 +98,12 @@ class _Buttons extends StatelessWidget {
           icon: PhosphorIconsBold.caretLeft,
         ),
         Spacer(),
-        CustomIconButton(onTap: () {}, icon: PhosphorIcons.heart()),
+        LikeButton(
+          campingModel: detailModel.campingModel,
+          size: 24,
+          isDetail: true,
+        ),
+        // CustomIconButton(onTap: () {}, icon: PhosphorIcons.heart()),
         CustomIconButton(
           onTap: () {},
           icon: PhosphorIcons.dotsThreeOutlineVertical(),

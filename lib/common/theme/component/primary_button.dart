@@ -46,13 +46,15 @@ class PrimaryButton extends ConsumerWidget {
           if (text != null && icon != null) const SizedBox(width: 8),
 
           if (text != null)
-            Text(
-              text!,
-              style: theme.typo.subtitle2.copyWith(
-                fontWeight: theme.typo.semiBold,
-                color: foregroundColor ?? theme.color.onPrimary,
+            Flexible(
+              child: Text(
+                text!,
+                style: theme.typo.subtitle2.copyWith(
+                  fontWeight: theme.typo.semiBold,
+                  color: foregroundColor ?? theme.color.onPrimary,
+                ),
+                textAlign: TextAlign.center,
               ),
-              textAlign: TextAlign.center,
             ),
 
           // AssetIcon(icon!, color: theme.color.onPrimary),

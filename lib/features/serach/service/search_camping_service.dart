@@ -7,6 +7,7 @@ import 'package:to_camp/features/camping/model/camping_model.dart';
 import 'package:to_camp/features/camping/repository/camping_repository.dart';
 import 'package:to_camp/features/serach/provider/recent_keyword_provider.dart';
 import 'package:to_camp/features/serach/service/recent_keyword_service.dart';
+import 'package:to_camp/features/serach/view/search/component/search_app_bar.dart';
 import 'package:to_camp/features/serach/view/search_result/screen/search_result_screen.dart';
 
 final searchCampingServiceProvider = Provider((ref) {
@@ -62,5 +63,16 @@ class SearchCampingService {
     await ref
         .read(recentKeywordProvider.notifier)
         .addKeyword(keyword);
+  }
+
+  void onKeywordTap(
+    BuildContext context,
+    WidgetRef ref,
+    TextEditingController controller,
+    String keyword,
+  ) {
+    controller.text = keyword;
+    ref.read(keywordProvider.notifier).state = keyword;
+    ref.read(searchCampingServiceProvider).onSearch(context, keyword);
   }
 }

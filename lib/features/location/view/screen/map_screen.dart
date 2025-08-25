@@ -51,7 +51,6 @@ class MapScreen extends ConsumerWidget {
           child: Column(
             children: [
               LocationRefreshButton(),
-
               SizedBox(
                 height: MediaQuery.of(context).size.height / 3,
               ),
@@ -60,7 +59,7 @@ class MapScreen extends ConsumerWidget {
           ),
         ),
         Positioned(
-          bottom: 12,
+          bottom: 112,
           right: 12,
           left: 12,
           child: Column(
