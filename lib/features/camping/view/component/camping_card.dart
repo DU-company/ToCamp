@@ -5,6 +5,7 @@ import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:to_camp/common/theme/foundation/app_theme.dart';
 import 'package:to_camp/common/theme/service/theme_service.dart';
 import 'package:to_camp/features/camping/model/camping_model.dart';
+import 'package:to_camp/features/like/view/component/like_button.dart';
 
 class CampingCard extends ConsumerWidget {
   final String id;
@@ -29,6 +30,8 @@ class CampingCard extends ConsumerWidget {
   final String siteBottomCl3; //데크
   final String siteBottomCl4; //자갈
   final String siteBottomCl5; //흙
+  // final bool isLiked;
+  final Widget likeButton;
   final bool isDetail;
   final bool isHorizontal;
   final bool readMore;
@@ -57,13 +60,16 @@ class CampingCard extends ConsumerWidget {
     required this.siteBottomCl3,
     required this.siteBottomCl4,
     required this.siteBottomCl5,
+    required this.likeButton,
     required this.isDetail,
     required this.isHorizontal,
     required this.readMore,
+    // required this.isLiked,
   });
 
   factory CampingCard.fromModel({
     required CampingModel model,
+    required Widget likeButton,
     bool isDetail = false,
     bool isHorizontal = false,
     bool readMore = false,
@@ -91,6 +97,8 @@ class CampingCard extends ConsumerWidget {
       siteBottomCl3: model.siteBottomCl3,
       siteBottomCl4: model.siteBottomCl4,
       siteBottomCl5: model.siteBottomCl5,
+      // isLiked: model.isLiked,
+      likeButton: likeButton,
       isDetail: isDetail,
       isHorizontal: isHorizontal,
       readMore: readMore,
@@ -102,7 +110,7 @@ class CampingCard extends ConsumerWidget {
     final theme = ref.watch(themeServiceProvider);
 
     return dynamicWidget(
-      ImageBox(thumbUrl: thumbUrl),
+      ImageBox(thumbUrl: thumbUrl, likeButton: likeButton),
       NameBox(name: name, theme: theme),
       FeaturesAndAddressBox(
         sbrsCl: sbrsCl,
@@ -167,6 +175,7 @@ class CampingCard extends ConsumerWidget {
               ]
             : [
                 if (!isDetail) imageBox,
+                const SizedBox(height: 8),
                 nameBox,
                 featuresBox,
                 etcBox,
@@ -179,21 +188,37 @@ class CampingCard extends ConsumerWidget {
 
 class ImageBox extends StatelessWidget {
   final String thumbUrl;
-  const ImageBox({super.key, required this.thumbUrl});
+  final Widget likeButton;
+  final double aspectRatio;
+  const ImageBox({
+    super.key,
+    required this.thumbUrl,
+    required this.likeButton,
+    this.aspectRatio = 1.3
+  });
 
   @override
   Widget build(BuildContext context) {
-    return AspectRatio(
-      aspectRatio: 1.3,
-      child: ClipRRect(
-        borderRadius: BorderRadiusGeometry.circular(8),
-        child: thumbUrl.isEmpty
-            ? Image.asset('asset/img/camping.jpg', fit: BoxFit.cover)
-            : CachedNetworkImage(
-                imageUrl: thumbUrl,
-                fit: BoxFit.cover,
-              ),
-      ),
+    return Stack(
+      children: [
+        AspectRatio(
+          aspectRatio: aspectRatio,
+          child: ClipRRect(
+            borderRadius: BorderRadiusGeometry.circular(8),
+            child: thumbUrl.isEmpty
+                ? Image.asset(
+                    'asset/img/camping.jpg',
+                    fit: BoxFit.cover,
+                  )
+                : CachedNetworkImage(
+                    imageUrl: thumbUrl,
+                    fit: BoxFit.cover,
+                  ),
+          ),
+        ),
+
+        likeButton,
+      ],
     );
   }
 }
@@ -237,14 +262,15 @@ class IntroBox extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        const SizedBox(height: 16),
+        const SizedBox(height: 8),
         if (hasIntro)
           Text(
             longerIntro,
             maxLines: maxLine,
             overflow: TextOverflow.ellipsis,
             style: theme.typo.headline6.copyWith(
-              // height: 1.5,
+              height: 1.5,
+              wordSpacing: 3,
               color: theme.color.subtext,
             ),
           ),
@@ -275,8 +301,8 @@ class FeaturesAndAddressBox extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final hasFeatures = sbrsCl.isNotEmpty || posblFcltyCl.isNotEmpty;
-
     final pAddress = isDetail ? address : '$doNm $sigunguNm';
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [

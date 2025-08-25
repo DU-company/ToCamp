@@ -4,6 +4,7 @@ import 'package:to_camp/common/model/pagination_model.dart';
 import 'package:to_camp/common/theme/service/theme_service.dart';
 import 'package:to_camp/features/camping/model/camping_model.dart';
 import 'package:to_camp/features/camping/view/component/camping_card.dart';
+import 'package:to_camp/features/like/view/component/like_button.dart';
 import 'package:to_camp/features/serach/view/search/component/search_app_bar.dart';
 
 class SearchResultSuccessView extends ConsumerWidget {
@@ -20,7 +21,10 @@ class SearchResultSuccessView extends ConsumerWidget {
     final theme = ref.watch(themeServiceProvider);
     if (data.items.isEmpty) {
       return SliverPadding(
-        padding: EdgeInsetsGeometry.symmetric(horizontal: 16, vertical: 64),
+        padding: EdgeInsetsGeometry.symmetric(
+          horizontal: 16,
+          vertical: 64,
+        ),
         sliver: SliverToBoxAdapter(
           child: Text(
             textAlign: TextAlign.center,
@@ -35,7 +39,10 @@ class SearchResultSuccessView extends ConsumerWidget {
       itemCount: data.items.length,
       itemBuilder: (context, index) {
         final model = data.items[index];
-        return CampingCard.fromModel(model: model);
+        return CampingCard.fromModel(
+          model: model,
+          likeButton: LikeButton(campingModel: model),
+        );
       },
     );
   }

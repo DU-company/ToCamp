@@ -5,6 +5,7 @@ import 'package:to_camp/features/camping/model/camping_model.dart';
 import 'package:to_camp/features/camping/service/camping_service.dart';
 import 'package:to_camp/features/camping/view/component/camping_card.dart';
 import 'package:to_camp/features/camping/view/screen/camping_screen.dart';
+import 'package:to_camp/features/like/view/component/like_button.dart';
 
 class CampingSuccessScreen extends ConsumerWidget {
   final PaginationSuccess<CampingModel> data;
@@ -22,7 +23,10 @@ class CampingSuccessScreen extends ConsumerWidget {
                 .read(campingServiceProvider)
                 .onCampingCardTap(context, model);
           },
-          child: CampingCard.fromModel(model: model),
+          child: CampingCard.fromModel(
+            model: model,
+            likeButton: LikeButton(campingModel: model),
+          ),
         );
       },
       separatorBuilder: (context, index) {

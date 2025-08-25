@@ -72,7 +72,3 @@ class SearchAppBar extends ConsumerWidget {
   }
 }
 
-refactor: Search 리팩토링
-chore: Firebase 없애고 supabase 연결
-feat: 키워드 기반 Pagination 구현
-feat: 검색 기록 저장 구현

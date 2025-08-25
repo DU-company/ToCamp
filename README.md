@@ -16,12 +16,12 @@
 - **Framework**: Flutter (3.23)
 - **State Management**: Riverpod
 - **Networking**: HTTP
-- **Database**: Hive(LocalDB)
+- **Database**: Hive(LocalDB), Supabase
 - **CI/CD**: (추가 예정)
 
 ---
 
-## 📂 프로젝트 구조 (예시)
+## 프로젝트 구조
 
 - lib/
 - ┣ common/      # 공통 유틸, 상수, 테마
@@ -30,18 +30,18 @@
 
 ---
 
-## 🗓 리팩토링 7일 플랜
-- **Day 1**: 프로젝트 세팅, 기본 의존성 설치, README 뼈대 작성
-- **Day 2**: 프로젝트 구조 정리 (core, data, domain, presentation)
-- **Day 3**: Auth 모듈 리팩토링 (API + 상태관리)
-- **Day 4**: Chat 모듈 리팩토링 (모델, 서비스, provider 연결)
-- **Day 5**: UI 개선 (공통 위젯, 테마, 에러 처리)
-- **Day 6**: 로컬 저장소 및 캐싱 적용
-- **Day 7**: 코드 리팩토링 마무리, 테스트, 문서 정리
+## 리팩토링 7일 플랜
+- **Day 1**: 아키텍처 설정, 커스텀 테마, API호출을 위한 파라미터 및 모델링
+- **Day 2**: Camping의 Repository, Service, Provider 구현 및 UI에 띄우기.
+- **Day 3**: geolocator를 활용한 위치기반 페이지네이션
+- **Day 4**: 키워드 기반 API요청 및 검색 엔진 구현
+- **Day 5**: 좋아요 기능 구현 및 환경설정 화면
+- **Day 6**: 다이나믹 링크 서비스 종료에 의한 마이그레이션
+- **Day 7**: UI 총 정리(반응형 UI포함)
 
 ---
 
-## 🔧 실행 방법
+##  실행 방법
 ```bash
 # 프로젝트 실행
 flutter pub get

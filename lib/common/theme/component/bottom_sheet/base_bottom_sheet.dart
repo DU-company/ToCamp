@@ -17,8 +17,8 @@ class BaseBottomSheet extends ConsumerWidget {
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(16),
-          topRight: Radius.circular(16),
+          topLeft: Radius.circular(24),
+          topRight: Radius.circular(24),
         ),
         color: theme.color.surface,
         boxShadow: theme.deco.shadow,

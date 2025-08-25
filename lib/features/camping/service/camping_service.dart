@@ -49,4 +49,6 @@ class CampingService {
       queryParameters: {'id': model.id},
     );
   }
+
+  checkIsLiked(){}
 }
