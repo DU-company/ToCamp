@@ -18,42 +18,42 @@ class AppTypo {
   late final TextStyle headline1 = TextStyle(
     height: 1.3,
     fontFamily: typo.name,
-    fontWeight: typo.regular,
+    fontWeight: typo.semiBold,
     fontSize: 24,
     color: fontColor,
   );
   late final TextStyle headline2 = TextStyle(
     height: 1.3,
     fontFamily: typo.name,
-    fontWeight: typo.regular,
+    fontWeight: typo.semiBold,
     fontSize: 22,
     color: fontColor,
   );
   late final TextStyle headline3 = TextStyle(
     height: 1.3,
     fontFamily: typo.name,
-    fontWeight: typo.regular,
+    fontWeight: typo.semiBold,
     fontSize: 21,
     color: fontColor,
   );
   late final TextStyle headline4 = TextStyle(
     height: 1.3,
     fontFamily: typo.name,
-    fontWeight: typo.regular,
+    fontWeight: typo.semiBold,
     fontSize: 20,
     color: fontColor,
   );
   late final TextStyle headline5 = TextStyle(
     height: 1.3,
     fontFamily: typo.name,
-    fontWeight: typo.regular,
+    fontWeight: typo.semiBold,
     fontSize: 19,
     color: fontColor,
   );
   late final TextStyle headline6 = TextStyle(
     height: 1.3,
     fontFamily: typo.name,
-    fontWeight: typo.regular,
+    fontWeight: typo.semiBold,
     fontSize: 18,
     color: fontColor,
   );
@@ -78,21 +78,21 @@ class AppTypo {
   late final TextStyle body1 = TextStyle(
     height: 1.3,
     fontFamily: typo.name,
-    fontWeight: typo.regular,
+    fontWeight: typo.light,
     fontSize: 14,
     color: fontColor,
   );
   late final TextStyle body2 = TextStyle(
     height: 1.3,
     fontFamily: typo.name,
-    fontWeight: typo.regular,
+    fontWeight: typo.light,
     fontSize: 12,
     color: fontColor,
   );
   late final TextStyle body3 = TextStyle(
     height: 1.3,
     fontFamily: typo.name,
-    fontWeight: typo.regular,
+    fontWeight: typo.light,
     fontSize: 10,
     color: fontColor,
   );

@@ -9,8 +9,8 @@ import 'package:to_camp/common/theme/res/layout.dart';
 
 final themeServiceProvider =
     StateNotifierProvider<ThemeService, AppTheme>((ref) {
-  return ThemeService();
-});
+      return ThemeService();
+    });
 
 class ThemeService extends StateNotifier<AppTheme> {
   final box = Hive.box<bool>(THEME_BOX);
@@ -68,6 +68,11 @@ final themeDataProvider = Provider<ThemeData>((ref) {
     ),
     bottomSheetTheme: BottomSheetThemeData(
       constraints: BoxConstraints(maxWidth: Breakpoint.bottomSheet),
+    ),
+    floatingActionButtonTheme: FloatingActionButtonThemeData(
+      backgroundColor: theme.color.primary,
+      foregroundColor: theme.color.onPrimary,
+      shape: CircleBorder(),
     ),
   );
 });

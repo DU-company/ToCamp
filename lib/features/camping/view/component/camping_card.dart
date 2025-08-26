@@ -188,13 +188,15 @@ class CampingCard extends ConsumerWidget {
 
 class ImageBox extends StatelessWidget {
   final String thumbUrl;
-  final Widget likeButton;
+  final Widget? likeButton;
   final double aspectRatio;
+  final double radius;
   const ImageBox({
     super.key,
     required this.thumbUrl,
     required this.likeButton,
-    this.aspectRatio = 1.3
+    this.aspectRatio = 1.3,
+    this.radius = 8,
   });
 
   @override
@@ -204,7 +206,7 @@ class ImageBox extends StatelessWidget {
         AspectRatio(
           aspectRatio: aspectRatio,
           child: ClipRRect(
-            borderRadius: BorderRadiusGeometry.circular(8),
+            borderRadius: BorderRadiusGeometry.circular(radius),
             child: thumbUrl.isEmpty
                 ? Image.asset(
                     'asset/img/camping.jpg',
@@ -217,7 +219,7 @@ class ImageBox extends StatelessWidget {
           ),
         ),
 
-        likeButton,
+        ?likeButton,
       ],
     );
   }

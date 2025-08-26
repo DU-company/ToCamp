@@ -29,7 +29,7 @@ class SearchResultSuccessView extends ConsumerWidget {
           child: Text(
             textAlign: TextAlign.center,
             '"$keyword"에 대한 검색 결과가 존재하지 않습니다.',
-            style: theme.typo.headline6,
+            style: theme.typo.subtitle1,
           ),
         ),
       );

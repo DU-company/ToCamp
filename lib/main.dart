@@ -4,7 +4,7 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:to_camp/common/theme/service/theme_service.dart';
-import 'package:to_camp/features/like/model/camping_like_model.dart';
+import 'package:to_camp/features/like/data/like_camping_entity.dart';
 import 'package:to_camp/features/serach/model/recent_keyword_model.dart';
 import 'package:to_camp/routes/app_router.dart';
 import 'common/const/data.dart';
@@ -24,7 +24,7 @@ void main() async {
   );
 
   await Hive.initFlutter();
-  Hive.registerAdapter(CampingLikeModelAdapter());
+  // Hive.registerAdapter(CampingLikeModelAdapter());
   // Hive.registerAdapter(HiveCampingModelAdapter());
   // Hive.registerAdapter(CampingModelAdapter());
   Hive.registerAdapter(RecentKeywordModelAdapter());
@@ -34,7 +34,7 @@ void main() async {
   await Hive.openBox<RecentKeywordModel>(
     RECENT_KEYWORD_BOX,
   ); // 최근 검색 단어
-  await Hive.openBox<CampingLikeModel>(CAMPING_LIKE_BOX);
+  // await Hive.openBox<LikeCampingEntity>(CAMPING_LIKE_BOX);
   await Hive.openBox<bool>(THEME_BOX); // 테마
 
   runApp(const ProviderScope(child: _APP()));

@@ -23,7 +23,6 @@ class DetailAppBar extends ConsumerWidget {
     final totalLength = hasThumbUrl
         ? detail.imgUrls.length + 1
         : detail.imgUrls.length;
-
     return SliverAppBar(
       automaticallyImplyLeading: false,
       titleSpacing: 8,

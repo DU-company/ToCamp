@@ -1,78 +1,123 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:hive_flutter/hive_flutter.dart';
-import 'package:to_camp/common/const/data.dart';
-import 'package:to_camp/common/utils/toast_utils.dart';
 import 'package:to_camp/features/camping/model/camping_model.dart';
+import 'package:to_camp/features/like/data/like_category_entity.dart';
 import 'package:to_camp/features/like/model/camping_like_model.dart';
+import 'package:to_camp/features/like/data/like_camping_entity.dart';
+import 'package:to_camp/features/like/repository/camping_like_repository.dart';
+import 'package:to_camp/features/like/repository/like_category_repository.dart';
 
 final campingLikeServiceProvider = Provider((ref) {
-  return CampingLikeService(ref: ref);
+  final likeCategoryRepository = ref.watch(
+    likeCategoryRepositoryProvider,
+  );
+  final likeCampingRepository = ref.watch(
+    likeCampingRepositoryProvider,
+  );
+  return CampingLikeService(
+    ref: ref,
+    likeCampingRepository: likeCampingRepository,
+    likeCategoryRepository: likeCategoryRepository,
+  );
 });
 
 class CampingLikeService {
   final Ref ref;
+  final LikeCampingRepository likeCampingRepository;
+  final LikeCategoryRepository likeCategoryRepository;
 
-  CampingLikeService({required this.ref});
+  CampingLikeService({
+    required this.ref,
+    required this.likeCampingRepository,
+    required this.likeCategoryRepository,
+  });
 
-  final box = Hive.box<CampingLikeModel>(CAMPING_LIKE_BOX);
+  // deleteDB() async {
+  //   await AppDatabase.deleteDB();
+  // }
 
-  List<CampingModel> getLikeData() {
-    /// CampingLikeModel
-    final resp = box.values.toList().reversed;
+  Future<List<CampingLikeModel>> getAllData() async {
+    final categories = await likeCategoryRepository.getCategories();
 
-    /// CampingModel로 Parsing
-    final pList = resp.map((e) => e.toCampingModel()).toList();
-    return pList;
-  }
+    List<CampingLikeModel> models = [];
 
-  Future<List<CampingModel>> onLikePressed(
-    CampingModel campingModel,
-  ) async {
-    final values = box.values;
-    final isExists = values.any((e) => e.id == campingModel.id);
-
-    /// 존재하는 캠핑장이면 삭제
-    if (isExists) {
-      return _removeCampingLike(campingModel);
-
-      /// 새로운 캠핑장이면 추가
-    } else {
-      return _addCampingLike(campingModel);
-    }
-  }
-
-  Future<List<CampingModel>> _addCampingLike(
-    CampingModel campingModel,
-  ) async {
-    final length = box.values.length;
-    String message;
-    bool isError = false;
-    if (length > 10) {
-      message = '좋아요는 최대 100개의 캠핑장만 가능합니다.';
-      isError = true;
-      throw 'Error';
-    } else {
-      message = '찜 목록에 추가했습니다.';
-      final likeModel = CampingLikeModel.fromCampingModel(
-        campingModel,
+    /// 받아온 Category들을 기반으로 Looping
+    for (final likeCategory in categories) {
+      final resp = await likeCampingRepository.getCampingsByCategory(
+        likeCategory.id!,
       );
-      await box.add(likeModel);
-    }
 
-    ref
-        .read(toastUtilsProvider)
-        .showToast(text: message, isError: isError);
-    return getLikeData();
+      /// Parsing
+      final campingModels = resp
+          .map((e) => e.toCampingModel())
+          .toList();
+
+      models.add(
+        CampingLikeModel(
+          likeCategory: likeCategory,
+          campingModels: campingModels,
+        ),
+      );
+    }
+    return models;
   }
 
-  Future<List<CampingModel>> _removeCampingLike(
-    CampingModel model,
+  /// 새로운 카테고리를 만들어 캠핑장까지 저장
+  Future<List<CampingLikeModel>> createCategoryAndAdd(
+    String name,
+    CampingModel campingModel,
   ) async {
-    final index = box.values.toList().indexWhere(
-      (e) => e.id == model.id,
+    final categoryId = await createCategory(name);
+    await addToCategory(categoryId, campingModel);
+    return getAllData();
+  }
+
+  Future<int> createCategory(String name) async {
+    final likeCategory = LikeCategoryEntity(null, name);
+    final id = await likeCategoryRepository.insertCategory(
+      likeCategory,
     );
-    await box.deleteAt(index);
-    ref.read(toastUtilsProvider).showToast(text: '찜 목록에서 삭제했습니다.');
-    return getLikeData();
+    return id;
+  }
+
+  Future<List<CampingLikeModel>> deleteCategory(
+    int categoryId,
+  ) async {
+    await likeCategoryRepository.deleteCategory(categoryId);
+    return getAllData();
+  }
+
+  Future<List<CampingLikeModel>> addToCategory(
+    int categoryId,
+    CampingModel campingModel,
+  ) async {
+    final likeCampingEntity = LikeCampingEntity.fromCampingModel(
+      model: campingModel,
+      categoryId: categoryId,
+    );
+    await likeCampingRepository.insertLikeCamping(likeCampingEntity);
+    return getAllData();
+  }
+
+  Future<List<CampingLikeModel>> removeFromCategory({
+    required String campingId,
+    // required int categoryId,
+  }) async {
+    await likeCampingRepository.deleteLikeCamping(
+      campingId: campingId,
+      // categoryId: categoryId,
+    );
+    final categories = await getAllData();
+    final emptyCategories = categories.where(
+      (c) => c.campingModels.isEmpty,
+    );
+
+    for (final category in emptyCategories) {
+      final categoryId = category.likeCategory.id;
+      if (categoryId != null) {
+        await deleteCategory(categoryId);
+      }
+    }
+
+    return getAllData();
   }
 }

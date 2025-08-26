@@ -25,7 +25,6 @@ class CampingRecommendView extends ConsumerWidget {
           '투캠 추천 HOT 캠핑지!',
           style: theme.typo.headline3.copyWith(
             color: theme.color.primary,
-            fontWeight: theme.typo.semiBold,
           ),
         ),
         const SizedBox(height: 8),
@@ -42,7 +41,7 @@ class CampingRecommendView extends ConsumerWidget {
             child: Text(
               textAlign: TextAlign.center,
               '일시적으로 추천 캠핑장 정보를 받아올 수 없습니다.',
-              style: theme.typo.subtitle2.copyWith(
+              style: theme.typo.subtitle1.copyWith(
                 color: theme.color.primary,
               ),
             ),
