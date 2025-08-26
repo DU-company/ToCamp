@@ -6,7 +6,6 @@ import 'package:to_camp/common/theme/service/theme_service.dart';
 
 class InputField extends ConsumerWidget {
   final String hint;
-  // final String? labelText;
   final TextEditingController? controller;
   final void Function(String text)? onChanged;
   final void Function(String text)? onSubmitted;
@@ -14,7 +13,6 @@ class InputField extends ConsumerWidget {
   final int? maxLine;
   final int? minLine;
   final bool isNumber;
-  final bool isName;
   final bool autoFocus;
   final FocusNode? focusNode;
   final bool enabled;
@@ -29,7 +27,6 @@ class InputField extends ConsumerWidget {
     this.maxLine,
     this.minLine,
     this.focusNode,
-    this.isName = false,
     this.isNumber = false,
     this.autoFocus = false,
     this.enabled = true,
@@ -102,10 +99,6 @@ class InputField extends ConsumerWidget {
       keyboardType: isNumber ? TextInputType.number : null,
       inputFormatters: [
         if (isNumber) FilteringTextInputFormatter.digitsOnly,
-        if (isName)
-          FilteringTextInputFormatter.allow(
-            RegExp(r'[a-zA-Z\u0E00-\u0E7F0-9]'),
-          ),
       ],
     );
   }

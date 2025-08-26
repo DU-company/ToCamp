@@ -26,7 +26,7 @@ class MapScreen extends ConsumerWidget {
     final data = ref.watch(locationCampingProvider);
     final locationIndex = ref.watch(locationIndexProvider);
     final showCard = ref.watch(showCardProvider);
-    print(showCard);
+
     if (data is PaginationLoading) {
       return LoadingWidget();
     }

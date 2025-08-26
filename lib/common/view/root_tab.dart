@@ -5,7 +5,8 @@ import 'package:to_camp/common/theme/service/theme_service.dart';
 import 'package:to_camp/common/utils/toast_utils.dart';
 import 'package:to_camp/common/view/default_layout.dart';
 import 'package:to_camp/features/camping/view/screen/camping_screen.dart';
-import 'package:to_camp/features/like/view/screen/camping_like_screen.dart';
+import 'package:to_camp/features/like/view/component/like_category_view.dart';
+import 'package:to_camp/features/like/view/screen/like_screen.dart';
 import 'package:to_camp/features/location/view/screen/location_screen.dart';
 import 'package:to_camp/features/serach/view/search/screen/search_screen.dart';
 
@@ -65,7 +66,7 @@ class _RootTabState extends ConsumerState<RootTab>
                 CampingScreen(),
                 SearchScreen(),
                 LocationScreen(),
-                CampingLikeScreen(),
+                LikeScreen(),
                 Center(child: Text('설정')),
               ],
             ),
@@ -152,7 +153,7 @@ class _BottomNavi extends ConsumerWidget {
             _BottomNaviItem(
               selectedIcon: PhosphorIconsBold.heart,
               unselectedIcon: PhosphorIcons.heart(),
-              label: '찜',
+              label: '위시리스트',
               onTap: () => onTap(3),
               isSelected: currentIndex == 3,
             ),

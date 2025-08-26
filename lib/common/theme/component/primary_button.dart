@@ -8,6 +8,8 @@ class PrimaryButton extends ConsumerWidget {
   final IconData? icon;
   final Color? backgroundColor;
   final Color? foregroundColor;
+  final double radius;
+  final double padding;
   const PrimaryButton({
     super.key,
     required this.onPressed,
@@ -15,6 +17,8 @@ class PrimaryButton extends ConsumerWidget {
     this.icon,
     this.backgroundColor,
     this.foregroundColor,
+    this.radius = 16,
+    this.padding = 12,
   });
 
   @override
@@ -25,9 +29,12 @@ class PrimaryButton extends ConsumerWidget {
         backgroundColor: backgroundColor ?? theme.color.primary,
         foregroundColor: foregroundColor ?? theme.color.onPrimary,
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(16),
+          borderRadius: BorderRadius.circular(radius),
         ),
-        padding: EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+        padding: EdgeInsets.symmetric(
+          horizontal: padding,
+          vertical: padding,
+        ),
         disabledBackgroundColor: theme.color.inactiveContainer,
         disabledForegroundColor: theme.color.onInactiveContainer,
         // textStyle: theme.typo.subtitle1,

@@ -1,11 +1,13 @@
-import 'package:easy_debounce/easy_throttle.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:to_camp/common/theme/component/custom_icon_button.dart';
 import 'package:to_camp/common/theme/service/theme_service.dart';
+import 'package:to_camp/common/utils/toast_utils.dart';
 import 'package:to_camp/features/camping/model/camping_model.dart';
+import 'package:to_camp/features/like/model/camping_like_model.dart';
 import 'package:to_camp/features/like/provider/camping_like_provider.dart';
+import 'package:to_camp/features/like/view/component/bottom_sheet/select_category_bottom_sheet.dart';
 
 class LikeButton extends ConsumerWidget {
   final CampingModel campingModel;
@@ -15,15 +17,16 @@ class LikeButton extends ConsumerWidget {
   const LikeButton({
     super.key,
     required this.campingModel,
-    this.position = 8,
-    this.size = 32,
+    this.position = 4,
+    this.size = 28,
     this.isDetail = false,
   });
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    if (isDetail)
+    if (isDetail) {
       return _Button(campingModel: campingModel, size: size);
+    }
     return Positioned(
       top: position,
       right: position,
@@ -38,21 +41,46 @@ class _Button extends ConsumerWidget {
   const _Button({
     super.key,
     required this.campingModel,
-    this.size = 32,
+    required this.size,
   });
+
+  bool checkIsLiked(List<CampingLikeModel> likeList) {
+    for (final categoryModel in likeList) {
+      if (categoryModel.campingModels.any(
+        (c) => c.id == campingModel.id,
+      )) {
+        return true;
+      }
+    }
+    return false;
+  }
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final likeList = ref.watch(campingLikeProvider);
     final theme = ref.watch(themeServiceProvider);
-    final isLiked = likeList.any((e) => e.id == campingModel.id);
+    final likeList = ref.watch(campingLikeProvider);
+    final isLiked = checkIsLiked(likeList);
     return CustomIconButton(
       onTap: () {
-        EasyThrottle.throttle('like', Duration(seconds: 1), () {
+        if (isLiked) {
           ref
               .read(campingLikeProvider.notifier)
-              .onLikePressed(campingModel);
-        });
+              .removeFromCategory(campingModel);
+          ref
+              .read(toastUtilsProvider)
+              .showToast(text: '위시리스트에서 삭제되었습니다.');
+        } else {
+          showModalBottomSheet(
+            scrollControlDisabledMaxHeightRatio: 0.5,
+            isScrollControlled: true,
+            useSafeArea: true,
+            context: context,
+            builder: (context) => SelectCategoryBottomSheet(
+              campingModel: campingModel,
+              isLiked: isLiked,
+            ),
+          );
+        }
       },
       size: size,
       backgroundColor: theme.color.surface,

@@ -2,6 +2,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:to_camp/common/view/root_tab.dart';
 import 'package:to_camp/features/camping_detail/view/screen/camping_detail_screen.dart';
+import 'package:to_camp/features/like/view/screen/camping_like_screen.dart';
 import 'package:to_camp/features/location/view/screen/location_camping_screen.dart';
 import 'package:to_camp/features/serach/view/search_result/screen/search_result_screen.dart';
 
@@ -33,6 +34,14 @@ class GoRoutes {
       builder: (_, state) {
         final keyword = state.uri.queryParameters['keyword']!;
         return SearchResultScreen(keyword: keyword);
+      },
+    ),
+    GoRoute(
+      path: '/like',
+      name: CampingLikeScreen.routeName,
+      builder: (_, state) {
+        final id = state.uri.queryParameters['id']!;
+        return CampingLikeScreen(id: id);
       },
     ),
     // GoRoute(

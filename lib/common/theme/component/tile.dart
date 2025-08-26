@@ -8,6 +8,7 @@ class Tile extends ConsumerWidget {
   final String text;
   final IconData? icon;
   final EdgeInsets? padding;
+  final IconData? trailing;
   const Tile({
     super.key,
     required this.onTap,
@@ -15,6 +16,7 @@ class Tile extends ConsumerWidget {
     this.color,
     this.icon,
     this.padding,
+    this.trailing,
   });
 
   @override
@@ -42,7 +44,7 @@ class Tile extends ConsumerWidget {
               Spacer(),
               if (onTap != null)
                 Icon(
-                  Icons.arrow_forward_ios_rounded,
+                  trailing ?? Icons.arrow_forward_ios_rounded,
                   color: color ?? theme.color.text,
                 ),
             ],

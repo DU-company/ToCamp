@@ -34,7 +34,6 @@ class CampingRecommendCard extends ConsumerWidget {
         '$order. $region',
         style: theme.typo.headline6.copyWith(
           color: isTopRank ? theme.color.primary : null,
-          fontWeight: isTopRank ? theme.typo.semiBold : null,
         ),
       ),
     );

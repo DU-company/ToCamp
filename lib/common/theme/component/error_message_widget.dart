@@ -23,7 +23,7 @@ class ErrorMessageWidget extends ConsumerWidget {
       children: [
         Text(
           message,
-          style: theme.typo.headline6,
+          style: theme.typo.subtitle1,
           textAlign: TextAlign.center,
         ),
         const SizedBox(height: 16),
