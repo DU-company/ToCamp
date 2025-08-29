@@ -18,6 +18,7 @@ class DefaultLayout extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = ref.watch(themeServiceProvider);
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: appBar,
       body: child,
       backgroundColor: theme.color.surface,

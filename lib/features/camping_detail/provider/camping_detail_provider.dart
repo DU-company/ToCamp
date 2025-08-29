@@ -34,8 +34,8 @@ class CampingDetailStateNotifier
     try {
       final resp = await campingDetailService.getDetailImages(id);
       state = resp;
-    } catch (e) {
-      state = CampingDetailError(message: e.toString());
+    } catch (e, s) {
+      state = CampingDetailError(message: '$e $s');
     }
   }
 }

@@ -3,11 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
+import 'package:share_plus/share_plus.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 import 'package:to_camp/common/theme/component/custom_icon_button.dart';
 import 'package:to_camp/common/theme/service/theme_service.dart';
 import 'package:to_camp/features/camping_detail/model/camping_detail_model.dart';
 import 'package:to_camp/features/like/view/component/like_button.dart';
+import 'package:to_camp/routes/dynamic_link_service.dart';
 
 final imageIndexProvider = StateProvider.autoDispose<int>((ref) => 0);
 
@@ -82,12 +84,12 @@ class DetailAppBar extends ConsumerWidget {
   }
 }
 
-class _Buttons extends StatelessWidget {
+class _Buttons extends ConsumerWidget {
   final CampingDetailModel detailModel;
   const _Buttons({super.key, required this.detailModel});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Row(
       children: [
         CustomIconButton(
@@ -102,10 +104,15 @@ class _Buttons extends StatelessWidget {
           size: 24,
           isDetail: true,
         ),
-        // CustomIconButton(onTap: () {}, icon: PhosphorIcons.heart()),
         CustomIconButton(
-          onTap: () {},
-          icon: PhosphorIcons.dotsThreeOutlineVertical(),
+          onTap: () async {
+            final uri = DynamicLinkService.getShortLink(
+              detailModel.campingModel,
+            );
+            final params = ShareParams(uri: uri);
+            await SharePlus.instance.share(params);
+          },
+          icon: PhosphorIcons.shareNetwork(),
         ),
       ],
     );

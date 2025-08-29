@@ -27,7 +27,7 @@ class CampingDetailService {
 
   Future<CampingDetailModel> getDetailImages(String id) async {
     try {
-      final campingModel = ref.watch(currentCampingProvider)!;
+      final campingModel = ref.read(currentCampingProvider)!;
       final params = PaginationParams(take: 30, pageNo: 1, id: id);
       final resp = await campingDetailRepository.getImages(params);
 
@@ -42,7 +42,7 @@ class CampingDetailService {
       );
     } catch (e, s) {
       print('Camping_Detail_Error : $e $s');
-      throw Exception(e);
+      rethrow;
     }
   }
 }
