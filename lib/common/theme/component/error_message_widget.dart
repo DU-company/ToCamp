@@ -17,21 +17,27 @@ class ErrorMessageWidget extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = ref.watch(themeServiceProvider);
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: [
-        Text(
-          message,
-          style: theme.typo.subtitle1,
-          textAlign: TextAlign.center,
-        ),
-        const SizedBox(height: 16),
-        CustomIconButton(
-          onTap: onTap,
-          icon: PhosphorIcons.arrowClockwise(),
-        ),
-      ],
+    return Padding(
+      padding: const EdgeInsets.symmetric(
+        horizontal: 8.0,
+        vertical: 16,
+      ),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Text(
+            message,
+            style: theme.typo.subtitle1,
+            textAlign: TextAlign.center,
+          ),
+          const SizedBox(height: 16),
+          CustomIconButton(
+            onTap: onTap,
+            icon: PhosphorIcons.arrowClockwise(),
+          ),
+        ],
+      ),
     );
   }
 }

@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:to_camp/common/model/pagination_model.dart';
 import 'package:to_camp/common/model/pagination_params.dart';
+import 'package:to_camp/common/provider/current_camping_provider.dart';
 import 'package:to_camp/features/camping/model/camping_model.dart';
 import 'package:to_camp/features/camping/repository/camping_repository.dart';
 import 'package:to_camp/features/serach/provider/recent_keyword_provider.dart';
@@ -38,10 +39,17 @@ class SearchCampingService {
         keyword: keyword,
       );
       final resp = await campingRepository.searchPaginate(params);
-      return PaginationSuccess<CampingModel>(
+
+      final success = PaginationSuccess<CampingModel>(
         items: resp.response.body.items.item,
         hasMore: true,
       );
+      if (success.items.isNotEmpty) {
+        ref.read(currentCampingProvider.notifier).state =
+            success.items.first;
+      }
+
+      return success;
     } catch (e, s) {
       print('$e $s');
       rethrow;

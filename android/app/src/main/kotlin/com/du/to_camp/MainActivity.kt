@@ -1,4 +1,4 @@
-package com.du.to_camp
+package com.du.tocamp
 
 import io.flutter.embedding.android.FlutterActivity
 

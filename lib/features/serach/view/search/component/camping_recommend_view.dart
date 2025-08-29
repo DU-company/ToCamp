@@ -49,7 +49,6 @@ class CampingRecommendView extends ConsumerWidget {
 
         if (!isLoading && !hasError)
           ...List.generate(recommendData.length, (index) {
-            final isTopRank = index < 3;
             final recommendModel = recommendData[index];
             return InkWell(
               onTap: () => ref
@@ -60,9 +59,9 @@ class CampingRecommendView extends ConsumerWidget {
                     controller,
                     recommendModel.region,
                   ),
-              child: CampingRecommendCard.fromModel(
+              child: CampingRecommendCard(
                 model: recommendModel,
-                isTopRank: isTopRank,
+                index: index,
               ),
             );
           }),

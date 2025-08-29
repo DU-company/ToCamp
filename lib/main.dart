@@ -4,7 +4,6 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:to_camp/common/theme/service/theme_service.dart';
-import 'package:to_camp/features/like/data/like_camping_entity.dart';
 import 'package:to_camp/features/serach/model/recent_keyword_model.dart';
 import 'package:to_camp/routes/app_router.dart';
 import 'common/const/data.dart';
@@ -50,14 +49,6 @@ class _APP extends ConsumerWidget {
     return MaterialApp.router(
       debugShowCheckedModeBanner: false,
       theme: theme,
-      builder: (context, child) {
-        return MediaQuery(
-          data: MediaQuery.of(context).copyWith(
-            textScaler: TextScaler.linear(1.0),
-          ), // 시스템 글꼴 크기 고정
-          child: child!, // 이 child가 앱의 전체 위젯 트리 (ex. home 화면)
-        );
-      },
       routerConfig: router,
     );
   }

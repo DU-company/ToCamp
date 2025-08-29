@@ -1,12 +1,6 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:to_camp/common/model/pagination_model.dart';
-import 'package:to_camp/common/provider/current_camping_provider.dart';
-import 'package:to_camp/common/theme/component/loading_widget.dart';
 import 'package:to_camp/common/view/default_layout.dart';
-import 'package:to_camp/features/camping/model/camping_model.dart';
-import 'package:to_camp/features/camping/view/component/camping_card.dart';
 import 'package:to_camp/features/camping_detail/model/camping_detail_model.dart';
 import 'package:to_camp/features/camping_detail/provider/camping_detail_provider.dart';
 import 'package:to_camp/features/camping_detail/view/screen/camping_detail_error_screen.dart';
@@ -32,7 +26,10 @@ class CampingDetailScreen extends ConsumerWidget {
     }
     // 에러 위젯
     if (detail is CampingDetailError) {
-      return CampingDetailErrorScreen(id: id);
+      return CampingDetailErrorScreen(
+        id: id,
+        message: detail.message,
+      );
     }
     detail as CampingDetailModel;
     return CampingDetailSuccessScreen(detail: detail);
