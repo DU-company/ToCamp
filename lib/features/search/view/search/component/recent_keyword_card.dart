@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
+import 'package:to_camp/common/theme/res/layout.dart';
 import 'package:to_camp/common/theme/service/theme_service.dart';
-import 'package:to_camp/features/serach/model/recent_keyword_model.dart';
-import 'package:to_camp/features/serach/provider/recent_keyword_provider.dart';
+import 'package:to_camp/features/search/model/recent_keyword_model.dart';
+import 'package:to_camp/features/search/provider/recent_keyword_provider.dart';
 
 class RecentKeywordCard extends ConsumerWidget {
   final String keyword;
@@ -32,8 +33,14 @@ class RecentKeywordCard extends ConsumerWidget {
               keyword,
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
-              style: theme.typo.subtitle1.copyWith(
-                color: theme.color.subtext,
+              style: context.layout(
+                theme.typo.headline6.copyWith(
+                  color: theme.color.subtext,
+                  fontWeight: theme.typo.regular,
+                ),
+                mobile: theme.typo.subtitle1.copyWith(
+                  color: theme.color.subtext,
+                ),
               ),
             ),
           ),

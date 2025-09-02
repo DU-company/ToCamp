@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:skeletonizer/skeletonizer.dart';
+import 'package:to_camp/common/theme/res/layout.dart';
 
 class CampingDetailLoadingScreen extends StatelessWidget {
   const CampingDetailLoadingScreen({super.key});
@@ -16,7 +17,7 @@ class CampingDetailLoadingScreen extends StatelessWidget {
           /// Image
           renderContainer(
             width: width,
-            height: 300,
+            height: context.layout(350, tablet: 450, desktop: 350),
             margin: EdgeInsets.zero,
           ),
 

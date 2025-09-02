@@ -1,8 +1,8 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:to_camp/common/const/data.dart';
-import 'package:to_camp/features/serach/model/recent_keyword_model.dart';
 import 'package:collection/collection.dart';
+import 'package:to_camp/features/search/model/recent_keyword_model.dart';
 
 final recentKeywordServiceProvider = Provider((ref) {
   return RecentKeywordService();

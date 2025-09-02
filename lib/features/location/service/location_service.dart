@@ -1,12 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:to_camp/common/exception/location_exception.dart';
-import 'package:to_camp/common/model/pagination_model.dart';
-import 'package:to_camp/common/model/pagination_params.dart';
-import 'package:to_camp/features/camping/model/camping_model.dart';
-import 'package:to_camp/features/camping/repository/camping_repository.dart';
 import 'package:to_camp/features/location/model/location_model.dart';
-import 'package:to_camp/features/location/provider/location_provider.dart';
 
 final locationServiceProvider = Provider<LocationService>((ref) {
   return LocationService(ref: ref);

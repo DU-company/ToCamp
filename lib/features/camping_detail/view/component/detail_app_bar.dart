@@ -27,7 +27,7 @@ class DetailAppBar extends ConsumerWidget {
       titleSpacing: 8,
       toolbarHeight: 42,
       title: _Buttons(detailModel: detailModel),
-      expandedHeight: context.layout(250, tablet: 350, desktop: 400),
+      expandedHeight: context.layout(350, tablet: 450, desktop: 350),
       flexibleSpace: _ImagePageView(detailModel: detailModel),
     );
   }

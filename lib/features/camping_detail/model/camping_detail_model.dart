@@ -1,7 +1,4 @@
-import 'package:json_annotation/json_annotation.dart';
-import 'package:to_camp/common/model/pagination_model.dart';
 import 'package:to_camp/features/camping/model/camping_model.dart';
-import 'package:to_camp/features/camping_detail/model/camping_image_item.dart';
 
 abstract class CampingDetailState {}
 

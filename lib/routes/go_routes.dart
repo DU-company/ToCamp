@@ -8,7 +8,7 @@ import 'package:to_camp/features/camping_detail/view/screen/shared_camping_detai
 import 'package:to_camp/features/image/view/screen/image_detail_screen.dart';
 import 'package:to_camp/features/image/view/screen/image_grid_screen.dart';
 import 'package:to_camp/features/like/view/screen/camping_like_screen.dart';
-import 'package:to_camp/features/serach/view/search_result/screen/search_result_screen.dart';
+import 'package:to_camp/features/search/view/search_result/screen/search_result_screen.dart';
 
 final routesProvider = Provider((ref) => GoRoutes());
 

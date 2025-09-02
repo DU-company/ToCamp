@@ -2,10 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:to_camp/common/supabase/provider/recommend_provider.dart';
 import 'package:to_camp/common/theme/component/loading_widget.dart';
+import 'package:to_camp/common/theme/res/layout.dart';
 import 'package:to_camp/common/theme/service/theme_service.dart';
-import 'package:to_camp/features/serach/service/search_camping_service.dart';
-import 'package:to_camp/features/serach/view/search/component/camping_recommend_card.dart';
-import 'package:to_camp/features/serach/view/search/component/search_app_bar.dart';
+import 'package:to_camp/features/search/service/search_camping_service.dart';
+import 'package:to_camp/features/search/view/search/component/camping_recommend_card.dart';
+import 'package:to_camp/features/search/view/search/component/search_app_bar.dart';
 
 class CampingRecommendView extends ConsumerWidget {
   const CampingRecommendView({super.key});
@@ -26,8 +27,14 @@ class CampingRecommendView extends ConsumerWidget {
           children: [
             Text(
               '투캠 추천 HOT 캠핑지!',
-              style: theme.typo.headline3.copyWith(
-                color: theme.color.primary,
+
+              style: context.layout(
+                theme.typo.headline1.copyWith(
+                  color: theme.color.primary,
+                ),
+                mobile: theme.typo.headline3.copyWith(
+                  color: theme.color.primary,
+                ),
               ),
             ),
             const SizedBox(height: 8),

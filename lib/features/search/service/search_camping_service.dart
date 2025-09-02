@@ -2,14 +2,14 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:to_camp/common/exception/camping_exception.dart';
-import 'package:to_camp/common/model/pagination_model.dart';
-import 'package:to_camp/common/model/pagination_params.dart';
+import 'package:to_camp/common/pagination/model/pagination_model.dart';
+import 'package:to_camp/common/pagination/model/pagination_params.dart';
 import 'package:to_camp/common/provider/current_camping_provider.dart';
 import 'package:to_camp/features/camping/model/camping_model.dart';
 import 'package:to_camp/features/camping/repository/camping_repository.dart';
-import 'package:to_camp/features/serach/provider/recent_keyword_provider.dart';
-import 'package:to_camp/features/serach/view/search/component/search_app_bar.dart';
-import 'package:to_camp/features/serach/view/search_result/screen/search_result_screen.dart';
+import 'package:to_camp/features/search/provider/recent_keyword_provider.dart';
+import 'package:to_camp/features/search/view/search/component/search_app_bar.dart';
+import 'package:to_camp/features/search/view/search_result/screen/search_result_screen.dart';
 
 final searchCampingServiceProvider = Provider((ref) {
   final campingRepository = ref.watch(campingRepositoryProvider);

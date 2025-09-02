@@ -1,7 +1,5 @@
 import 'package:dio/dio.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:to_camp/common/utils/data_utils.dart';
 import 'package:to_camp/common/utils/platform_utils.dart';
 
 import '../const/data.dart';

@@ -1,6 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:to_camp/features/serach/model/recent_keyword_model.dart';
-import 'package:to_camp/features/serach/service/recent_keyword_service.dart';
+import 'package:to_camp/features/search/model/recent_keyword_model.dart';
+import 'package:to_camp/features/search/service/recent_keyword_service.dart';
 
 final recentKeywordProvider = StateNotifierProvider((ref) {
   final recentKeywordService = ref.watch(

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
-import 'package:to_camp/common/model/pagination_model.dart';
+import 'package:to_camp/common/pagination/model/pagination_model.dart';
 import 'package:to_camp/common/theme/component/error_message_widget.dart';
 import 'package:to_camp/common/theme/foundation/app_theme.dart';
 import 'package:to_camp/common/theme/service/theme_service.dart';

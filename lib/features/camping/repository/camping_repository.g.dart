@@ -51,6 +51,38 @@ class _CampingRepository implements CampingRepository {
   }
 
   @override
+  Future<PaginationSuccess<CampingImageItem>> getImages(
+      PaginationParams params) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    queryParameters.addAll(params.toJson());
+    final _headers = <String, dynamic>{};
+    final Map<String, dynamic>? _data = null;
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<PaginationSuccess<CampingImageItem>>(Options(
+      method: 'GET',
+      headers: _headers,
+      extra: _extra,
+    )
+            .compose(
+              _dio.options,
+              '/imageList',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(
+                baseUrl: _combineBaseUrls(
+              _dio.options.baseUrl,
+              baseUrl,
+            ))));
+    final value = PaginationSuccess<CampingImageItem>.fromJson(
+      _result.data!,
+      (json) => CampingImageItem.fromJson(json as Map<String, dynamic>),
+    );
+    return value;
+  }
+
+  @override
   Future<PaginationSuccess<CampingModel>> locationBasedPaginate(
       PaginationParams params) async {
     const _extra = <String, dynamic>{};

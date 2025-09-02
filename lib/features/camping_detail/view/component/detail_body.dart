@@ -29,7 +29,6 @@ class DetailBody extends ConsumerWidget {
             model: campingModel,
             isDetail: true,
             readMore: readMore,
-            showIntro: true,
           ),
 
           /// ReadMoreButton
@@ -43,7 +42,7 @@ class DetailBody extends ConsumerWidget {
                   ? PhosphorIconsBold.caretUp
                   : PhosphorIconsBold.caretDown,
             ),
-          DetailMap(model: campingModel),
+          const SizedBox(height: 32),
         ],
       ),
     );

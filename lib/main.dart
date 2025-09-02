@@ -4,7 +4,7 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:to_camp/common/theme/service/theme_service.dart';
-import 'package:to_camp/features/serach/model/recent_keyword_model.dart';
+import 'package:to_camp/features/search/model/recent_keyword_model.dart';
 import 'package:to_camp/routes/app_router.dart';
 import 'common/const/data.dart';
 import 'package:hive_flutter/hive_flutter.dart';
