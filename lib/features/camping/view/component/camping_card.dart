@@ -1,11 +1,12 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
+import 'package:to_camp/common/const/data.dart';
 import 'package:to_camp/common/theme/foundation/app_theme.dart';
+import 'package:to_camp/common/theme/res/layout.dart';
 import 'package:to_camp/common/theme/service/theme_service.dart';
 import 'package:to_camp/features/camping/model/camping_model.dart';
-import 'package:to_camp/features/like/view/component/like_button.dart';
+import 'package:to_camp/features/image/view/component/base_network_image.dart';
 
 class CampingCard extends ConsumerWidget {
   final String id;
@@ -35,6 +36,7 @@ class CampingCard extends ConsumerWidget {
   final bool isDetail;
   final bool isHorizontal;
   final bool readMore;
+  final bool showIntro;
 
   const CampingCard({
     super.key,
@@ -60,8 +62,9 @@ class CampingCard extends ConsumerWidget {
     required this.siteBottomCl3,
     required this.siteBottomCl4,
     required this.siteBottomCl5,
-    required this.likeButton,
     required this.isDetail,
+    required this.likeButton,
+    required this.showIntro,
     required this.isHorizontal,
     required this.readMore,
     // required this.isLiked,
@@ -71,6 +74,7 @@ class CampingCard extends ConsumerWidget {
     required CampingModel model,
     required Widget likeButton,
     bool isDetail = false,
+    bool showIntro = false,
     bool isHorizontal = false,
     bool readMore = false,
   }) {
@@ -100,6 +104,7 @@ class CampingCard extends ConsumerWidget {
       // isLiked: model.isLiked,
       likeButton: likeButton,
       isDetail: isDetail,
+      showIntro: showIntro,
       isHorizontal: isHorizontal,
       readMore: readMore,
     );
@@ -155,20 +160,19 @@ class CampingCard extends ConsumerWidget {
         mainAxisSize: MainAxisSize.min,
         children: isHorizontal
             ? [
-                IntrinsicHeight(
-                  child: Row(
-                    children: [
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment:
-                              CrossAxisAlignment.stretch,
-                          children: [nameBox, Spacer(), introBox],
-                        ),
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment:
+                            CrossAxisAlignment.stretch,
+                        children: [nameBox, introBox],
                       ),
-                      const SizedBox(width: 8),
-                      Expanded(flex: 1, child: imageBox),
-                    ],
-                  ),
+                    ),
+                    const SizedBox(width: 4),
+                    Expanded(child: imageBox),
+                  ],
                 ),
                 featuresBox,
                 etcBox,
@@ -179,7 +183,7 @@ class CampingCard extends ConsumerWidget {
                 nameBox,
                 featuresBox,
                 etcBox,
-                if (isDetail) introBox,
+                if (showIntro) introBox,
               ],
       ),
     );
@@ -189,12 +193,14 @@ class CampingCard extends ConsumerWidget {
 class ImageBox extends StatelessWidget {
   final String thumbUrl;
   final Widget? likeButton;
-  final double aspectRatio;
   final double radius;
+  final double aspectRatio;
+  // final double height;
   const ImageBox({
     super.key,
     required this.thumbUrl,
     required this.likeButton,
+    // this.height = 250,
     this.aspectRatio = 1.3,
     this.radius = 8,
   });
@@ -209,17 +215,15 @@ class ImageBox extends StatelessWidget {
             borderRadius: BorderRadiusGeometry.circular(radius),
             child: thumbUrl.isEmpty
                 ? Image.asset(
-                    'asset/img/camping.jpg',
+                    CAMPING_IMAGE,
                     fit: BoxFit.cover,
+                    width: double.infinity,
                   )
-                : CachedNetworkImage(
-                    imageUrl: thumbUrl,
-                    fit: BoxFit.cover,
-                  ),
+                : BaseNetworkImage(imgUrl: thumbUrl),
           ),
         ),
 
-        ?likeButton,
+        if (likeButton != null) likeButton!,
       ],
     );
   }
@@ -235,8 +239,9 @@ class NameBox extends StatelessWidget {
     return Text(
       name,
       maxLines: 2,
-      style: theme.typo.headline2.copyWith(
-        fontWeight: theme.typo.semiBold,
+      style: context.layout(
+        theme.typo.headline3,
+        mobile: theme.typo.headline5,
       ),
     );
   }
@@ -270,10 +275,9 @@ class IntroBox extends StatelessWidget {
             longerIntro,
             maxLines: maxLine,
             overflow: TextOverflow.ellipsis,
-            style: theme.typo.headline6.copyWith(
+            style: theme.typo.subtitle1.copyWith(
               height: 1.5,
-              wordSpacing: 3,
-              color: theme.color.subtext,
+              wordSpacing: 4,
             ),
           ),
       ],
@@ -313,10 +317,10 @@ class FeaturesAndAddressBox extends StatelessWidget {
         if (hasFeatures)
           Text(
             splitText(sbrsCl + posblFcltyCl),
-            maxLines: 2,
+            maxLines: isDetail ? 2 : 1,
             overflow: TextOverflow.ellipsis,
             style: theme.typo.subtitle1.copyWith(
-              color: theme.color.inactive,
+              color: theme.color.onHintContainer,
             ),
           ),
 
@@ -324,7 +328,7 @@ class FeaturesAndAddressBox extends StatelessWidget {
         const SizedBox(height: 8),
         Text(
           pAddress,
-          style: theme.typo.subtitle1.copyWith(
+          style: theme.typo.subtitle2.copyWith(
             fontWeight: theme.typo.semiBold,
             color: theme.color.subtext,
           ),

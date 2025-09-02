@@ -24,31 +24,22 @@ class SelectCategoryBottomSheet extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final theme = ref.watch(themeServiceProvider);
-
-    final likeList = ref.watch(campingLikeProvider);
     return BaseBottomSheet(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Expanded(
             child: LikeCategoryView(
-              onTap: (categoryId) {
-                String msg;
-                if (isLiked) {
-                  ref
-                      .read(campingLikeProvider.notifier)
-                      .removeFromCategory(campingModel);
-                  msg = '위시리스트에서 삭제되었습니다.';
-                } else {
-                  ref
-                      .read(campingLikeProvider.notifier)
-                      .addToCategory(categoryId, campingModel);
-                  msg = '위시리스트에 추가되었습니다.';
-                }
+              onTap: (categoryId, name) {
+                ref
+                    .read(campingLikeProvider.notifier)
+                    .addToCategory(categoryId, campingModel);
                 ref
                     .read(toastUtilsProvider)
-                    .showToast(text: msg, isError: false);
+                    .showToast(
+                      text: '"$name"에 추가되었습니다.',
+                      isError: false,
+                    );
                 context.pop();
               },
               onLongPress: (categoryId) {},
@@ -62,9 +53,17 @@ class SelectCategoryBottomSheet extends ConsumerWidget {
                 context.pop();
                 showModalBottomSheet(
                   context: context,
+                  isScrollControlled: true,
                   builder: (context) {
-                    return AddCategoryBottomSheet(
-                      campingModel: campingModel,
+                    return Padding(
+                      padding: EdgeInsets.only(
+                        bottom: MediaQuery.of(
+                          context,
+                        ).viewInsets.bottom,
+                      ),
+                      child: AddCategoryBottomSheet(
+                        campingModel: campingModel,
+                      ),
                     );
                   },
                 );

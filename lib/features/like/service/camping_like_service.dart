@@ -1,10 +1,17 @@
+import 'package:easy_debounce/easy_throttle.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:to_camp/common/dababase/app_database.dart';
+import 'package:to_camp/common/utils/toast_utils.dart';
 import 'package:to_camp/features/camping/model/camping_model.dart';
-import 'package:to_camp/features/like/data/like_category_entity.dart';
+import 'package:to_camp/features/like/entity/like_camping_entity.dart';
+import 'package:to_camp/features/like/entity/like_category_entity.dart';
 import 'package:to_camp/features/like/model/camping_like_model.dart';
-import 'package:to_camp/features/like/data/like_camping_entity.dart';
-import 'package:to_camp/features/like/repository/camping_like_repository.dart';
+import 'package:to_camp/features/like/provider/camping_like_provider.dart';
+import 'package:to_camp/features/like/repository/like_camping_repository.dart';
 import 'package:to_camp/features/like/repository/like_category_repository.dart';
+import 'package:to_camp/features/like/view/component/bottom_sheet/select_category_bottom_sheet.dart';
 
 final campingLikeServiceProvider = Provider((ref) {
   final likeCategoryRepository = ref.watch(
@@ -31,9 +38,9 @@ class CampingLikeService {
     required this.likeCategoryRepository,
   });
 
-  // deleteDB() async {
-  //   await AppDatabase.deleteDB();
-  // }
+  deleteDB() async {
+    await AppDatabase.deleteDB();
+  }
 
   Future<List<CampingLikeModel>> getAllData() async {
     final categories = await likeCategoryRepository.getCategories();
@@ -43,7 +50,7 @@ class CampingLikeService {
     /// 받아온 Category들을 기반으로 Looping
     for (final likeCategory in categories) {
       final resp = await likeCampingRepository.getCampingsByCategory(
-        likeCategory.id!,
+        categoryId: likeCategory.id!,
       );
 
       /// Parsing
@@ -100,11 +107,9 @@ class CampingLikeService {
 
   Future<List<CampingLikeModel>> removeFromCategory({
     required String campingId,
-    // required int categoryId,
   }) async {
     await likeCampingRepository.deleteLikeCamping(
       campingId: campingId,
-      // categoryId: categoryId,
     );
     final categories = await getAllData();
     final emptyCategories = categories.where(
@@ -119,5 +124,39 @@ class CampingLikeService {
     }
 
     return getAllData();
+  }
+
+  void onLikePressed({
+    required BuildContext context,
+    required bool isLiked,
+    required CampingModel campingModel,
+  }) {
+    EasyThrottle.throttle('onLikePressed', Duration(seconds: 1), () {
+      try {
+        if (isLiked) {
+          ref
+              .read(campingLikeProvider.notifier)
+              .removeFromCategory(campingModel);
+          ref
+              .read(toastUtilsProvider)
+              .showToast(text: '위시리스트에서 삭제되었습니다.');
+        } else {
+          showModalBottomSheet(
+            scrollControlDisabledMaxHeightRatio: 0.5,
+            isScrollControlled: true,
+            useSafeArea: true,
+            context: context,
+            builder: (context) => SelectCategoryBottomSheet(
+              campingModel: campingModel,
+              isLiked: isLiked,
+            ),
+          );
+        }
+      } catch (e) {
+        ref
+            .read(toastUtilsProvider)
+            .showToast(text: '위시리스트에 추가할 수 없습니다.');
+      }
+    });
   }
 }

@@ -1,15 +1,14 @@
-import 'package:easy_debounce/easy_throttle.dart';
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:phosphor_flutter/phosphor_flutter.dart';
-import 'package:platform_maps_flutter/platform_maps_flutter.dart';
 import 'package:to_camp/common/model/pagination_model.dart';
 import 'package:to_camp/common/theme/component/error_message_widget.dart';
 import 'package:to_camp/common/theme/component/loading_widget.dart';
-import 'package:to_camp/common/theme/component/primary_button.dart';
-import 'package:to_camp/common/theme/service/theme_service.dart';
+import 'package:to_camp/common/theme/res/layout.dart';
 import 'package:to_camp/features/camping/model/camping_model.dart';
 import 'package:to_camp/features/camping/service/camping_service.dart';
+import 'package:to_camp/features/like/provider/camping_like_provider.dart';
+import 'package:to_camp/features/like/utils/like_utils.dart';
 import 'package:to_camp/features/location/model/location_model.dart';
 import 'package:to_camp/features/location/provider/location_camping_provider.dart';
 import 'package:to_camp/features/location/view/component/location_camping_card.dart';
@@ -26,6 +25,7 @@ class MapScreen extends ConsumerWidget {
     final data = ref.watch(locationCampingProvider);
     final locationIndex = ref.watch(locationIndexProvider);
     final showCard = ref.watch(showCardProvider);
+    final likeModels = ref.watch(campingLikeProvider);
 
     if (data is PaginationLoading) {
       return LoadingWidget();
@@ -41,15 +41,19 @@ class MapScreen extends ConsumerWidget {
 
     data as PaginationSuccess<CampingModel>;
 
+    /// 위치기반 + 좋아요 목록 합치기
+    final totalModels = [
+      ...data.items,
+      ...LikeUtils.getTotalLike(likeModels),
+    ];
     return Stack(
       children: [
-        PlatformMapWidget(location: location, models: data.items),
-        Positioned(
-          top: 64,
-          right: 0,
-          left: 0,
+        PlatformMapWidget(location: location, models: totalModels),
+        Align(
+          alignment: Alignment.topCenter,
           child: Column(
             children: [
+              const SizedBox(height: 64),
               LocationRefreshButton(),
               SizedBox(
                 height: MediaQuery.of(context).size.height / 3,
@@ -58,29 +62,29 @@ class MapScreen extends ConsumerWidget {
             ],
           ),
         ),
-        Positioned(
-          bottom: 112,
-          right: 12,
-          left: 12,
+        Align(
+          alignment: context.layout(
+            Alignment.bottomCenter,
+            desktop: Alignment.bottomRight,
+          ),
           child: Column(
+            mainAxisSize: MainAxisSize.min,
             children: [
-              ShowCardButton(
-                // model: data.items[locationIndex],
-                models: data.items,
-              ),
+              if (data.items.isNotEmpty)
+                ShowCardButton(items: data.items),
               const SizedBox(height: 4),
-              if (data.items.isNotEmpty && showCard)
+              if (totalModels.isNotEmpty && showCard)
                 GestureDetector(
                   onTap: () {
                     ref
                         .read(campingServiceProvider)
                         .onCampingCardTap(
                           context,
-                          data.items[locationIndex],
+                          totalModels[locationIndex],
                         );
                   },
                   child: LocationCampingCard(
-                    model: data.items[locationIndex],
+                    model: totalModels[locationIndex],
                   ),
                 ),
             ],

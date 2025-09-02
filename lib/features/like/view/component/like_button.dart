@@ -7,6 +7,8 @@ import 'package:to_camp/common/utils/toast_utils.dart';
 import 'package:to_camp/features/camping/model/camping_model.dart';
 import 'package:to_camp/features/like/model/camping_like_model.dart';
 import 'package:to_camp/features/like/provider/camping_like_provider.dart';
+import 'package:to_camp/features/like/service/camping_like_service.dart';
+import 'package:to_camp/features/like/utils/like_utils.dart';
 import 'package:to_camp/features/like/view/component/bottom_sheet/select_category_bottom_sheet.dart';
 
 class LikeButton extends ConsumerWidget {
@@ -44,43 +46,20 @@ class _Button extends ConsumerWidget {
     required this.size,
   });
 
-  bool checkIsLiked(List<CampingLikeModel> likeList) {
-    for (final categoryModel in likeList) {
-      if (categoryModel.campingModels.any(
-        (c) => c.id == campingModel.id,
-      )) {
-        return true;
-      }
-    }
-    return false;
-  }
-
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = ref.watch(themeServiceProvider);
     final likeList = ref.watch(campingLikeProvider);
-    final isLiked = checkIsLiked(likeList);
+    final isLiked = LikeUtils.checkIsLiked(likeList, campingModel);
     return CustomIconButton(
       onTap: () {
-        if (isLiked) {
-          ref
-              .read(campingLikeProvider.notifier)
-              .removeFromCategory(campingModel);
-          ref
-              .read(toastUtilsProvider)
-              .showToast(text: '위시리스트에서 삭제되었습니다.');
-        } else {
-          showModalBottomSheet(
-            scrollControlDisabledMaxHeightRatio: 0.5,
-            isScrollControlled: true,
-            useSafeArea: true,
-            context: context,
-            builder: (context) => SelectCategoryBottomSheet(
-              campingModel: campingModel,
+        ref
+            .read(campingLikeServiceProvider)
+            .onLikePressed(
+              context: context,
               isLiked: isLiked,
-            ),
-          );
-        }
+              campingModel: campingModel,
+            );
       },
       size: size,
       backgroundColor: theme.color.surface,

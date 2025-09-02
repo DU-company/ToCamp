@@ -1,32 +1,55 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:to_camp/common/model/pagination_model.dart';
-import 'package:to_camp/common/theme/component/error_message_widget.dart';
-import 'package:to_camp/common/theme/component/loading_widget.dart';
+import 'package:to_camp/common/theme/component/custom_divider.dart';
+import 'package:to_camp/common/theme/res/layout.dart';
+import 'package:to_camp/common/view/default_layout.dart';
 import 'package:to_camp/features/camping/model/camping_model.dart';
 import 'package:to_camp/features/camping/provider/camping_provider.dart';
 import 'package:to_camp/features/camping/service/camping_service.dart';
 import 'package:to_camp/features/camping/view/component/camping_card.dart';
-import 'package:to_camp/features/camping/view/screen/camping_success_screen.dart';
+import 'package:to_camp/features/like/view/component/like_button.dart';
 
 class CampingScreen extends ConsumerWidget {
-  const CampingScreen({super.key});
+  static String get routeName => 'camping';
+
+  final List<CampingModel> items;
+  final String title;
+  const CampingScreen({
+    super.key,
+    required this.items,
+    required this.title,
+  });
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final data = ref.watch(campingProvider);
-    if (data is PaginationLoading) {
-      return LoadingWidget();
-    }
-    if (data is PaginationError) {
-      return ErrorMessageWidget(
-        message: data.message,
-        onTap: () {
-          ref.read(campingProvider.notifier).paginate();
-        },
-      );
-    }
-    data as PaginationSuccess<CampingModel>;
-    return CampingSuccessScreen(data: data);
+    return DefaultLayout(
+      child: CustomScrollView(
+        physics: AlwaysScrollableScrollPhysics(
+          parent: BouncingScrollPhysics(),
+        ),
+        slivers: [
+          SliverAppBar(title: Text(title), floating: true),
+          SliverList.separated(
+            itemCount: items.length,
+            itemBuilder: (context, index) {
+              final model = items[index];
+              return GestureDetector(
+                onTap: () {
+                  ref
+                      .read(campingServiceProvider)
+                      .onCampingCardTap(context, model);
+                },
+                child: CampingCard.fromModel(
+                  model: model,
+                  likeButton: LikeButton(campingModel: model),
+                  isHorizontal: context.layout(true, mobile: false),
+                ),
+              );
+            },
+            separatorBuilder: (context, index) => CustomDivider(),
+          ),
+        ],
+      ),
+    );
   }
 }

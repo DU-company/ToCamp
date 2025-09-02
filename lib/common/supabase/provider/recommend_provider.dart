@@ -24,8 +24,8 @@ class RecommendProvider
       final resp = await repository.getRecommendations();
       state = resp;
     } catch (e) {
-      /// 에러 발생 시, 1개의 List를 반환
-      state = [CampingRecommendationModel(region: '에러', order: 1)];
+      /// 에러 발생 시, 1개의 데이터를 반환
+      state = [CampingRecommendationModel(region: '에러', priority: 1)];
     }
   }
 }

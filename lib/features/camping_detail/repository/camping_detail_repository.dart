@@ -22,7 +22,7 @@ abstract class CampingDetailRepository {
       _CampingDetailRepository;
 
   @GET('/imageList')
-  Future<PaginationData<CampingImageItem>> getImages(
+  Future<PaginationSuccess<CampingImageItem>> getImages(
     @Queries() PaginationParams params,
   );
 }

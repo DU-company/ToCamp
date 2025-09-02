@@ -21,7 +21,7 @@ class LocationProvider extends StateNotifier<LocationState> {
       state = LocationLoading();
       final resp = await locationService.getLocation();
       state = resp;
-    } catch (e) {
+    } catch (e, s) {
       state = LocationError(message: e.toString());
     }
   }

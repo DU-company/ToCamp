@@ -25,6 +25,7 @@ class SearchAppBar extends ConsumerWidget {
     final controller = ref.watch(searchTextEditingController);
     final keyword = ref.watch(keywordProvider);
     return SliverAppBar(
+      floating: true,
       titleSpacing: 8,
       title: InputField(
         hint: '이번 캠핑은 어디로 가시나요?',
@@ -61,8 +62,8 @@ class SearchAppBar extends ConsumerWidget {
       msg = '올바른 검색어를 입력해 주세요.';
     } else if (keyword.trim().length < 2) {
       msg = '최소 두 글자 이상의 검색어를 입력해 주세요.';
-    } else if (keyword.trim().length > 50) {
-      msg = '최대 50자 이하의 검색어를 입력해 주세요.';
+    } else if (keyword.trim().length > 20) {
+      msg = '최대 20자 이하의 검색어를 입력해 주세요.';
     }
     if (msg != null) {
       ref.read(toastUtilsProvider).showToast(text: msg);
@@ -71,4 +72,3 @@ class SearchAppBar extends ConsumerWidget {
     return true;
   }
 }
-

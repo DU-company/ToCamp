@@ -12,7 +12,7 @@ final campingRepositoryProvider = Provider<CampingRepository>((ref) {
   final dio = ref.watch(dioProvider);
   return CampingRepository(
     dio,
-    baseUrl: 'http://apis.data.go.kr/B551011/GoCamping',
+    baseUrl: 'https://apis.data.go.kr/B551011/GoCamping',
   );
 });
 
@@ -22,17 +22,17 @@ abstract class CampingRepository {
       _CampingRepository;
 
   @GET('/basedList')
-  Future<PaginationData<CampingModel>> paginate(
+  Future<PaginationSuccess<CampingModel>> paginate(
     @Queries() PaginationParams params,
   );
 
   @GET('/locationBasedList')
-  Future<PaginationData<CampingModel>> locationBasedPaginate(
+  Future<PaginationSuccess<CampingModel>> locationBasedPaginate(
     @Queries() PaginationParams params,
   );
 
   @GET('/searchList')
-  Future<PaginationData<CampingModel>> searchPaginate(
+  Future<PaginationSuccess<CampingModel>> searchPaginate(
     @Queries() PaginationParams params,
   );
 }

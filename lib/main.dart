@@ -23,18 +23,9 @@ void main() async {
   );
 
   await Hive.initFlutter();
-  // Hive.registerAdapter(CampingLikeModelAdapter());
-  // Hive.registerAdapter(HiveCampingModelAdapter());
-  // Hive.registerAdapter(CampingModelAdapter());
   Hive.registerAdapter(RecentKeywordModelAdapter());
-  //
-  // await Hive.openBox<CampingModel>(LIKE_BOX); // 찜
-  // await Hive.openBox<CampingModel>(RECENT_CAMPING_BOX); // 최근 조회 캠핑장
-  await Hive.openBox<RecentKeywordModel>(
-    RECENT_KEYWORD_BOX,
-  ); // 최근 검색 단어
-  // await Hive.openBox<LikeCampingEntity>(CAMPING_LIKE_BOX);
-  await Hive.openBox<bool>(THEME_BOX); // 테마
+  await Hive.openBox<RecentKeywordModel>(RECENT_KEYWORD_BOX);
+  await Hive.openBox<bool>(THEME_BOX);
 
   runApp(const ProviderScope(child: _APP()));
 }

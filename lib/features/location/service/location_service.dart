@@ -1,5 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:to_camp/common/exception/location_exception.dart';
 import 'package:to_camp/common/model/pagination_model.dart';
 import 'package:to_camp/common/model/pagination_params.dart';
 import 'package:to_camp/features/camping/model/camping_model.dart';
@@ -23,7 +24,7 @@ class LocationService {
     /// GPS 사용 가능 여부 체크
     isLocationEnabled = await Geolocator.isLocationServiceEnabled();
     if (!isLocationEnabled) {
-      throw Exception('GPS를 사용할 수 없습니다.');
+      throw GPSNotEnabledException();
     }
 
     /// 위치 권한 허용 여부 체크
@@ -31,11 +32,11 @@ class LocationService {
     if (permission == LocationPermission.denied) {
       permission = await Geolocator.requestPermission();
       if (permission == LocationPermission.denied) {
-        throw Exception('위치 권한이 거부되었습니다.\n위치 권한을 허가해 주세요.');
+        throw LocationPermissionDeniedException();
       }
     }
     if (permission == LocationPermission.deniedForever) {
-      throw Exception('설정에서 위치 권한을 허가해 주세요.');
+      throw LocationPermissionDeniedException();
     }
 
     /// 위 단계를 모두 통과하면 위치 권한을 사용할 수 있는 환경임.
@@ -51,8 +52,7 @@ class LocationService {
         lng: position.longitude,
       );
     } catch (e, s) {
-      print('$e $s');
-      rethrow;
+      throw FailedGetLocationInfo();
     }
   }
 }

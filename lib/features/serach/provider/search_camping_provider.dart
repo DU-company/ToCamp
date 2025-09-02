@@ -29,7 +29,7 @@ class SearchCampingStateNotifier
     paginate();
   }
 
-  Future<void> paginate({int take = 30, int pageNo = 1}) async {
+  Future<void> paginate({int take = 500, int pageNo = 1}) async {
     try {
       state = PaginationLoading();
       final resp = await searchCampingService.paginate(
@@ -43,7 +43,7 @@ class SearchCampingStateNotifier
         final pState = state as PaginationSuccess<CampingModel>;
         state = PaginationErrorHasData(
           items: pState.items,
-          hasMore: pState.hasMore,
+          totalCount: pState.totalCount,
         );
       } else {
         state = PaginationError(message: e.toString());

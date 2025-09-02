@@ -5,11 +5,11 @@ part 'camping_recommendation_model.g.dart';
 @JsonSerializable()
 class CampingRecommendationModel {
   final String region;
-  final int order;
+  final int priority;
 
   CampingRecommendationModel({
     required this.region,
-    required this.order,
+    required this.priority,
   });
 
   factory CampingRecommendationModel.fromJson(Map<String, dynamic>json)

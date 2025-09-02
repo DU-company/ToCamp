@@ -1,14 +1,19 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
+import 'package:to_camp/common/pagination/pagination_list_view.dart';
 import 'package:to_camp/common/theme/service/theme_service.dart';
 import 'package:to_camp/common/utils/toast_utils.dart';
 import 'package:to_camp/common/view/default_layout.dart';
 import 'package:to_camp/features/camping/view/screen/camping_screen.dart';
+import 'package:to_camp/features/home/view/screen/home_screen.dart';
 import 'package:to_camp/features/like/view/component/like_category_view.dart';
 import 'package:to_camp/features/like/view/screen/like_screen.dart';
 import 'package:to_camp/features/location/view/screen/location_screen.dart';
 import 'package:to_camp/features/serach/view/search/screen/search_screen.dart';
+import 'package:to_camp/features/settings/view/screen/setting_screen.dart';
 
 class RootTab extends ConsumerStatefulWidget {
   static String get routeName => 'home';
@@ -43,31 +48,21 @@ class _RootTabState extends ConsumerState<RootTab>
 
   @override
   Widget build(BuildContext context) {
-    return PopScope(
-      onPopInvokedWithResult: (didPop, result) async {
-        await onWillPop();
-      },
-      // onWillPop: onWillPop,
+    return WillPopScope(
+      onWillPop: onWillPop,
       child: DefaultLayout(
-        // bottomNavigationBar: _BottomNavi(
-        //   currentIndex: tabController.index,
-        //   onTap: (index) {
-        //     setState(() {
-        //       tabController.index = index;
-        //     });
-        //   },
-        // ),
         child: Stack(
           children: [
             TabBarView(
               physics: const NeverScrollableScrollPhysics(),
               controller: tabController,
               children: [
-                CampingScreen(),
+                // PaginationListView(),
+                HomeScreen(onLocationPressed: onLocationPressed),
                 SearchScreen(),
                 LocationScreen(),
                 LikeScreen(),
-                Center(child: Text('설정')),
+                SettingScreen(),
               ],
             ),
             Align(
@@ -87,15 +82,9 @@ class _RootTabState extends ConsumerState<RootTab>
     );
   }
 
-  locationOnPressed() {
+  onLocationPressed() {
     setState(() {
       tabController.animateTo(2);
-    });
-  }
-
-  likeOnPressed() {
-    setState(() {
-      tabController.animateTo(3);
     });
   }
 }
@@ -116,7 +105,11 @@ class _BottomNavi extends ConsumerWidget {
 
     return SafeArea(
       child: Container(
-        margin: EdgeInsets.symmetric(horizontal: 8),
+        margin: EdgeInsets.only(
+          left: 8,
+          right: 8,
+          bottom: Platform.isAndroid ? 8 : 0,
+        ),
         padding: const EdgeInsets.symmetric(vertical: 12),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(16),

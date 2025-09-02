@@ -1,9 +1,11 @@
 import 'dart:typed_data';
-import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:platform_maps_flutter/platform_maps_flutter.dart';
 import 'package:to_camp/features/camping/model/camping_model.dart';
+import 'package:to_camp/features/like/model/camping_like_model.dart';
+import 'package:to_camp/features/like/provider/camping_like_provider.dart';
+import 'package:to_camp/features/like/utils/like_utils.dart';
 import 'package:to_camp/features/location/model/location_model.dart';
 import 'package:to_camp/features/location/provider/marker_icon_provider.dart';
 import 'package:to_camp/features/location/service/location_camping_service.dart';
@@ -45,6 +47,8 @@ class _PlatformMapWidgetState extends ConsumerState<PlatformMapWidget>
   Widget build(BuildContext context) {
     final markerIcons = ref.watch(markerIconProvider);
     final mapController = ref.watch(mapControllerProvider);
+    final likeModels = ref.watch(campingLikeProvider);
+
     return PlatformMap(
       myLocationButtonEnabled: false,
       zoomControlsEnabled: false,
@@ -78,7 +82,7 @@ class _PlatformMapWidgetState extends ConsumerState<PlatformMapWidget>
           ? {}
           : Set.from(
               setMarkersFromModels(
-                widget.models,
+                likeModels,
                 markerIcons,
                 mapController,
               ),
@@ -88,15 +92,19 @@ class _PlatformMapWidgetState extends ConsumerState<PlatformMapWidget>
   }
 
   List<Marker> setMarkersFromModels(
-    List<CampingModel> models,
+    List<CampingLikeModel> likeModels,
     List<Uint8List> markerIcons,
     PlatformMapController? mapController,
   ) {
+    final models = widget.models;
     return List.generate(models.length, (index) {
       final model = models[index];
+      final isLiked = LikeUtils.checkIsLiked(likeModels, model);
       return Marker(
         markerId: MarkerId(model.id),
-        icon: BitmapDescriptor.fromBytes(markerIcons[0]),
+        icon: BitmapDescriptor.fromBytes(
+          markerIcons[isLiked ? 1 : 0],
+        ),
         position: LatLng(model.lat, model.lng),
         consumeTapEvents: true,
         onTap: () {

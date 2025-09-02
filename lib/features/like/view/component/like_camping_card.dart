@@ -75,7 +75,7 @@ class LikeCampingCard extends ConsumerWidget {
                   lineIntro: lineIntro,
                   intro: intro,
                   theme: theme,
-                  maxLine: 2,
+                  maxLine: 3,
                 ),
               ],
             ),

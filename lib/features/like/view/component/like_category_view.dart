@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
+import 'package:to_camp/common/theme/res/layout.dart';
 import 'package:to_camp/common/theme/service/theme_service.dart';
 import 'package:to_camp/features/like/provider/camping_like_provider.dart';
 import 'package:to_camp/features/like/view/component/bottom_sheet/add_category_bottom_sheet.dart';
@@ -10,7 +11,7 @@ import 'package:to_camp/features/like/view/component/like_category_card.dart';
 import 'package:to_camp/features/like/view/screen/camping_like_screen.dart';
 
 class LikeCategoryView extends ConsumerWidget {
-  final void Function(int) onTap;
+  final void Function(int, String) onTap;
   final void Function(int) onLongPress;
 
   const LikeCategoryView({
@@ -27,6 +28,9 @@ class LikeCategoryView extends ConsumerWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 8.0),
       child: CustomScrollView(
+        physics: AlwaysScrollableScrollPhysics(
+          parent: BouncingScrollPhysics(),
+        ),
         slivers: [
           SliverAppBar(
             titleSpacing: 0,
@@ -58,20 +62,26 @@ class LikeCategoryView extends ConsumerWidget {
               ),
             ),
           SliverGrid.builder(
-            gridDelegate:
-                const SliverGridDelegateWithFixedCrossAxisCount(
-                  childAspectRatio: 0.7,
-                  crossAxisCount: 2,
-                  mainAxisSpacing: 16,
-                  crossAxisSpacing: 8,
-                ),
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              childAspectRatio: 0.7,
+              crossAxisCount: context.layout(
+                2,
+                tablet: 3,
+                desktop: 4,
+              ),
+              mainAxisSpacing: 16,
+              crossAxisSpacing: 8,
+            ),
             itemCount: data.length,
             itemBuilder: (context, index) {
               final campingLikeModel = data[index];
               final categoryId = campingLikeModel.likeCategory.id!;
               return GestureDetector(
                 onLongPress: () => onLongPress(categoryId),
-                onTap: () => onTap(categoryId),
+                onTap: () => onTap(
+                  categoryId,
+                  campingLikeModel.likeCategory.name,
+                ),
                 child: LikeCategoryCard(
                   campingLikeModel: campingLikeModel,
                 ),

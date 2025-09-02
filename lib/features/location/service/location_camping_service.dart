@@ -1,5 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:platform_maps_flutter/platform_maps_flutter.dart';
+import 'package:to_camp/common/exception/location_exception.dart';
 import 'package:to_camp/common/model/pagination_model.dart';
 import 'package:to_camp/common/model/pagination_params.dart';
 import 'package:to_camp/common/utils/location_utils.dart';
@@ -30,8 +31,8 @@ class LocationCampingService {
     try {
       double? lat;
       double? lng;
-      int take = 30;
-      double radius = 30000;
+      int take = 50;
+      double radius = 20000;
 
       final cameraPosition = ref.read(cameraPositionProvider);
       if (cameraPosition != null) {
@@ -41,6 +42,7 @@ class LocationCampingService {
         take = LocationUtils.takeByZoom(cameraPosition.zoom);
       }
       final location = ref.read(locationProvider);
+
       if (location is LocationSuccess) {
         final params = PaginationParams(
           pageNo: 1,
@@ -53,20 +55,20 @@ class LocationCampingService {
           params,
         );
 
-        final items = resp.response.body.items.item;
+        final items = resp.items;
 
         final pItems = LocationUtils.sortByDistance(
           items,
           lat ?? location.lat,
           lng ?? location.lng,
         );
-        return PaginationSuccess(items: pItems, hasMore: false);
+        return PaginationSuccess(items: pItems, totalCount: resp.totalCount);
       } else {
-        throw Exception('주변 캠핑장 정보를 불러올 수 없습니다.');
+        throw '실패';
       }
     } catch (e, s) {
       print('$e $s');
-      rethrow;
+      throw FailedLocationPaginate();
     }
   }
 
@@ -79,11 +81,12 @@ class LocationCampingService {
     final mapController = ref.read(mapControllerProvider);
 
     final index = models.indexWhere((e) => e.id == model.id);
+
     if (mapController != null) {
       ref.read(locationIndexProvider.notifier).state = index;
 
       await mapController.animateCamera(
-        CameraUpdate.newLatLngZoom(LatLng(model.lat, model.lng), 12),
+        CameraUpdate.newLatLng(LatLng(model.lat, model.lng)),
       );
 
       ref.read(showCardProvider.notifier).state = true;

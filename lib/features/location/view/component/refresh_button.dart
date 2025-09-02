@@ -17,7 +17,7 @@ class LocationRefreshButton extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    // final data = ref.watch(locationCampingProvider);
+    // final entity = ref.watch(locationCampingProvider);
     final theme = ref.watch(themeServiceProvider);
     final mapController = ref.watch(mapControllerProvider);
     final showRefreshButton = ref.watch(showRefreshProvider);
@@ -38,7 +38,7 @@ class LocationRefreshButton extends ConsumerWidget {
   void onRefresh(
     WidgetRef ref,
     PlatformMapController? mapController,
-    // PaginationState data,
+    // PaginationState entity,
   ) {
     EasyThrottle.throttle(
       'location_refresh',

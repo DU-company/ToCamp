@@ -1,14 +1,14 @@
-import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:to_camp/common/view/root_tab.dart';
+import 'package:to_camp/features/camping/model/camping_model.dart';
+import 'package:to_camp/features/camping/view/screen/camping_screen.dart';
 import 'package:to_camp/features/camping_detail/view/screen/camping_detail_screen.dart';
 import 'package:to_camp/features/camping_detail/view/screen/shared_camping_detail_screen.dart';
+import 'package:to_camp/features/image/view/screen/image_detail_screen.dart';
+import 'package:to_camp/features/image/view/screen/image_grid_screen.dart';
 import 'package:to_camp/features/like/view/screen/camping_like_screen.dart';
-import 'package:to_camp/features/location/view/screen/location_camping_screen.dart';
 import 'package:to_camp/features/serach/view/search_result/screen/search_result_screen.dart';
-
 
 final routesProvider = Provider((ref) => GoRoutes());
 
@@ -20,11 +20,36 @@ class GoRoutes {
       builder: (_, _) => RootTab(),
       routes: [
         GoRoute(
+          path: 'camping/:title',
+          name: CampingScreen.routeName,
+          builder: (_, state) {
+            final items = state.extra as List<CampingModel>;
+            final title = state.pathParameters['title']!;
+            return CampingScreen(items: items, title: title);
+          },
+        ),
+        GoRoute(
           path: 'detail',
           name: CampingDetailScreen.routeName,
           builder: (_, state) {
             final id = state.uri.queryParameters['id']!;
             return CampingDetailScreen(id: id);
+          },
+        ),
+        GoRoute(
+          path: 'imageGrid',
+          name: ImageGridScreen.routeName,
+          builder: (_, state) {
+            final id = state.uri.queryParameters['id']!;
+            return ImageGridScreen(id: id);
+          },
+        ),
+        GoRoute(
+          path: 'imageDetail',
+          name: ImageDetailScreen.routeName,
+          builder: (_, state) {
+            final id = state.uri.queryParameters['id']!;
+            return ImageDetailScreen(id: id);
           },
         ),
         GoRoute(
@@ -36,16 +61,15 @@ class GoRoutes {
           },
         ),
         GoRoute(
-          path: 'location',
-          name: LocationCampingScreen.routeName,
-          builder: (_, _) => LocationCampingScreen(),
-        ),
-        GoRoute(
           path: 'like',
           name: CampingLikeScreen.routeName,
           builder: (_, state) {
             final id = state.uri.queryParameters['id']!;
-            return CampingLikeScreen(id: id);
+            final name = state.uri.queryParameters['name']!;
+            return CampingLikeScreen(
+              categoryId: id,
+              categoryName: name,
+            );
           },
         ),
         GoRoute(
@@ -62,6 +86,13 @@ class GoRoutes {
   ];
 
   String? redirectLogic(GoRouterState state) {
-    print(state.uri);
+    final uri = state.uri;
+    if (uri.host == 'shared') {
+      final id = uri.queryParameters['id'];
+      final name = uri.queryParameters['name'];
+      return '/shared?id=$id&name=$name';
+    } else {
+      return null;
+    }
   }
 }

@@ -18,6 +18,9 @@ class DetailBody extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final readMore = ref.watch(readMoreProvider);
     final theme = ref.watch(themeServiceProvider);
+    final hasIntro =
+        campingModel.lineIntro.isNotEmpty ||
+        campingModel.intro.isNotEmpty;
     return SliverToBoxAdapter(
       child: Column(
         children: [
@@ -26,19 +29,20 @@ class DetailBody extends ConsumerWidget {
             model: campingModel,
             isDetail: true,
             readMore: readMore,
+            showIntro: true,
           ),
 
           /// ReadMoreButton
-          CustomIconButton(
-            foregroundColor: theme.color.primary,
-            onTap: () {
-              ref.read(readMoreProvider.notifier).state = !readMore;
-            },
-            icon: readMore
-                ? PhosphorIconsBold.caretUp
-                : PhosphorIconsBold.caretDown,
-          ),
-          const Divider(height: 32),
+          if (hasIntro)
+            CustomIconButton(
+              foregroundColor: theme.color.primary,
+              onTap: () {
+                ref.read(readMoreProvider.notifier).state = !readMore;
+              },
+              icon: readMore
+                  ? PhosphorIconsBold.caretUp
+                  : PhosphorIconsBold.caretDown,
+            ),
           DetailMap(model: campingModel),
         ],
       ),
