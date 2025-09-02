@@ -41,8 +41,8 @@ class ToastUtils {
 
       Fluttertoast.showToast(
         msg: msg,
-        textColor: theme.color.hint,
-        backgroundColor: theme.color.hintContainer,
+        textColor: theme.color.onTertiary,
+        backgroundColor: theme.color.tertiary,
       );
       return Future.value(false);
     }

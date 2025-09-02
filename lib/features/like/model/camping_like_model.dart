@@ -1,6 +1,6 @@
 import 'package:to_camp/features/camping/model/camping_model.dart';
-import 'package:to_camp/features/like/data/like_camping_entity.dart';
-import 'package:to_camp/features/like/data/like_category_entity.dart';
+import 'package:to_camp/features/like/entity/like_camping_entity.dart';
+import 'package:to_camp/features/like/entity/like_category_entity.dart';
 
 class CampingLikeModel {
   final LikeCategoryEntity likeCategory;

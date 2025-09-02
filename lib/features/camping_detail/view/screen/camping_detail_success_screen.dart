@@ -17,13 +17,12 @@ class CampingDetailSuccessScreen extends ConsumerWidget {
         Expanded(
           child: CustomScrollView(
             slivers: [
-              DetailAppBar(detail: detail),
+              DetailAppBar(detailModel: detail),
               DetailBody(campingModel: detail.campingModel),
-
             ],
           ),
         ),
-        DetailFooter(),
+        DetailFooter(detailModel: detail),
       ],
     );
   }

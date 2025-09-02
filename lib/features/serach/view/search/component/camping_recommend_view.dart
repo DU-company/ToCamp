@@ -18,54 +18,59 @@ class CampingRecommendView extends ConsumerWidget {
     final isLoading = recommendData.isEmpty;
     final hasError = recommendData.length == 1;
 
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: [
-        Text(
-          '투캠 추천 HOT 캠핑지!',
-          style: theme.typo.headline3.copyWith(
-            color: theme.color.primary,
-          ),
-        ),
-        const SizedBox(height: 8),
-
-        if (isLoading)
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 32.0),
-            child: LoadingWidget(),
-          ),
-
-        if (hasError)
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 32.0),
-            child: Text(
-              textAlign: TextAlign.center,
-              '일시적으로 추천 캠핑장 정보를 받아올 수 없습니다.',
-              style: theme.typo.subtitle1.copyWith(
+    return SliverToBoxAdapter(
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 8.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Text(
+              '투캠 추천 HOT 캠핑지!',
+              style: theme.typo.headline3.copyWith(
                 color: theme.color.primary,
               ),
             ),
-          ),
+            const SizedBox(height: 8),
 
-        if (!isLoading && !hasError)
-          ...List.generate(recommendData.length, (index) {
-            final recommendModel = recommendData[index];
-            return InkWell(
-              onTap: () => ref
-                  .read(searchCampingServiceProvider)
-                  .onKeywordTap(
-                    context,
-                    ref,
-                    controller,
-                    recommendModel.region,
-                  ),
-              child: CampingRecommendCard(
-                model: recommendModel,
-                index: index,
+            if (isLoading)
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 32.0),
+                child: LoadingWidget(),
               ),
-            );
-          }),
-      ],
+
+            if (hasError)
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 32.0),
+                child: Text(
+                  textAlign: TextAlign.center,
+                  '일시적으로 추천 캠핑장 정보를 받아올 수 없습니다.',
+                  style: theme.typo.subtitle1.copyWith(
+                    color: theme.color.primary,
+                  ),
+                ),
+              ),
+
+            if (!isLoading && !hasError)
+              ...List.generate(recommendData.length, (index) {
+                final recommendModel = recommendData[index];
+                return InkWell(
+                  onTap: () => ref
+                      .read(searchCampingServiceProvider)
+                      .onKeywordTap(
+                        context,
+                        ref,
+                        controller,
+                        recommendModel.region,
+                      ),
+                  child: CampingRecommendCard(
+                    model: recommendModel,
+                    index: index,
+                  ),
+                );
+              }),
+          ],
+        ),
+      ),
     );
   }
 }

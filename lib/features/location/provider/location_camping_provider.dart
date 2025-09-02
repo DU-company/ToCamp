@@ -31,7 +31,7 @@ class LocationCampingStateNotifier
         final pState = state as PaginationSuccess<CampingModel>;
         state = PaginationFetchingMore<CampingModel>(
           items: pState.items,
-          hasMore: pState.hasMore,
+          totalCount: pState.totalCount,
         );
 
         /// 데이터를 처음 가져오는 경우
@@ -45,7 +45,7 @@ class LocationCampingStateNotifier
         final pState = state as PaginationSuccess<CampingModel>;
         state = PaginationErrorHasData(
           items: pState.items,
-          hasMore: pState.hasMore,
+          totalCount: pState.totalCount,
         );
       } else {
         state = PaginationError(message: e.toString());
@@ -53,5 +53,3 @@ class LocationCampingStateNotifier
     }
   }
 }
-
-

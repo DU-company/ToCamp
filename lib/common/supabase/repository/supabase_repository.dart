@@ -1,5 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:to_camp/common/supabase/model/banner_ad_model.dart';
 import 'package:to_camp/common/supabase/model/camping_recommendation_model.dart';
 import 'package:to_camp/common/supabase/provider/supabase_provider.dart';
 
@@ -19,11 +20,29 @@ class SupabaseRepository {
       final resp = await supabase
           .from('camping_recommendations')
           .select()
-          .order('order', ascending: true)
+          .order('priority', ascending: true)
           .limit(10);
 
       final models = resp
           .map((e) => CampingRecommendationModel.fromJson(e))
+          .toList();
+
+      return models;
+    } catch (e) {
+      return [];
+    }
+  }
+
+  Future<List<BannerAdModel>> getBannerAd() async {
+    try {
+      final resp = await supabase
+          .from('banner_ad')
+          .select()
+          .order('priority', ascending: true)
+          .limit(10);
+
+      final models = resp
+          .map((e) => BannerAdModel.fromJson(e))
           .toList();
 
       return models;

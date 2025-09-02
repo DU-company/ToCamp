@@ -14,10 +14,13 @@ class LikeScreen extends ConsumerWidget {
       children: [
         Expanded(
           child: LikeCategoryView(
-            onTap: (categoryId) {
+            onTap: (categoryId, name) {
               context.pushNamed(
                 CampingLikeScreen.routeName,
-                queryParameters: {'id': categoryId.toString()},
+                queryParameters: {
+                  'id': categoryId.toString(),
+                  'name': name,
+                },
               );
             },
             onLongPress: (categoryId) {

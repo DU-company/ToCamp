@@ -48,6 +48,7 @@ class PrimaryButton extends ConsumerWidget {
             Icon(
               icon,
               color: foregroundColor ?? theme.color.onPrimary,
+              size: 24,
             ),
 
           if (text != null && icon != null) const SizedBox(width: 8),

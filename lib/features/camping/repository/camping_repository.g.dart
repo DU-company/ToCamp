@@ -19,14 +19,15 @@ class _CampingRepository implements CampingRepository {
   String? baseUrl;
 
   @override
-  Future<PaginationData<CampingModel>> paginate(PaginationParams params) async {
+  Future<PaginationSuccess<CampingModel>> paginate(
+      PaginationParams params) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     queryParameters.addAll(params.toJson());
     final _headers = <String, dynamic>{};
     final Map<String, dynamic>? _data = null;
     final _result = await _dio.fetch<Map<String, dynamic>>(
-        _setStreamType<PaginationData<CampingModel>>(Options(
+        _setStreamType<PaginationSuccess<CampingModel>>(Options(
       method: 'GET',
       headers: _headers,
       extra: _extra,
@@ -42,7 +43,7 @@ class _CampingRepository implements CampingRepository {
               _dio.options.baseUrl,
               baseUrl,
             ))));
-    final value = PaginationData<CampingModel>.fromJson(
+    final value = PaginationSuccess<CampingModel>.fromJson(
       _result.data!,
       (json) => CampingModel.fromJson(json as Map<String, dynamic>),
     );
@@ -50,7 +51,7 @@ class _CampingRepository implements CampingRepository {
   }
 
   @override
-  Future<PaginationData<CampingModel>> locationBasedPaginate(
+  Future<PaginationSuccess<CampingModel>> locationBasedPaginate(
       PaginationParams params) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
@@ -58,7 +59,7 @@ class _CampingRepository implements CampingRepository {
     final _headers = <String, dynamic>{};
     final Map<String, dynamic>? _data = null;
     final _result = await _dio.fetch<Map<String, dynamic>>(
-        _setStreamType<PaginationData<CampingModel>>(Options(
+        _setStreamType<PaginationSuccess<CampingModel>>(Options(
       method: 'GET',
       headers: _headers,
       extra: _extra,
@@ -74,7 +75,7 @@ class _CampingRepository implements CampingRepository {
               _dio.options.baseUrl,
               baseUrl,
             ))));
-    final value = PaginationData<CampingModel>.fromJson(
+    final value = PaginationSuccess<CampingModel>.fromJson(
       _result.data!,
       (json) => CampingModel.fromJson(json as Map<String, dynamic>),
     );
@@ -82,7 +83,7 @@ class _CampingRepository implements CampingRepository {
   }
 
   @override
-  Future<PaginationData<CampingModel>> searchPaginate(
+  Future<PaginationSuccess<CampingModel>> searchPaginate(
       PaginationParams params) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
@@ -90,7 +91,7 @@ class _CampingRepository implements CampingRepository {
     final _headers = <String, dynamic>{};
     final Map<String, dynamic>? _data = null;
     final _result = await _dio.fetch<Map<String, dynamic>>(
-        _setStreamType<PaginationData<CampingModel>>(Options(
+        _setStreamType<PaginationSuccess<CampingModel>>(Options(
       method: 'GET',
       headers: _headers,
       extra: _extra,
@@ -106,7 +107,7 @@ class _CampingRepository implements CampingRepository {
               _dio.options.baseUrl,
               baseUrl,
             ))));
-    final value = PaginationData<CampingModel>.fromJson(
+    final value = PaginationSuccess<CampingModel>.fromJson(
       _result.data!,
       (json) => CampingModel.fromJson(json as Map<String, dynamic>),
     );

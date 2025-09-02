@@ -35,6 +35,14 @@
                     />
             </intent-filter>
             <!-- Deep Link 설정 끝 -->
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data
+                    android:scheme="com.du.tocamp"
+                    android:host="shared" />
+            </intent-filter>
 
         </activity>
         <!-- Don't delete the meta-data below.
@@ -43,7 +51,7 @@
             android:name="flutterEmbedding"
             android:value="2" />
         <meta-data android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyA16YVN5DrDwCQYVB_wOK63BBvcz1XCaHI"/>
+            android:value="AIzaSyBNDr5_r5qoJ4ZlvbEO4f48XJOxO0oVPi8"/>
     </application>
     <!-- Provide required visibility configuration for API level 30 and above -->
     <queries>

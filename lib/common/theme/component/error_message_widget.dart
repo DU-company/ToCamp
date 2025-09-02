@@ -7,7 +7,7 @@ import 'package:to_camp/features/location/provider/location_provider.dart';
 
 class ErrorMessageWidget extends ConsumerWidget {
   final String message;
-  final VoidCallback onTap;
+  final VoidCallback? onTap;
   const ErrorMessageWidget({
     super.key,
     required this.message,
@@ -32,10 +32,12 @@ class ErrorMessageWidget extends ConsumerWidget {
             textAlign: TextAlign.center,
           ),
           const SizedBox(height: 16),
-          CustomIconButton(
-            onTap: onTap,
-            icon: PhosphorIcons.arrowClockwise(),
-          ),
+          if (onTap != null)
+            CustomIconButton(
+              onTap: onTap,
+              icon: PhosphorIcons.arrowClockwise(),
+              size: 28,
+            ),
         ],
       ),
     );

@@ -1,9 +1,10 @@
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 
-final String tableLikeCategory = 'like_categories';
-final String tableLikeCamping = 'like_campings';
-final String dbName = 'tocamp.db';
+const String tableLikeCategory = 'like_categories';
+const String tableLikeCamping = 'like_campings';
+const String tableRecentCamping = 'recent_campings';
+const String dbName = 'tocamp.db';
 
 class AppDatabase {
   static Database? _db;
@@ -51,6 +52,7 @@ class AppDatabase {
             lng REAL,
             lat REAL,
             resveUrl TEXT,
+            homepage TEXT,
             tel TEXT,
             siteBottomCl1 TEXT,
             siteBottomCl2 TEXT,
@@ -62,6 +64,39 @@ class AppDatabase {
             FOREIGN KEY (categoryId) REFERENCES $tableLikeCategory(id) ON DELETE CASCADE
           )
           ''');
+
+        await db.execute('''
+          CREATE TABLE $tableRecentCamping (
+            id TEXT PRIMARY KEY NOT NULL,
+            thumbUrl TEXT NOT NULL,
+            name TEXT NOT NULL,
+            lineIntro TEXT,
+            intro TEXT,
+            sbrsCl TEXT,
+            posblFcltyCl TEXT,
+            doNm TEXT,
+            sigunguNm TEXT,
+            address TEXT,
+            fire TEXT,
+            pet TEXT,
+            caravan TEXT,
+            lng REAL,
+            lat REAL,
+            resveUrl TEXT,
+            homepage TEXT,
+            tel TEXT,
+            siteBottomCl1 TEXT,
+            siteBottomCl2 TEXT,
+            siteBottomCl3 TEXT,
+            siteBottomCl4 TEXT,
+            siteBottomCl5 TEXT,
+            createdAt INTEGER NOT NULL
+          )
+          ''');
+      },
+      // onUpgrade: (db, oldVersion, newVersion) {},
+      onOpen: (db) async {
+        await db.execute('PRAGMA foreign_keys = ON'); // 외래키 활성화
       },
     );
 

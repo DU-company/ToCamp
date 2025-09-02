@@ -5,10 +5,13 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:platform_maps_flutter/platform_maps_flutter.dart';
+import 'package:to_camp/common/theme/component/custom_divider.dart';
+import 'package:to_camp/common/theme/component/tile.dart';
 import 'package:to_camp/common/theme/service/theme_service.dart';
 import 'package:to_camp/common/utils/toast_utils.dart';
 import 'package:to_camp/features/camping/model/camping_model.dart';
 import 'package:to_camp/features/location/provider/marker_icon_provider.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class DetailMap extends ConsumerWidget {
   final CampingModel model;
@@ -23,9 +26,12 @@ class DetailMap extends ConsumerWidget {
       ),
       child: Column(
         children: [
+          const CustomDivider(),
           _Address(address: model.address),
           const SizedBox(height: 8),
           _Map(model: model),
+          const SizedBox(height: 8),
+          _Tel(model: model),
         ],
       ),
     );
@@ -39,6 +45,7 @@ class _Address extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = ref.watch(themeServiceProvider);
+    if (address.isEmpty) return SizedBox();
 
     return Row(
       crossAxisAlignment: CrossAxisAlignment.center,
@@ -93,6 +100,8 @@ class _Map extends ConsumerWidget {
     final markerIcons = ref.watch(markerIconProvider);
     late final PlatformMapController? mapController;
 
+    if (model.lat == 0 || model.lng == 0) return SizedBox();
+
     if (markerIcons.isEmpty) return SizedBox();
     return ClipRRect(
       borderRadius: BorderRadiusGeometry.circular(16),
@@ -108,7 +117,9 @@ class _Map extends ConsumerWidget {
             await Future.delayed(Duration(milliseconds: 100));
             mapController = controller;
             if (mapController != null) {
-              await mapController!.showMarkerInfoWindow(MarkerId(model.id));
+              await mapController!.showMarkerInfoWindow(
+                MarkerId(model.id),
+              );
             }
           },
           initialCameraPosition: CameraPosition(
@@ -119,6 +130,7 @@ class _Map extends ConsumerWidget {
           myLocationButtonEnabled: false,
           rotateGesturesEnabled: false,
           tiltGesturesEnabled: false,
+          zoomControlsEnabled: false,
           markers: {
             Marker(
               markerId: MarkerId(model.id),
@@ -132,6 +144,25 @@ class _Map extends ConsumerWidget {
           },
         ),
       ),
+    );
+  }
+}
+
+class _Tel extends StatelessWidget {
+  final CampingModel model;
+  const _Tel({super.key, required this.model});
+
+  @override
+  Widget build(BuildContext context) {
+    final hasTel = model.tel.isNotEmpty;
+    if (!hasTel) return const SizedBox();
+    return Tile(
+      onTap: () {
+        final uri = Uri(scheme: 'tel', path: model.tel);
+        launchUrl(uri);
+      },
+      text: model.tel,
+      trailing: PhosphorIcons.phoneTransfer(),
     );
   }
 }

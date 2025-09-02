@@ -54,7 +54,9 @@ final themeDataProvider = Provider<ThemeData>((ref) {
       centerTitle: false,
       scrolledUnderElevation: 0,
       iconTheme: IconThemeData(color: theme.color.text),
-      titleTextStyle: theme.typo.subtitle1.copyWith(),
+      titleTextStyle: theme.typo.headline6.copyWith(
+        fontWeight: theme.typo.regular,
+      ),
     ),
 
     iconTheme: IconThemeData(color: theme.color.text),
@@ -66,13 +68,9 @@ final themeDataProvider = Provider<ThemeData>((ref) {
       unselectedItemColor: theme.color.inactive,
       type: BottomNavigationBarType.fixed,
     ),
-    bottomSheetTheme: BottomSheetThemeData(
+
+    bottomSheetTheme: const BottomSheetThemeData(
       constraints: BoxConstraints(maxWidth: Breakpoint.bottomSheet),
-    ),
-    floatingActionButtonTheme: FloatingActionButtonThemeData(
-      backgroundColor: theme.color.primary,
-      foregroundColor: theme.color.onPrimary,
-      shape: CircleBorder(),
     ),
   );
 });

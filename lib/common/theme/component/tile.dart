@@ -31,22 +31,19 @@ class Tile extends ConsumerWidget {
           child: Row(
             children: [
               if (icon != null) Icon(icon),
-
               if (icon != null) SizedBox(width: 8),
-
-              Text(
-                text,
-                style: theme.typo.headline6.copyWith(
-                  color: color ?? theme.color.text,
+              Expanded(
+                child: Text(
+                  text,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: theme.typo.headline6.copyWith(
+                    color: color ?? theme.color.text,
+                    fontWeight: theme.typo.regular,
+                  ),
                 ),
               ),
-
-              Spacer(),
-              if (onTap != null)
-                Icon(
-                  trailing ?? Icons.arrow_forward_ios_rounded,
-                  color: color ?? theme.color.text,
-                ),
+              if (trailing != null) Icon(trailing),
             ],
           ),
         ),

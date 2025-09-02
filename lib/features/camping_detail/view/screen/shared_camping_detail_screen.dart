@@ -33,12 +33,8 @@ class SharedCampingDetailScreen extends ConsumerWidget {
       return CampingDetailLoadingScreen();
     }
     // 에러 위젯
-    if (state is CampingDetailError) {
-      final pState = state as CampingDetailError;
-      return ErrorMessageWidget(
-        onTap: () {},
-        message: pState.message,
-      );
+    if (state is PaginationError) {
+      return ErrorMessageWidget(onTap: () {}, message: state.message);
     }
     state as PaginationSuccess<CampingModel>;
     return CampingDetailScreen(id: id);

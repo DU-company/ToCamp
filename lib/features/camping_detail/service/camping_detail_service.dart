@@ -1,4 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:to_camp/common/exception/camping_exception.dart';
 import 'package:to_camp/common/model/pagination_model.dart';
 import 'package:to_camp/common/model/pagination_params.dart';
 import 'package:to_camp/common/provider/current_camping_provider.dart';
@@ -32,9 +33,7 @@ class CampingDetailService {
       final resp = await campingDetailRepository.getImages(params);
 
       /// Parsing
-      final imgUrls = resp.response.body.items.item
-          .map((e) => e.imageUrl)
-          .toList();
+      final imgUrls = resp.items.map((e) => e.imageUrl).toList();
 
       return CampingDetailModel(
         campingModel: campingModel,
@@ -42,7 +41,7 @@ class CampingDetailService {
       );
     } catch (e, s) {
       print('Camping_Detail_Error : $e $s');
-      rethrow;
+      throw FailedCampingDetailException();
     }
   }
 }

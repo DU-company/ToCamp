@@ -1,6 +1,7 @@
 import 'dart:ui' as ui;
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:to_camp/common/const/data.dart';
 
 final markerIconProvider =
     StateNotifierProvider<MarkerIconProvider, List<Uint8List>>(
@@ -19,12 +20,12 @@ class MarkerIconProvider extends StateNotifier<List<Uint8List>> {
 
       markerIcon = await getBytesFromAsset(
         //IOS와 android 상위버전에서는 정상작동하지만 android 하위버전에서는 매우 크게 보인다
-        'asset/img/marker.png',
+        MARKER,
         120,
         // Platform.isIOS ? 120 : 70,
       );
       likedMarkerIcon = await getBytesFromAsset(
-        'asset/img/liked_marker.png',
+        MARKER_PINK,
         120,
         // Platform.isIOS ? 120 : 70,
       );

@@ -1,6 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:to_camp/common/dababase/app_database.dart';
-import 'package:to_camp/features/like/data/like_category_entity.dart';
+import 'package:to_camp/features/like/entity/like_category_entity.dart';
 
 final likeCategoryRepositoryProvider = Provider(
   (ref) => LikeCategoryRepository(),

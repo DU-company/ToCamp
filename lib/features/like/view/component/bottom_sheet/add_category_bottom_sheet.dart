@@ -42,7 +42,6 @@ class AddCategoryBottomSheet extends ConsumerWidget {
 
           InputField(
             maxLine: 1,
-
             hint: 'ex) 글램핑',
             onChanged: (text) {
               ref.read(categoryNameProvider.notifier).state = text;
@@ -70,7 +69,7 @@ class AddCategoryBottomSheet extends ConsumerWidget {
   bool checkName(String name, WidgetRef ref) {
     String? msg;
     if (name.trim().length < 2) {
-      msg = '2자 이상을 입력해 주세요.';
+      msg = '2글자 이상을 입력해 주세요.';
     }
     if (name.length > 21) {
       msg = '20자 이하로 작성해 주세요.';
@@ -91,7 +90,7 @@ class AddCategoryBottomSheet extends ConsumerWidget {
   ) {
     EasyThrottle.throttle(
       'create_category',
-      Duration(seconds: 1),
+      Duration(seconds: 3),
       () async {
         final isOk = checkName(categoryName, ref);
         if (isOk) {
@@ -100,7 +99,10 @@ class AddCategoryBottomSheet extends ConsumerWidget {
               .createCategory(categoryName, campingModel);
           ref
               .read(toastUtilsProvider)
-              .showToast(text: '위시리스트에 추가되었습니다.', isError: false);
+              .showToast(
+                text: '"$categoryName"에 추가되었습니다.',
+                isError: false,
+              );
           context.pop();
         }
       },

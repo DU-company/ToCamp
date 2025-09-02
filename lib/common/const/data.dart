@@ -1,12 +1,18 @@
-import 'dart:io';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:platform_maps_flutter/platform_maps_flutter.dart';
 
+/// API KEY
 final SERVICE_KEY = dotenv.env['SERVICE_KEY']!;
 final SUPABASE_URL = dotenv.env['SUPABASE_URL']!;
 final SUPABASE_ANON_KEY = dotenv.env['SUPABASE_ANON_KEY']!;
 
-const CAMPING_LIKE_BOX = 'CAMPING_LIKE_BOX';
+/// HIVE BOX
 const RECENT_KEYWORD_BOX = 'RECENT_KEYWORD_BOX';
-// const RECENT_CAMPING_BOX = 'RECENT_CAMPING_BOX';
 const THEME_BOX = 'THEME_BOX';
+
+/// Asset Image
+const CAMPING_IMAGE = 'asset/img/camping.png';
+const CAMPING_BANNER = 'asset/img/camping_banner.png';
+const LOGO_BLACK = 'asset/img/logo_black.svg';
+const LOGO_WHITE = 'asset/img/logo_white.svg';
+const MARKER = 'asset/img/marker.png';
+const MARKER_PINK = 'asset/img/marker_pink.png';

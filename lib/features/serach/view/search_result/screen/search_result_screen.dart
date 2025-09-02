@@ -30,6 +30,9 @@ class SearchResultScreen extends ConsumerWidget {
       },
       child: DefaultLayout(
         child: CustomScrollView(
+          physics: AlwaysScrollableScrollPhysics(
+            parent: BouncingScrollPhysics(),
+          ),
           keyboardDismissBehavior:
               ScrollViewKeyboardDismissBehavior.onDrag,
           slivers: [SearchAppBar(), body(height, data)],

@@ -3,18 +3,22 @@ import 'package:to_camp/features/camping/model/camping_model.dart';
 
 class LocationUtils {
   static double radiusByZoom(double zoom) {
-    if (zoom > 9.0) {
-      return 30000;
+    if (zoom > 12.0) {
+      return 15000;
+    } else if (zoom > 9.0) {
+      return 20000;
     } else {
       return 50000;
     }
   }
 
   static int takeByZoom(double zoom) {
-    if (zoom > 9.0) {
-      return 30;
+    if (zoom > 12.0) {
+      return 40;
+    } else if (zoom > 9.0) {
+      return 60;
     } else {
-      return 50;
+      return 80;
     }
   }
 
