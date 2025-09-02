@@ -5,9 +5,9 @@ import 'package:to_camp/common/theme/component/error_message_widget.dart';
 import 'package:to_camp/common/theme/service/theme_service.dart';
 import 'package:to_camp/common/view/default_layout.dart';
 import 'package:to_camp/features/camping/service/camping_service.dart';
+import 'package:to_camp/features/camping/view/component/camping_card.dart';
 import 'package:to_camp/features/like/provider/camping_like_provider.dart';
 import 'package:to_camp/features/like/view/component/like_button.dart';
-import 'package:to_camp/features/like/view/component/like_camping_card.dart';
 
 class CampingLikeScreen extends ConsumerWidget {
   static String get routeName => 'like';
@@ -59,7 +59,7 @@ class CampingLikeScreen extends ConsumerWidget {
                         .read(campingServiceProvider)
                         .onCampingCardTap(context, model);
                   },
-                  child: LikeCampingCard.fromModel(
+                  child: CampingCard.fromModel(
                     model: model,
                     likeButton: LikeButton(
                       campingModel: model,

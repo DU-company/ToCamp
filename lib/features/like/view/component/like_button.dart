@@ -3,13 +3,10 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:to_camp/common/theme/component/custom_icon_button.dart';
 import 'package:to_camp/common/theme/service/theme_service.dart';
-import 'package:to_camp/common/utils/toast_utils.dart';
 import 'package:to_camp/features/camping/model/camping_model.dart';
-import 'package:to_camp/features/like/model/camping_like_model.dart';
 import 'package:to_camp/features/like/provider/camping_like_provider.dart';
 import 'package:to_camp/features/like/service/camping_like_service.dart';
 import 'package:to_camp/features/like/utils/like_utils.dart';
-import 'package:to_camp/features/like/view/component/bottom_sheet/select_category_bottom_sheet.dart';
 
 class LikeButton extends ConsumerWidget {
   final CampingModel campingModel;

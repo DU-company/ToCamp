@@ -6,6 +6,7 @@ import 'package:to_camp/features/location/model/location_model.dart';
 import 'package:to_camp/features/location/provider/location_provider.dart';
 import 'package:to_camp/features/location/view/screen/map_screen.dart';
 
+/// GPS로 위치 정보를 가져오는 화면
 class LocationScreen extends ConsumerWidget {
   const LocationScreen({super.key});
 

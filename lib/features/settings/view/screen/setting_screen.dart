@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:share_plus/share_plus.dart';
-import 'package:to_camp/common/model/pagination_model.dart';
+import 'package:to_camp/common/pagination/model/pagination_model.dart';
 import 'package:to_camp/common/theme/component/custom_divider.dart';
 import 'package:to_camp/common/theme/component/tile.dart';
 import 'package:to_camp/common/theme/service/theme_service.dart';
@@ -11,7 +11,6 @@ import 'package:to_camp/features/camping/model/camping_model.dart';
 import 'package:to_camp/features/camping/view/screen/camping_screen.dart';
 import 'package:to_camp/features/camping_recent/provider/camping_recent_provider.dart';
 import 'package:to_camp/features/home/view/screen/home_screen.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 class SettingScreen extends ConsumerWidget {
   const SettingScreen({super.key});

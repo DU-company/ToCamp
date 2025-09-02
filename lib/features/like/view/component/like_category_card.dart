@@ -1,8 +1,7 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:to_camp/common/theme/service/theme_service.dart';
-import 'package:to_camp/features/camping/view/component/camping_card.dart';
+import 'package:to_camp/features/camping/view/component/image_box.dart';
 import 'package:to_camp/features/like/model/camping_like_model.dart';
 
 class LikeCategoryCard extends ConsumerWidget {

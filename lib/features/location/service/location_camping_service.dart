@@ -1,13 +1,12 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:platform_maps_flutter/platform_maps_flutter.dart';
 import 'package:to_camp/common/exception/location_exception.dart';
-import 'package:to_camp/common/model/pagination_model.dart';
-import 'package:to_camp/common/model/pagination_params.dart';
+import 'package:to_camp/common/pagination/model/pagination_model.dart';
+import 'package:to_camp/common/pagination/model/pagination_params.dart';
 import 'package:to_camp/common/utils/location_utils.dart';
 import 'package:to_camp/features/camping/model/camping_model.dart';
 import 'package:to_camp/features/camping/repository/camping_repository.dart';
 import 'package:to_camp/features/location/model/location_model.dart';
-import 'package:to_camp/features/location/provider/location_camping_provider.dart';
 import 'package:to_camp/features/location/provider/location_provider.dart';
 import 'package:to_camp/features/location/view/component/platform_map_widget.dart';
 
@@ -62,7 +61,10 @@ class LocationCampingService {
           lat ?? location.lat,
           lng ?? location.lng,
         );
-        return PaginationSuccess(items: pItems, totalCount: resp.totalCount);
+        return PaginationSuccess(
+          items: pItems,
+          totalCount: resp.totalCount,
+        );
       } else {
         throw '실패';
       }

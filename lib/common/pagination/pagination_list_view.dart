@@ -1,7 +1,7 @@
 import 'package:easy_debounce/easy_throttle.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:to_camp/common/model/pagination_model.dart';
+import 'package:to_camp/common/pagination/model/pagination_model.dart';
 import 'package:to_camp/common/theme/component/custom_divider.dart';
 import 'package:to_camp/common/theme/component/error_message_widget.dart';
 import 'package:to_camp/common/theme/component/loading_widget.dart';

@@ -1,15 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
-import 'package:phosphor_flutter/phosphor_flutter.dart';
-import 'package:to_camp/common/theme/component/custom_icon_button.dart';
 import 'package:to_camp/common/theme/component/input_field.dart';
-import 'package:to_camp/common/theme/component/primary_button.dart';
-import 'package:to_camp/common/theme/service/theme_service.dart';
 import 'package:to_camp/common/utils/toast_utils.dart';
-import 'package:to_camp/features/serach/provider/recent_keyword_provider.dart';
-import 'package:to_camp/features/serach/service/search_camping_service.dart';
-import 'package:to_camp/features/serach/view/search_result/screen/search_result_screen.dart';
+import 'package:to_camp/features/search/service/search_camping_service.dart';
 
 final searchTextEditingController = Provider(
   (ref) => TextEditingController(),

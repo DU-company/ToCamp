@@ -2,9 +2,10 @@ import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:retrofit/http.dart';
 import 'package:to_camp/common/dio/dio.dart';
-import 'package:to_camp/common/model/pagination_params.dart';
-import 'package:to_camp/common/model/pagination_model.dart';
+import 'package:to_camp/common/pagination/model/pagination_model.dart';
+import 'package:to_camp/common/pagination/model/pagination_params.dart';
 import 'package:to_camp/features/camping/model/camping_model.dart';
+import 'package:to_camp/features/camping_detail/model/camping_image_item.dart';
 
 part 'camping_repository.g.dart';
 
@@ -23,6 +24,11 @@ abstract class CampingRepository {
 
   @GET('/basedList')
   Future<PaginationSuccess<CampingModel>> paginate(
+    @Queries() PaginationParams params,
+  );
+
+  @GET('/imageList')
+  Future<PaginationSuccess<CampingImageItem>> getImages(
     @Queries() PaginationParams params,
   );
 

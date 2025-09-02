@@ -1,7 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:to_camp/common/model/pagination_model.dart';
+import 'package:to_camp/common/pagination/model/pagination_model.dart';
 import 'package:to_camp/features/camping/model/camping_model.dart';
-import 'package:to_camp/features/serach/service/search_camping_service.dart';
+import 'package:to_camp/features/search/service/search_camping_service.dart';
 
 final searchCampingProvider =
     StateNotifierProvider.family<

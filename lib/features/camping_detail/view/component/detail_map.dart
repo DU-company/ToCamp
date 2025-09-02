@@ -7,6 +7,7 @@ import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:platform_maps_flutter/platform_maps_flutter.dart';
 import 'package:to_camp/common/theme/component/custom_divider.dart';
 import 'package:to_camp/common/theme/component/tile.dart';
+import 'package:to_camp/common/theme/res/layout.dart';
 import 'package:to_camp/common/theme/service/theme_service.dart';
 import 'package:to_camp/common/utils/toast_utils.dart';
 import 'package:to_camp/features/camping/model/camping_model.dart';
@@ -22,11 +23,11 @@ class DetailMap extends ConsumerWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(
         horizontal: 8.0,
-        vertical: 16,
+        vertical: 32,
       ),
       child: Column(
         children: [
-          const CustomDivider(),
+          context.layout(const CustomDivider(), desktop: SizedBox()),
           _Address(address: model.address),
           const SizedBox(height: 8),
           _Map(model: model),

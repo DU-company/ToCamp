@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:to_camp/common/const/data.dart';
-import 'package:to_camp/common/model/pagination_model.dart';
+import 'package:to_camp/common/pagination/model/pagination_model.dart';
 import 'package:to_camp/common/supabase/provider/banner_ad_provider.dart';
 import 'package:to_camp/common/theme/component/custom_divider.dart';
 import 'package:to_camp/common/theme/component/error_message_widget.dart';
@@ -20,7 +20,7 @@ import 'package:to_camp/features/home/view/component/mini_card_list_view.dart';
 import 'package:to_camp/features/location/model/location_model.dart';
 import 'package:to_camp/features/location/provider/location_camping_provider.dart';
 import 'package:to_camp/features/location/provider/location_provider.dart';
-import 'package:to_camp/features/serach/provider/search_camping_provider.dart';
+import 'package:to_camp/features/search/provider/search_camping_provider.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -230,24 +230,17 @@ class _BannerAdState extends ConsumerState<_BannerAd> {
   void initState() {
     super.initState();
     pageController = PageController(initialPage: 0);
-    _timer = Timer.periodic(const Duration(seconds: 5), (
+    _timer = Timer.periodic(const Duration(seconds: 10), (
       Timer timer,
     ) {
       // 마지막 페이지에 도달하면 첫 번째 페이지로 이동
-      if (pageController.page == bannerLength - 1) {
-        pageController.animateToPage(
-          0,
-          duration: const Duration(milliseconds: 500),
-          curve: Curves.ease,
-        );
-      } else {
-        // 다음 페이지로 이동
-        pageController.animateToPage(
-          currentIndex + 1,
-          duration: const Duration(milliseconds: 500),
-          curve: Curves.ease,
-        );
-      }
+      final isLastPage = pageController.page == bannerLength - 1;
+
+      pageController.animateToPage(
+        isLastPage ? 0 : currentIndex + 1,
+        duration: const Duration(milliseconds: 500),
+        curve: Curves.ease,
+      );
     });
   }
 
@@ -269,8 +262,8 @@ class _BannerAdState extends ConsumerState<_BannerAd> {
       return SizedBox(
         width: context.layout(
           null,
-          tablet: width / 1.5,
-          desktop: width / 2,
+          tablet: width / 1.3,
+          desktop: width / 1.5,
         ),
         child: Column(
           children: [

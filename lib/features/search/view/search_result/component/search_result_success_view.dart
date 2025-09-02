@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:to_camp/common/model/pagination_model.dart';
+import 'package:to_camp/common/pagination/model/pagination_model.dart';
 import 'package:to_camp/common/theme/component/custom_divider.dart';
 import 'package:to_camp/common/theme/service/theme_service.dart';
 import 'package:to_camp/features/camping/model/camping_model.dart';
 import 'package:to_camp/features/camping/service/camping_service.dart';
 import 'package:to_camp/features/camping/view/component/camping_card.dart';
 import 'package:to_camp/features/like/view/component/like_button.dart';
-import 'package:to_camp/features/serach/view/search/component/search_app_bar.dart';
 
 class SearchResultSuccessView extends ConsumerWidget {
   final PaginationSuccess<CampingModel> data;

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:platform_maps_flutter/platform_maps_flutter.dart';
-import 'package:to_camp/common/model/pagination_model.dart';
+import 'package:to_camp/common/pagination/model/pagination_model.dart';
 import 'package:to_camp/common/theme/component/primary_button.dart';
 import 'package:to_camp/common/theme/service/theme_service.dart';
 import 'package:to_camp/common/utils/toast_utils.dart';
@@ -17,7 +17,6 @@ class LocationRefreshButton extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    // final entity = ref.watch(locationCampingProvider);
     final theme = ref.watch(themeServiceProvider);
     final mapController = ref.watch(mapControllerProvider);
     final showRefreshButton = ref.watch(showRefreshProvider);
@@ -38,7 +37,6 @@ class LocationRefreshButton extends ConsumerWidget {
   void onRefresh(
     WidgetRef ref,
     PlatformMapController? mapController,
-    // PaginationState entity,
   ) {
     EasyThrottle.throttle(
       'location_refresh',

@@ -1,18 +1,14 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
-import 'package:to_camp/common/pagination/pagination_list_view.dart';
 import 'package:to_camp/common/theme/service/theme_service.dart';
 import 'package:to_camp/common/utils/toast_utils.dart';
 import 'package:to_camp/common/view/default_layout.dart';
-import 'package:to_camp/features/camping/view/screen/camping_screen.dart';
 import 'package:to_camp/features/home/view/screen/home_screen.dart';
-import 'package:to_camp/features/like/view/component/like_category_view.dart';
 import 'package:to_camp/features/like/view/screen/like_screen.dart';
 import 'package:to_camp/features/location/view/screen/location_screen.dart';
-import 'package:to_camp/features/serach/view/search/screen/search_screen.dart';
+import 'package:to_camp/features/search/view/search/screen/search_screen.dart';
 import 'package:to_camp/features/settings/view/screen/setting_screen.dart';
 
 class RootTab extends ConsumerStatefulWidget {
@@ -57,7 +53,6 @@ class _RootTabState extends ConsumerState<RootTab>
               physics: const NeverScrollableScrollPhysics(),
               controller: tabController,
               children: [
-                // PaginationListView(),
                 HomeScreen(onLocationPressed: onLocationPressed),
                 SearchScreen(),
                 LocationScreen(),
@@ -211,61 +206,6 @@ class _BottomNaviItem extends ConsumerWidget {
           ),
         ),
       ),
-    );
-  }
-}
-
-class _BottomNavigationBar extends ConsumerWidget {
-  final Function(int) onTap;
-  final int index;
-
-  const _BottomNavigationBar({
-    super.key,
-    required this.onTap,
-    required this.index,
-  });
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final theme = ref.watch(themeServiceProvider);
-    return Container();
-    return BottomNavigationBar(
-      // elevation: 10,
-      onTap: onTap,
-      currentIndex: index,
-      selectedFontSize: 14.0,
-      unselectedFontSize: 14.0,
-      selectedItemColor: theme.color.primary,
-      items: [
-        BottomNavigationBarItem(
-          icon: index == 0
-              ? Icon(PhosphorIconsBold.tipi)
-              : Icon(PhosphorIcons.tipi()),
-          label: '홈',
-        ),
-        BottomNavigationBarItem(
-          icon: index == 1
-              ? Icon(PhosphorIconsBold.magnifyingGlass)
-              : Icon(PhosphorIcons.magnifyingGlass()),
-          label: '검색',
-        ),
-        BottomNavigationBarItem(
-          icon: index == 2
-              ? Icon(PhosphorIconsBold.mapPinLine)
-              : Icon(PhosphorIcons.mapPinLine()),
-          label: '내 근처',
-        ),
-        BottomNavigationBarItem(
-          icon: index == 3
-              ? Icon(PhosphorIconsFill.heart)
-              : Icon(PhosphorIcons.heart()),
-          label: '찜',
-        ),
-        const BottomNavigationBarItem(
-          icon: Icon(PhosphorIconsBold.dotsThreeOutline),
-          label: '더보기',
-        ),
-      ],
     );
   }
 }

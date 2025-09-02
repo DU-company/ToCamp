@@ -1,7 +1,6 @@
-import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:to_camp/common/model/pagination_model.dart';
+import 'package:to_camp/common/pagination/model/pagination_model.dart';
 import 'package:to_camp/common/theme/component/error_message_widget.dart';
 import 'package:to_camp/common/theme/component/loading_widget.dart';
 import 'package:to_camp/common/theme/res/layout.dart';
@@ -16,6 +15,7 @@ import 'package:to_camp/features/location/view/component/platform_map_widget.dar
 import 'package:to_camp/features/location/view/component/refresh_button.dart';
 import 'package:to_camp/features/location/view/component/show_card_button.dart';
 
+/// 받아온 위치 정보로 지도를 띄우는 화면
 class MapScreen extends ConsumerWidget {
   final LocationSuccess location;
   const MapScreen({super.key, required this.location});
@@ -62,6 +62,8 @@ class MapScreen extends ConsumerWidget {
             ],
           ),
         ),
+
+        /// Card
         Align(
           alignment: context.layout(
             Alignment.bottomCenter,

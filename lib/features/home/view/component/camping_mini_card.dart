@@ -3,6 +3,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:to_camp/common/theme/service/theme_service.dart';
 import 'package:to_camp/features/camping/model/camping_model.dart';
 import 'package:to_camp/features/camping/view/component/camping_card.dart';
+import 'package:to_camp/features/camping/view/component/image_box.dart';
+import 'package:to_camp/features/camping/view/component/name_box.dart';
 import 'package:to_camp/features/image/view/component/base_network_image.dart';
 import 'package:to_camp/features/like/view/component/like_button.dart';
 

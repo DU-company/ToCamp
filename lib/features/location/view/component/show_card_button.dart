@@ -8,7 +8,6 @@ import 'package:to_camp/features/camping/model/camping_model.dart';
 import 'package:to_camp/features/camping/view/screen/camping_screen.dart';
 import 'package:to_camp/features/location/service/location_camping_service.dart';
 import 'package:to_camp/features/location/view/component/platform_map_widget.dart';
-import 'package:to_camp/features/location/view/screen/location_camping_screen.dart';
 
 class ShowCardButton extends ConsumerWidget {
   final List<CampingModel> items;
