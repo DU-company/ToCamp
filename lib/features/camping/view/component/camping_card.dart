@@ -160,6 +160,7 @@ class _ResponsiveCampingCard extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: context.layout(
+        /// Tablet & Desktop
         IntrinsicHeight(
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -181,9 +182,13 @@ class _ResponsiveCampingCard extends StatelessWidget {
             ],
           ),
         ),
+
+        /// Mobile
         mobile: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             if (!isDetail) imageBox,
+            const SizedBox(height: 8),
             nameBox,
             addressBox,
             etcBox,

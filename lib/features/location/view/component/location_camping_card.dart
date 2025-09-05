@@ -22,6 +22,7 @@ class LocationCampingCard extends ConsumerWidget {
       imageBox: ImageBox(
         radius: 16,
         thumbUrl: model.thumbUrl,
+        aspectRatio: 1.2,
         likeButton: LikeButton(campingModel: model, position: 4),
       ),
       nameBox: NameBox(name: model.name, theme: theme),
@@ -75,7 +76,7 @@ class _ResponsiveLocationCampingCard extends ConsumerWidget {
     final size = MediaQuery.of(context).size;
 
     return Container(
-      width: context.layout(null, desktop: size.width / 3),
+      width: context.layout(null, desktop: size.width / 2.5),
       decoration: BoxDecoration(
         color: theme.color.surface,
         borderRadius: BorderRadius.circular(16),
@@ -84,14 +85,13 @@ class _ResponsiveLocationCampingCard extends ConsumerWidget {
       margin: EdgeInsets.only(
         right: 12,
         left: context.layout(12, desktop: null),
-        bottom: 100,
+        bottom: 112,
       ),
       padding: EdgeInsets.all(8),
 
       /// Responsive UI
       child: context.layout(
         Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -114,7 +114,26 @@ class _ResponsiveLocationCampingCard extends ConsumerWidget {
         ),
         desktop: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [imageBox, nameBox, addressBox, etcBox, introBox],
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            IntrinsicHeight(
+              child: Row(
+                children: [
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [nameBox, Spacer(), addressBox],
+                    ),
+                  ),
+                  const SizedBox(width: 4),
+                  Expanded(child: imageBox),
+                ],
+              ),
+            ),
+            const SizedBox(height: 8),
+            etcBox,
+            introBox,
+          ],
         ),
       ),
     );

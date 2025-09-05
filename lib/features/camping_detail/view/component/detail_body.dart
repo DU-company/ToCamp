@@ -42,7 +42,7 @@ class DetailBody extends ConsumerWidget {
                   ? PhosphorIconsBold.caretUp
                   : PhosphorIconsBold.caretDown,
             ),
-          const SizedBox(height: 32),
+          const SizedBox(height: 16),
         ],
       ),
     );
