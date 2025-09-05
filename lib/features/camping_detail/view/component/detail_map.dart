@@ -23,7 +23,7 @@ class DetailMap extends ConsumerWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(
         horizontal: 8.0,
-        vertical: 32,
+        vertical: 16,
       ),
       child: Column(
         children: [

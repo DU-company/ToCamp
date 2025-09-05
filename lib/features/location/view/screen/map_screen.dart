@@ -76,17 +76,19 @@ class MapScreen extends ConsumerWidget {
                 ShowCardButton(items: data.items),
               const SizedBox(height: 4),
               if (totalModels.isNotEmpty && showCard)
-                GestureDetector(
-                  onTap: () {
-                    ref
-                        .read(campingServiceProvider)
-                        .onCampingCardTap(
-                          context,
-                          totalModels[locationIndex],
-                        );
-                  },
-                  child: LocationCampingCard(
-                    model: totalModels[locationIndex],
+                Flexible(
+                  child: GestureDetector(
+                    onTap: () {
+                      ref
+                          .read(campingServiceProvider)
+                          .onCampingCardTap(
+                            context,
+                            totalModels[locationIndex],
+                          );
+                    },
+                    child: LocationCampingCard(
+                      model: totalModels[locationIndex],
+                    ),
                   ),
                 ),
             ],

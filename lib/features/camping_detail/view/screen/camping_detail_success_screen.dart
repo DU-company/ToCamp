@@ -41,6 +41,7 @@ class _ResponsiveCampingDetailScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return context.layout(
       Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Expanded(
             child: CustomScrollView(
