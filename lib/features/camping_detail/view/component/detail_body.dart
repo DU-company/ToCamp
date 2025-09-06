@@ -5,7 +5,6 @@ import 'package:to_camp/common/theme/component/custom_icon_button.dart';
 import 'package:to_camp/common/theme/service/theme_service.dart';
 import 'package:to_camp/features/camping/model/camping_model.dart';
 import 'package:to_camp/features/camping/view/component/camping_card.dart';
-import 'package:to_camp/features/camping_detail/view/component/detail_map.dart';
 import 'package:to_camp/features/like/view/component/like_button.dart';
 
 final readMoreProvider = StateProvider.autoDispose((ref) => false);

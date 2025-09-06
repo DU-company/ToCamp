@@ -20,10 +20,14 @@ class LocationCampingCard extends ConsumerWidget {
     final theme = ref.watch(themeServiceProvider);
     return _ResponsiveLocationCampingCard(
       imageBox: ImageBox(
-        radius: 16,
+        radius: 12,
         thumbUrl: model.thumbUrl,
         aspectRatio: 1.2,
-        likeButton: LikeButton(campingModel: model, position: 4),
+        likeButton: LikeButton(
+          campingModel: model,
+          position: 0,
+          size: context.layout(28, mobile: 24),
+        ),
       ),
       nameBox: NameBox(name: model.name, theme: theme),
       introBox: IntroBox(
@@ -39,6 +43,7 @@ class LocationCampingCard extends ConsumerWidget {
         doNm: model.doNm,
         address: model.address,
         sigunguNm: model.sigunguNm,
+        maxLine: 1,
       ),
       etcBox: EtcBox(
         theme: theme,
@@ -79,7 +84,7 @@ class _ResponsiveLocationCampingCard extends ConsumerWidget {
       width: context.layout(null, desktop: size.width / 2.5),
       decoration: BoxDecoration(
         color: theme.color.surface,
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: BorderRadius.circular(12),
         boxShadow: theme.deco.shadow,
       ),
       margin: EdgeInsets.only(
@@ -92,6 +97,8 @@ class _ResponsiveLocationCampingCard extends ConsumerWidget {
       /// Responsive UI
       child: context.layout(
         Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,

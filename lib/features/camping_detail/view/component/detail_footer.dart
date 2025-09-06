@@ -25,7 +25,10 @@ class DetailFooter extends ConsumerWidget {
         campingModel.homepage.isNotEmpty ||
         campingModel.resveUrl.isNotEmpty;
     return BaseBottomSheet(
-      padding: EdgeInsets.symmetric(horizontal: 8, vertical: 12),
+      padding: const EdgeInsets.symmetric(
+        horizontal: 8,
+        vertical: 12,
+      ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [

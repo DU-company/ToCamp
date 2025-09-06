@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
-import 'package:share_plus/share_plus.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 import 'package:to_camp/common/const/data.dart';
 import 'package:to_camp/common/theme/component/custom_icon_button.dart';
@@ -12,7 +11,7 @@ import 'package:to_camp/features/camping_detail/model/camping_detail_model.dart'
 import 'package:to_camp/features/image/view/component/base_network_image.dart';
 import 'package:to_camp/features/image/view/screen/image_grid_screen.dart';
 import 'package:to_camp/features/like/view/component/like_button.dart';
-import 'package:to_camp/routes/dynamic_link_service.dart';
+import 'package:to_camp/routes/utils/deep_link_utils.dart';
 
 final imageIndexProvider = StateProvider.autoDispose<int>((ref) => 0);
 
@@ -55,7 +54,7 @@ class _Buttons extends ConsumerWidget {
           isDetail: true,
         ),
         CustomIconButton(
-          onTap: () => DynamicLinkService.shareLink(
+          onTap: () => DeepLinkUtils.shareLink(
             context,
             detailModel.campingModel,
           ),
@@ -149,7 +148,7 @@ class _IndexBox extends ConsumerWidget {
         ),
         decoration: BoxDecoration(
           color: theme.color.surface.withOpacity(0.6),
-          borderRadius: BorderRadius.only(
+          borderRadius: const BorderRadius.only(
             topLeft: Radius.circular(8),
             bottomLeft: Radius.circular(8),
           ),
