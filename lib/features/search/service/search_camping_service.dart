@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:to_camp/common/exception/camping_exception.dart';
+import 'package:to_camp/common/exception/search_exception.dart';
 import 'package:to_camp/common/pagination/model/pagination_model.dart';
 import 'package:to_camp/common/pagination/model/pagination_params.dart';
 import 'package:to_camp/common/provider/current_camping_provider.dart';
@@ -54,7 +54,7 @@ class SearchCampingService {
       return success;
     } catch (e, s) {
       print('$e $s');
-      throw PaginationException();
+      throw SearchCampingException(keyword);
     }
   }
 
@@ -83,6 +83,6 @@ class SearchCampingService {
   ) {
     controller.text = keyword;
     ref.read(keywordProvider.notifier).state = keyword;
-    ref.read(searchCampingServiceProvider).onSearch(context, keyword);
+    onSearch(context, keyword);
   }
 }

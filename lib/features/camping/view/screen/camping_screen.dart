@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:to_camp/common/theme/component/custom_divider.dart';
 import 'package:to_camp/common/theme/res/layout.dart';
+import 'package:to_camp/common/view/custom_scroll_widget.dart';
 import 'package:to_camp/common/view/default_layout.dart';
 import 'package:to_camp/features/camping/model/camping_model.dart';
 import 'package:to_camp/features/camping/service/camping_service.dart';
@@ -12,7 +13,7 @@ class CampingScreen extends ConsumerWidget {
   static String get routeName => 'camping';
 
   final List<CampingModel> items;
-  final String title;
+  final String? title;
   const CampingScreen({
     super.key,
     required this.items,
@@ -22,12 +23,10 @@ class CampingScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return DefaultLayout(
-      child: CustomScrollView(
-        physics: AlwaysScrollableScrollPhysics(
-          parent: BouncingScrollPhysics(),
-        ),
+      child: CustomScrollWidget(
         slivers: [
-          SliverAppBar(title: Text(title), floating: true),
+          if (title != null)
+            SliverAppBar(title: Text(title!), floating: true),
           SliverList.separated(
             itemCount: items.length,
             itemBuilder: (context, index) {

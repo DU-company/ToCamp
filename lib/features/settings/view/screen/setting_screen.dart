@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
-import 'package:share_plus/share_plus.dart';
+import 'package:to_camp/common/const/data.dart';
 import 'package:to_camp/common/pagination/model/pagination_model.dart';
 import 'package:to_camp/common/theme/component/custom_divider.dart';
 import 'package:to_camp/common/theme/component/tile.dart';
@@ -10,7 +10,8 @@ import 'package:to_camp/common/theme/service/theme_service.dart';
 import 'package:to_camp/features/camping/model/camping_model.dart';
 import 'package:to_camp/features/camping/view/screen/camping_screen.dart';
 import 'package:to_camp/features/camping_recent/provider/camping_recent_provider.dart';
-import 'package:to_camp/features/home/view/screen/home_screen.dart';
+import 'package:to_camp/features/home/view/component/app_info.dart';
+import 'package:to_camp/routes/utils/deep_link_utils.dart';
 
 class SettingScreen extends ConsumerWidget {
   const SettingScreen({super.key});
@@ -54,22 +55,22 @@ class SettingScreen extends ConsumerWidget {
               const CustomDivider(),
               Tile(
                 onTap: () async {
-                  final params = ShareParams(
-                    text: 'du0788754@gmail.com',
+                  await DeepLinkUtils.shareEmail(
+                    context,
+                    EMAIL_ADDRESS,
                   );
-                  await SharePlus.instance.share(params);
                 },
-                text: 'du0788754@gmail.com',
+                text: EMAIL_ADDRESS,
                 trailing: PhosphorIcons.envelopeSimple(),
               ),
 
               const CustomDivider(),
 
-              Tile(onTap: null, text: '버전 정보 v2.0.0'),
+              const Tile(onTap: null, text: '버전 정보 $APP_VERSION'),
             ],
           ),
         ),
-        AppInfo(),
+        const AppInfo(),
         const SizedBox(height: 60),
       ],
     );

@@ -17,7 +17,7 @@ class GoRoutes {
     GoRoute(
       path: '/',
       name: RootTab.routeName,
-      builder: (_, _) => RootTab(),
+      builder: (_, _) => const RootTab(),
       routes: [
         GoRoute(
           path: 'camping/:title',

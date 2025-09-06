@@ -3,7 +3,7 @@ import 'package:platform_maps_flutter/platform_maps_flutter.dart';
 import 'package:to_camp/common/exception/location_exception.dart';
 import 'package:to_camp/common/pagination/model/pagination_model.dart';
 import 'package:to_camp/common/pagination/model/pagination_params.dart';
-import 'package:to_camp/common/utils/location_utils.dart';
+import 'package:to_camp/features/location/utils/location_utils.dart';
 import 'package:to_camp/features/camping/model/camping_model.dart';
 import 'package:to_camp/features/camping/repository/camping_repository.dart';
 import 'package:to_camp/features/location/model/location_model.dart';

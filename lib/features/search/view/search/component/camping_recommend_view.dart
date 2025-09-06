@@ -27,12 +27,11 @@ class CampingRecommendView extends ConsumerWidget {
           children: [
             Text(
               '투캠 추천 HOT 캠핑지!',
-
               style: context.layout(
-                theme.typo.headline1.copyWith(
+                theme.typo.headline3.copyWith(
                   color: theme.color.primary,
                 ),
-                mobile: theme.typo.headline3.copyWith(
+                mobile: theme.typo.headline4.copyWith(
                   color: theme.color.primary,
                 ),
               ),
@@ -40,8 +39,8 @@ class CampingRecommendView extends ConsumerWidget {
             const SizedBox(height: 8),
 
             if (isLoading)
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 32.0),
+              const Padding(
+                padding: EdgeInsets.symmetric(vertical: 32.0),
                 child: LoadingWidget(),
               ),
 

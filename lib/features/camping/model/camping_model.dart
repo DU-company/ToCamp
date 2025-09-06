@@ -1,5 +1,4 @@
 import 'package:json_annotation/json_annotation.dart';
-import 'package:hive_flutter/hive_flutter.dart';
 
 part 'camping_model.g.dart';
 

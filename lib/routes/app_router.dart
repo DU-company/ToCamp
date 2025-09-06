@@ -6,7 +6,6 @@ import 'package:to_camp/routes/go_routes.dart';
 final appRouterProvider = Provider((ref) {
   final routes = ref.watch(routesProvider);
   return GoRouter(
-    // navigatorKey: rootNavigatorKey,
     initialLocation: '/',
     routes: routes.routes,
     redirect: (context, state) => routes.redirectLogic(state),

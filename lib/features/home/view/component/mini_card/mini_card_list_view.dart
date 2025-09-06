@@ -4,11 +4,12 @@ import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:to_camp/common/pagination/model/pagination_model.dart';
 import 'package:to_camp/common/theme/component/error_message_widget.dart';
 import 'package:to_camp/common/theme/foundation/app_theme.dart';
+import 'package:to_camp/common/theme/res/layout.dart';
 import 'package:to_camp/common/theme/service/theme_service.dart';
 import 'package:to_camp/features/camping/model/camping_model.dart';
 import 'package:to_camp/features/camping/service/camping_service.dart';
-import 'package:to_camp/features/home/view/component/camping_mini_card.dart';
-import 'package:to_camp/features/home/view/component/mini_card_loading_view.dart';
+import 'package:to_camp/features/home/view/component/mini_card/camping_mini_card.dart';
+import 'package:to_camp/features/home/view/component/mini_card/mini_card_loading_view.dart';
 
 class MiniCardListView extends ConsumerWidget {
   final String label1;
@@ -135,8 +136,9 @@ class _Labels extends StatelessWidget {
         children: [
           Text(
             label1,
-            style: theme.typo.subtitle1.copyWith(
-              fontWeight: theme.typo.semiBold,
+            style: context.layout(
+              theme.typo.headline5,
+              mobile: theme.typo.headline6,
             ),
           ),
           Spacer(),
@@ -144,7 +146,13 @@ class _Labels extends StatelessWidget {
             onTap: onTap,
             child: Row(
               children: [
-                Text(label2, style: theme.typo.subtitle2),
+                Text(
+                  label2,
+                  style: context.layout(
+                    theme.typo.subtitle1,
+                    mobile: theme.typo.subtitle2,
+                  ),
+                ),
                 Icon(
                   PhosphorIconsBold.caretRight,
                   color: theme.color.primary,
