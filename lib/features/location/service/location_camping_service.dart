@@ -3,6 +3,7 @@ import 'package:platform_maps_flutter/platform_maps_flutter.dart';
 import 'package:to_camp/common/exception/location_exception.dart';
 import 'package:to_camp/common/pagination/model/pagination_model.dart';
 import 'package:to_camp/common/pagination/model/pagination_params.dart';
+import 'package:to_camp/common/provider/current_camping_provider.dart';
 import 'package:to_camp/features/location/utils/location_utils.dart';
 import 'package:to_camp/features/camping/model/camping_model.dart';
 import 'package:to_camp/features/camping/repository/camping_repository.dart';
@@ -80,6 +81,7 @@ class LocationCampingService {
   }) async {
     if (models.isEmpty) return;
 
+    final currentPosition = ref.read(cameraPositionProvider);
     final mapController = ref.read(mapControllerProvider);
 
     final index = models.indexWhere((e) => e.id == model.id);
@@ -87,13 +89,32 @@ class LocationCampingService {
     if (mapController != null) {
       ref.read(locationIndexProvider.notifier).state = index;
 
-      await mapController.animateCamera(
-        CameraUpdate.newLatLng(LatLng(model.lat, model.lng)),
+      await animateCameraByZoom(
+        currentPosition,
+        mapController,
+        model,
       );
 
       ref.read(showCardProvider.notifier).state = true;
 
       mapController.showMarkerInfoWindow(MarkerId(model.id));
+    }
+  }
+
+  Future<void> animateCameraByZoom(
+    CameraPosition? currentPosition,
+    PlatformMapController mapController,
+    CampingModel model,
+  ) async {
+    if (currentPosition == null || currentPosition.zoom > 10) {
+      await mapController.animateCamera(
+        CameraUpdate.newLatLng(LatLng(model.lat, model.lng)),
+      );
+    } else {
+      /// 너무 축소시킨 경우에는 Zoom 해주기
+      await mapController.animateCamera(
+        CameraUpdate.newLatLngZoom(LatLng(model.lat, model.lng), 12),
+      );
     }
   }
 }

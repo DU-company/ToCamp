@@ -17,7 +17,7 @@ class CampingDetailLoadingScreen extends StatelessWidget {
           /// Image
           renderContainer(
             width: width,
-            height: context.layout(350, tablet: 450, desktop: 350),
+            height: context.layout(300, tablet: 450, desktop: 350),
             margin: EdgeInsets.zero,
           ),
 
@@ -46,8 +46,7 @@ class CampingDetailLoadingScreen extends StatelessWidget {
     EdgeInsets? margin,
   }) {
     return Container(
-      margin:
-          margin ?? EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+      margin: margin ?? const EdgeInsets.all(8),
       height: height ?? 32,
       width: width,
       color: Colors.grey,

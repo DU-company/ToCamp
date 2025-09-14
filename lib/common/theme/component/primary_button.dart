@@ -37,7 +37,6 @@ class PrimaryButton extends ConsumerWidget {
         ),
         disabledBackgroundColor: theme.color.inactiveContainer,
         disabledForegroundColor: theme.color.onInactiveContainer,
-        // textStyle: theme.typo.subtitle1,
       ),
       onPressed: onPressed,
       child: Row(
@@ -58,14 +57,11 @@ class PrimaryButton extends ConsumerWidget {
               child: Text(
                 text!,
                 style: theme.typo.subtitle2.copyWith(
-                  fontWeight: theme.typo.semiBold,
                   color: foregroundColor ?? theme.color.onPrimary,
                 ),
                 textAlign: TextAlign.center,
               ),
             ),
-
-          // AssetIcon(icon!, color: theme.color.onPrimary),
         ],
       ),
     );

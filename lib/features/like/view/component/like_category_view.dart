@@ -1,14 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
-import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:to_camp/common/theme/res/layout.dart';
 import 'package:to_camp/common/theme/service/theme_service.dart';
 import 'package:to_camp/features/like/provider/camping_like_provider.dart';
-import 'package:to_camp/features/like/view/component/bottom_sheet/add_category_bottom_sheet.dart';
-import 'package:to_camp/features/like/view/component/dialog/delete_category_confirm_dialog.dart';
 import 'package:to_camp/features/like/view/component/like_category_card.dart';
-import 'package:to_camp/features/like/view/screen/camping_like_screen.dart';
 
 class LikeCategoryView extends ConsumerWidget {
   final void Function(int, String) onTap;
@@ -28,7 +23,7 @@ class LikeCategoryView extends ConsumerWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 8.0),
       child: CustomScrollView(
-        physics: AlwaysScrollableScrollPhysics(
+        physics: const AlwaysScrollableScrollPhysics(
           parent: BouncingScrollPhysics(),
         ),
         slivers: [

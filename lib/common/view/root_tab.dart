@@ -22,7 +22,6 @@ class RootTab extends ConsumerStatefulWidget {
 class _RootTabState extends ConsumerState<RootTab>
     with SingleTickerProviderStateMixin {
   late TabController tabController;
-  DateTime? currentBackPressTime;
 
   @override
   void initState() {
@@ -36,16 +35,10 @@ class _RootTabState extends ConsumerState<RootTab>
     super.dispose();
   }
 
-  Future<bool> onWillPop() async {
-    return ref
-        .read(toastUtilsProvider)
-        .onWillPop(currentBackPressTime);
-  }
-
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
-      onWillPop: onWillPop,
+      onWillPop: () => ToastUtils.onWillPop(ref),
       child: DefaultLayout(
         child: Stack(
           children: [
@@ -54,10 +47,10 @@ class _RootTabState extends ConsumerState<RootTab>
               controller: tabController,
               children: [
                 HomeScreen(onLocationPressed: onLocationPressed),
-                SearchScreen(),
-                LocationScreen(),
-                LikeScreen(),
-                SettingScreen(),
+                const SearchScreen(),
+                const LocationScreen(),
+                const LikeScreen(),
+                const SettingScreen(),
               ],
             ),
             Align(
@@ -100,11 +93,7 @@ class _BottomNavi extends ConsumerWidget {
 
     return SafeArea(
       child: Container(
-        margin: EdgeInsets.only(
-          left: 8,
-          right: 8,
-          bottom: Platform.isAndroid ? 8 : 0,
-        ),
+        margin: const EdgeInsets.only(left: 8, right: 8, bottom: 8),
         padding: const EdgeInsets.symmetric(vertical: 12),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(16),

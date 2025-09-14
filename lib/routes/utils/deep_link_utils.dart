@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:share_plus/share_plus.dart';
+import 'package:to_camp/common/const/data.dart';
 import 'package:to_camp/features/camping/model/camping_model.dart';
 
 abstract class DeepLinkUtils {
@@ -11,6 +13,7 @@ abstract class DeepLinkUtils {
     final uri = getShortLink(model);
     final params = ShareParams(
       uri: uri,
+      subject: '투캠에서 확인해보세요!',
       sharePositionOrigin: box!.localToGlobal(Offset.zero) & box.size,
     );
     await SharePlus.instance.share(params);
@@ -30,9 +33,10 @@ abstract class DeepLinkUtils {
   }
 
   static Uri getShortLink(CampingModel model) {
-    final uri = Uri(
-      scheme: 'com.du.tocamp',
-      host: 'shared',
+    final String baseUrl = SUPABASE_URL;
+
+    final uri = Uri.parse(baseUrl).replace(
+      path: 'functions/v1/share_camp_site',
       queryParameters: {'id': model.id, 'name': model.name},
     );
 

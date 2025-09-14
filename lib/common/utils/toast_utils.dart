@@ -29,24 +29,21 @@ class ToastUtils {
     );
   }
 
-  Future<bool> onWillPop(DateTime? pressTime) {
-    final theme = ref.read(themeServiceProvider);
 
+  static DateTime? currentBackPressTime;
+  static Future<bool> onWillPop(WidgetRef ref) async {
     DateTime now = DateTime.now();
 
-    if (pressTime == null ||
-        now.difference(pressTime) > const Duration(seconds: 2)) {
-      pressTime = now;
-      const msg = "'뒤로' 버튼을 한 번 더 누르면 종료됩니다.";
+    if (currentBackPressTime == null ||
+        now.difference(currentBackPressTime!) >
+            const Duration(seconds: 2)) {
+      currentBackPressTime = now;
 
-      Fluttertoast.showToast(
-        msg: msg,
-        textColor: theme.color.onTertiary,
-        backgroundColor: theme.color.tertiary,
-      );
-      return Future.value(false);
+      ref
+          .read(toastUtilsProvider)
+          .showToast(text: "'뒤로' 버튼을 한 번 더 누르면 종료됩니다.");
+      return false;
     }
-
-    return Future.value(true);
+    return true;
   }
 }

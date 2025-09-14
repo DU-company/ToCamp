@@ -59,7 +59,7 @@ class _PlatformMapWidgetState extends ConsumerState<PlatformMapWidget>
       rotateGesturesEnabled: false,
       // minMaxZoomPreference: MinMaxZoomPreference(8, 12),
       onMapCreated: (controller) async {
-        await Future.delayed(Duration(milliseconds: 100));
+        await Future.delayed(Duration(milliseconds: 200));
         ref.read(mapControllerProvider.notifier).state = controller;
         if (widget.models.isNotEmpty) {
           controller.showMarkerInfoWindow(

@@ -18,12 +18,11 @@ class LocationRefreshButton extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = ref.watch(themeServiceProvider);
-    final mapController = ref.watch(mapControllerProvider);
     final showRefreshButton = ref.watch(showRefreshProvider);
 
     if (showRefreshButton) {
       return PrimaryButton(
-        onPressed: () => onRefresh(ref, mapController),
+        onPressed: () => onRefresh(ref),
         text: '이 지역 재탐색',
         icon: PhosphorIconsBold.arrowClockwise,
         foregroundColor: theme.color.primary,
@@ -34,10 +33,7 @@ class LocationRefreshButton extends ConsumerWidget {
     }
   }
 
-  void onRefresh(
-    WidgetRef ref,
-    PlatformMapController? mapController,
-  ) {
+  void onRefresh(WidgetRef ref) {
     EasyThrottle.throttle(
       'location_refresh',
       Duration(seconds: 3),

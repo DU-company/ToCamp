@@ -9,17 +9,17 @@ final likeCategoryRepositoryProvider = Provider(
 class LikeCategoryRepository {
   final table = tableLikeCategory;
 
+  Future<List<LikeCategoryEntity>> getCategories() async {
+    final db = await AppDatabase.database;
+    final resp = await db.query(table, orderBy: 'id DESC');
+    return resp.map((e) => LikeCategoryEntity.fromJson(e)).toList();
+  }
+
   Future<int> insertCategory(
     LikeCategoryEntity likeCategoryEntity,
   ) async {
     final db = await AppDatabase.database;
     return await db.insert(table, likeCategoryEntity.toJson());
-  }
-
-  Future<List<LikeCategoryEntity>> getCategories() async {
-    final db = await AppDatabase.database;
-    final resp = await db.query(table);
-    return resp.map((e) => LikeCategoryEntity.fromJson(e)).toList();
   }
 
   Future<int> deleteCategory(int id) async {

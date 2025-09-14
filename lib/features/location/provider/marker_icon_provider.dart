@@ -1,7 +1,9 @@
+import 'dart:io';
 import 'dart:ui' as ui;
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:to_camp/common/const/data.dart';
+import 'package:to_camp/common/utils/platform_utils.dart';
 
 final markerIconProvider =
     StateNotifierProvider<MarkerIconProvider, List<Uint8List>>(
@@ -10,24 +12,21 @@ final markerIconProvider =
 
 class MarkerIconProvider extends StateNotifier<List<Uint8List>> {
   MarkerIconProvider() : super([]) {
-    setCustomMapPin();
+    setMarkerIcon();
   }
 
-  void setCustomMapPin() async {
+  void setMarkerIcon() async {
     try {
       Uint8List markerIcon;
       Uint8List likedMarkerIcon;
 
       markerIcon = await getBytesFromAsset(
-        //IOS와 android 상위버전에서는 정상작동하지만 android 하위버전에서는 매우 크게 보인다
         MARKER,
-        120,
-        // Platform.isIOS ? 120 : 70,
+        PlatformUtils.setMarkerSize(),
       );
       likedMarkerIcon = await getBytesFromAsset(
         MARKER_PINK,
-        120,
-        // Platform.isIOS ? 120 : 70,
+        PlatformUtils.setMarkerSize(),
       );
       state = [markerIcon, likedMarkerIcon];
     } catch (e) {
@@ -37,9 +36,11 @@ class MarkerIconProvider extends StateNotifier<List<Uint8List>> {
 
   Future<Uint8List> getBytesFromAsset(String path, int width) async {
     ByteData data = await rootBundle.load(path);
+
     ui.Codec codec = await ui.instantiateImageCodec(
       data.buffer.asUint8List(),
       targetWidth: width,
+      allowUpscaling: false,
     );
     ui.FrameInfo fi = await codec.getNextFrame();
     return (await fi.image.toByteData(

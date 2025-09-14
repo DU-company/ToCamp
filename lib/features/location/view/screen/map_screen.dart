@@ -28,7 +28,7 @@ class MapScreen extends ConsumerWidget {
     final likeModels = ref.watch(campingLikeProvider);
 
     if (data is PaginationLoading) {
-      return LoadingWidget();
+      return const LoadingWidget();
     }
     if (data is PaginationError) {
       return ErrorMessageWidget(
@@ -72,8 +72,8 @@ class MapScreen extends ConsumerWidget {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              if (data.items.isNotEmpty)
-                ShowCardButton(items: data.items),
+              if (totalModels.isNotEmpty)
+                ShowCardButton(items: totalModels),
               const SizedBox(height: 4),
               if (totalModels.isNotEmpty && showCard)
                 Flexible(
@@ -87,7 +87,12 @@ class MapScreen extends ConsumerWidget {
                           );
                     },
                     child: LocationCampingCard(
-                      model: totalModels[locationIndex],
+                      model:
+                          totalModels[totalModels.length -
+                                      locationIndex >=
+                                  1
+                              ? locationIndex
+                              : 0],
                     ),
                   ),
                 ),

@@ -26,7 +26,7 @@ class DetailAppBar extends ConsumerWidget {
       titleSpacing: 8,
       toolbarHeight: 42,
       title: _Buttons(detailModel: detailModel),
-      expandedHeight: context.layout(250, tablet: 450, desktop: 350),
+      expandedHeight: context.layout(300, tablet: 450, desktop: 350),
       flexibleSpace: _ImagePageView(detailModel: detailModel),
     );
   }
@@ -45,13 +45,12 @@ class _Buttons extends ConsumerWidget {
             context.pop();
           },
           icon: PhosphorIconsBold.caretLeft,
-          size: 26,
         ),
         Spacer(),
         LikeButton(
           campingModel: detailModel.campingModel,
-          size: 26,
           isDetail: true,
+          size: 24,
         ),
         CustomIconButton(
           onTap: () => DeepLinkUtils.shareLink(
@@ -59,7 +58,6 @@ class _Buttons extends ConsumerWidget {
             detailModel.campingModel,
           ),
           icon: PhosphorIcons.shareNetwork(),
-          size: 26,
         ),
       ],
     );

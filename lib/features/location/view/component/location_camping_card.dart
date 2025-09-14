@@ -1,8 +1,8 @@
-import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:to_camp/common/theme/res/layout.dart';
 import 'package:to_camp/common/theme/service/theme_service.dart';
+import 'package:to_camp/common/utils/platform_utils.dart';
 import 'package:to_camp/features/camping/model/camping_model.dart';
 import 'package:to_camp/features/camping/view/component/features_box.dart';
 import 'package:to_camp/features/camping/view/component/etc_box.dart';
@@ -18,6 +18,7 @@ class LocationCampingCard extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = ref.watch(themeServiceProvider);
+
     return _ResponsiveLocationCampingCard(
       imageBox: ImageBox(
         radius: 12,
@@ -26,7 +27,7 @@ class LocationCampingCard extends ConsumerWidget {
         likeButton: LikeButton(
           campingModel: model,
           position: 0,
-          size: context.layout(28, mobile: 24),
+          size: 28,
         ),
       ),
       nameBox: NameBox(name: model.name, theme: theme),
@@ -90,9 +91,9 @@ class _ResponsiveLocationCampingCard extends ConsumerWidget {
       margin: EdgeInsets.only(
         right: 12,
         left: context.layout(12, desktop: null),
-        bottom: 112,
+        bottom: PlatformUtils.setMapBottomPadding(),
       ),
-      padding: EdgeInsets.all(8),
+      padding: const EdgeInsets.all(8),
 
       /// Responsive UI
       child: context.layout(
@@ -111,7 +112,6 @@ class _ResponsiveLocationCampingCard extends ConsumerWidget {
                   ),
                 ),
                 const SizedBox(width: 4),
-
                 Expanded(flex: 2, child: imageBox),
               ],
             ),
@@ -129,7 +129,7 @@ class _ResponsiveLocationCampingCard extends ConsumerWidget {
                   Expanded(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: [nameBox, Spacer(), addressBox],
+                      children: [nameBox, const Spacer(), addressBox],
                     ),
                   ),
                   const SizedBox(width: 4),

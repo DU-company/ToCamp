@@ -1,9 +1,12 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:to_camp/common/theme/component/primary_button.dart';
 import 'package:to_camp/common/theme/service/theme_service.dart';
+import 'package:to_camp/common/utils/platform_utils.dart';
 import 'package:to_camp/features/camping/model/camping_model.dart';
 import 'package:to_camp/features/camping/view/screen/camping_screen.dart';
 import 'package:to_camp/features/location/service/location_camping_service.dart';
@@ -20,7 +23,7 @@ class ShowCardButton extends ConsumerWidget {
     final locationIndex = ref.watch(locationIndexProvider);
     return Padding(
       padding: EdgeInsets.only(
-        bottom: showCard ? 0 : 112,
+        bottom: showCard ? 0 : PlatformUtils.setMapBottomPadding(),
         right: 12,
         left: 12,
       ),
@@ -39,7 +42,10 @@ class ShowCardButton extends ConsumerWidget {
                 .read(locationCampingServiceProvider)
                 .onMarkerTap(
                   models: items,
-                  model: items[locationIndex],
+                  model:
+                      items[items.length - locationIndex >= 1
+                          ? locationIndex
+                          : 0],
                 );
           }
         },

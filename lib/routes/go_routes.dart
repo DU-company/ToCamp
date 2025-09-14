@@ -87,6 +87,7 @@ class GoRoutes {
 
   String? redirectLogic(GoRouterState state) {
     final uri = state.uri;
+    print(uri);
     if (uri.host == 'shared') {
       final id = uri.queryParameters['id'];
       final name = uri.queryParameters['name'];
