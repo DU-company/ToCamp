@@ -93,8 +93,9 @@ class _BottomNavi extends ConsumerWidget {
 
     return SafeArea(
       child: Container(
-        margin: const EdgeInsets.only(left: 8, right: 8, bottom: 8),
+        margin: const EdgeInsets.all(8),
         padding: const EdgeInsets.symmetric(vertical: 12),
+        height: 72,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(16),
           color: theme.color.surface,
@@ -177,18 +178,25 @@ class _BottomNaviItem extends ConsumerWidget {
         child: Padding(
           padding: const EdgeInsets.all(4.0),
           child: Column(
-            mainAxisSize: MainAxisSize.min,
             children: [
-              Icon(
-                isSelected ? selectedIcon : unselectedIcon,
-                color: color,
-              ),
-              const SizedBox(height: 2),
-              Text(
-                label,
-                style: theme.typo.body3.copyWith(
+              Expanded(
+                child: Icon(
+                  isSelected ? selectedIcon : unselectedIcon,
                   color: color,
-                  fontWeight: isSelected ? theme.typo.semiBold : null,
+                ),
+              ),
+              const SizedBox(height: 4),
+              Expanded(
+                child: Center(
+                  child: Text(
+                    label,
+                    style: theme.typo.body3.copyWith(
+                      color: color,
+                      fontWeight: isSelected
+                          ? theme.typo.semiBold
+                          : null,
+                    ),
+                  ),
                 ),
               ),
             ],

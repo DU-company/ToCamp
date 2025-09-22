@@ -5,11 +5,7 @@ abstract class PlatformUtils {
     return Platform.isIOS ? 'IOS' : 'ANDROID';
   }
 
-  static double setMapBottomPadding() {
-    return Platform.isAndroid ? 92.0 : 112.0;
-  }
-
   static int setMarkerSize() {
-    return Platform.isAndroid ? 90 : 120;
+    return Platform.isAndroid ? 100 : 120;
   }
 }

@@ -23,11 +23,10 @@ class ImageGridScreen extends ConsumerWidget {
     final detail = ref.watch(campingDetailProvider(id));
 
     detail as CampingDetailModel;
-    final theme = ref.watch(themeServiceProvider);
     return DefaultLayout(
       appBar: AppBar(title: Text('${detail.imgUrls.length}장의 사진')),
       child: GridView.builder(
-        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 3,
           mainAxisSpacing: 4,
           crossAxisSpacing: 4,
@@ -44,7 +43,7 @@ class ImageGridScreen extends ConsumerWidget {
                 queryParameters: {"id": id},
               );
             },
-            child: BaseNetworkImage(imgUrl: imgUrl),
+            child: BaseNetworkImage(imgUrl: imgUrl, memSize: 300),
           );
         },
       ),

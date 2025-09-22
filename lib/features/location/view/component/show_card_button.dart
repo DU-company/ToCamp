@@ -21,9 +21,12 @@ class ShowCardButton extends ConsumerWidget {
     final theme = ref.watch(themeServiceProvider);
     final showCard = ref.watch(showCardProvider);
     final locationIndex = ref.watch(locationIndexProvider);
+    final double safeAreaBottom = MediaQuery.of(
+      context,
+    ).padding.bottom;
     return Padding(
       padding: EdgeInsets.only(
-        bottom: showCard ? 0 : PlatformUtils.setMapBottomPadding(),
+        bottom: showCard ? 0 : safeAreaBottom + 88,
         right: 12,
         left: 12,
       ),

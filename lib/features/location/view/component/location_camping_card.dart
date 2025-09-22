@@ -80,18 +80,20 @@ class _ResponsiveLocationCampingCard extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = ref.watch(themeServiceProvider);
     final size = MediaQuery.of(context).size;
+    final double safeAreaBottom = MediaQuery.of(
+      context,
+    ).padding.bottom;
 
     return Container(
       width: context.layout(null, desktop: size.width / 2.5),
       decoration: BoxDecoration(
         color: theme.color.surface,
         borderRadius: BorderRadius.circular(12),
-        boxShadow: theme.deco.shadow,
       ),
       margin: EdgeInsets.only(
         right: 12,
         left: context.layout(12, desktop: null),
-        bottom: PlatformUtils.setMapBottomPadding(),
+        bottom: safeAreaBottom + 88,
       ),
       padding: const EdgeInsets.all(8),
 

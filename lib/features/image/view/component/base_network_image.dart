@@ -7,11 +7,13 @@ class BaseNetworkImage extends StatelessWidget {
   final String imgUrl;
   final BoxFit fit;
   final double height;
+  final int? memSize;
   const BaseNetworkImage({
     super.key,
     required this.imgUrl,
     this.fit = BoxFit.cover,
     this.height = 250,
+    this.memSize,
   });
 
   @override
@@ -21,6 +23,8 @@ class BaseNetworkImage extends StatelessWidget {
       fit: fit,
       width: double.infinity,
       height: height,
+      memCacheHeight: memSize, // 메모리 과부하 방지
+      memCacheWidth: memSize,
       fadeInDuration: Duration(milliseconds: 100),
       placeholder: (context, url) {
         return Skeletonizer(

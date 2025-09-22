@@ -23,7 +23,7 @@ class CustomScrollWidget extends StatelessWidget {
             slivers: slivers,
           ),
         ),
-        if (hasBox) const SizedBox(height: 60),
+        if (hasBox) const SizedBox(height: 120),
       ],
     );
   }
