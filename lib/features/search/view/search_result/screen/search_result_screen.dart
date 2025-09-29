@@ -4,7 +4,7 @@ import 'package:to_camp/common/pagination/model/pagination_model.dart';
 import 'package:to_camp/common/theme/component/custom_divider.dart';
 import 'package:to_camp/common/theme/component/error_message_widget.dart';
 import 'package:to_camp/common/theme/component/loading_widget.dart';
-import 'package:to_camp/common/view/custom_scroll_widget.dart';
+import 'package:to_camp/common/view/base_custom_scroll_view.dart';
 import 'package:to_camp/common/view/default_layout.dart';
 import 'package:to_camp/features/camping/model/camping_model.dart';
 import 'package:to_camp/features/camping/provider/camping_provider.dart';
@@ -32,7 +32,7 @@ class SearchResultScreen extends ConsumerWidget {
         }
       },
       child: DefaultLayout(
-        child: CustomScrollWidget(
+        child: BaseCustomScrollView(
           slivers: [
             const SearchAppBar(),
             body(height, data),
@@ -60,7 +60,7 @@ class SearchResultScreen extends ConsumerWidget {
           height: height / 2,
           child: ErrorMessageWidget(
             message: data.message,
-            onTap: () {},
+            onTap: null,
           ),
         ),
       );

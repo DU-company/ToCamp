@@ -26,6 +26,7 @@ class CampingStateNotifier extends StateNotifier<PaginationState> {
     bool forceReFetching = false,
   }) async {
     try {
+      state = PaginationLoading();
       final params = PaginationParams(take: take, pageNo: 1);
       state = await campingService.paginate(params);
     } catch (e) {

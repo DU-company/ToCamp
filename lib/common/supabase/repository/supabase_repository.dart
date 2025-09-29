@@ -2,6 +2,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:to_camp/common/supabase/model/banner_ad_model.dart';
 import 'package:to_camp/common/supabase/model/camping_recommendation_model.dart';
+import 'package:to_camp/common/supabase/model/error_state_model.dart';
 import 'package:to_camp/common/supabase/provider/supabase_provider.dart';
 
 final supabaseRepositoryProvider = Provider((ref) {
@@ -49,5 +50,17 @@ class SupabaseRepository {
     } catch (e) {
       return [];
     }
+  }
+
+  Future<ErrorStateModel?> getErrorState() async {
+    final resp = await supabase
+        .from('error_state')
+        .select('title, content')
+        .maybeSingle();
+
+    if (resp != null) {
+      return ErrorStateModel.fromJson(resp);
+    }
+    return null;
   }
 }

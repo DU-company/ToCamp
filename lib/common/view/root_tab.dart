@@ -1,7 +1,12 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
+import 'package:to_camp/common/supabase/model/error_state_model.dart';
+import 'package:to_camp/common/supabase/provider/error_state_provider.dart';
+import 'package:to_camp/common/theme/component/dialog/base_confirm_dialog.dart';
+import 'package:to_camp/common/theme/component/dialog/base_dialog.dart';
 import 'package:to_camp/common/theme/service/theme_service.dart';
 import 'package:to_camp/common/utils/toast_utils.dart';
 import 'package:to_camp/common/view/default_layout.dart';
@@ -37,6 +42,12 @@ class _RootTabState extends ConsumerState<RootTab>
 
   @override
   Widget build(BuildContext context) {
+    ref.listen(errorStateProvider, (p, n) {
+      if (n != null) {
+        showAppErrorDialog(n);
+      }
+    });
+
     return WillPopScope(
       onWillPop: () => ToastUtils.onWillPop(ref),
       child: DefaultLayout(
@@ -74,6 +85,22 @@ class _RootTabState extends ConsumerState<RootTab>
     setState(() {
       tabController.animateTo(2);
     });
+  }
+
+  void showAppErrorDialog(ErrorStateModel errorStateModel) {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return BaseConfirmDialog(
+          title: errorStateModel.content,
+          confirmMessage: '확인',
+          cancelMessage: '닫기',
+          onConfirm: () {
+            context.pop();
+          },
+        );
+      },
+    );
   }
 }
 

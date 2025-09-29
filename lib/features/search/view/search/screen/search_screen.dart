@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:to_camp/common/theme/component/custom_divider.dart';
-import 'package:to_camp/common/view/custom_scroll_widget.dart';
+import 'package:to_camp/common/view/base_custom_scroll_view.dart';
 import 'package:to_camp/features/home/view/screen/home_screen.dart';
 import 'package:to_camp/features/search/view/search/component/camping_recommend_view.dart';
 import 'package:to_camp/features/search/view/search/component/recent_keyword_view.dart';
@@ -11,7 +11,7 @@ class SearchScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const CustomScrollWidget(
+    return const BaseCustomScrollView(
       slivers: [
         /// AppBar (Input_field)
         SearchAppBar(),

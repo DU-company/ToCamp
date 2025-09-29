@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-class CustomScrollWidget extends StatelessWidget {
+class BaseCustomScrollView extends StatelessWidget {
   final List<Widget> slivers;
   final bool hasBox;
-  const CustomScrollWidget({
+  const BaseCustomScrollView({
     super.key,
     required this.slivers,
     this.hasBox = true,
@@ -11,6 +11,8 @@ class CustomScrollWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final safeAreaBottom = MediaQuery.of(context).padding.bottom;
+
     return Column(
       children: [
         Expanded(
@@ -23,7 +25,7 @@ class CustomScrollWidget extends StatelessWidget {
             slivers: slivers,
           ),
         ),
-        if (hasBox) const SizedBox(height: 120),
+        if (hasBox) SizedBox(height: safeAreaBottom + 60),
       ],
     );
   }

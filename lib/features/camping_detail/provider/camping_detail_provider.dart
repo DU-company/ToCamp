@@ -31,6 +31,7 @@ class CampingDetailStateNotifier
 
   Future<void> getDetail() async {
     try {
+      state = CampingDetailLoading();
       final resp = await campingDetailService.getDetailImages(id);
       state = resp;
     } catch (e, s) {

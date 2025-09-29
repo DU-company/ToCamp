@@ -17,5 +17,5 @@ const LOGO_WHITE = 'asset/img/logo_white.svg';
 const MARKER = 'asset/img/marker.png';
 const MARKER_PINK = 'asset/img/marker_pink.png';
 
-const APP_VERSION = 'v2.0.5';
+const APP_VERSION = 'v2.0.6';
 const EMAIL_ADDRESS = 'du0788754@gmail.com';
