@@ -2,21 +2,16 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:to_camp/common/supabase/model/camping_recommendation_model.dart';
 import 'package:to_camp/common/supabase/repository/supabase_repository.dart';
 
-final recommendProvider =
-    StateNotifierProvider<
-      RecommendProvider,
-      List<CampingRecommendationModel>
-    >((ref) {
-      final repository = ref.watch(supabaseRepositoryProvider);
-      return RecommendProvider(repository: repository);
-    });
+final recommendProvider = NotifierProvider(() => RecommendProvider());
 
 class RecommendProvider
-    extends StateNotifier<List<CampingRecommendationModel>> {
-  final SupabaseRepository repository;
-
-  RecommendProvider({required this.repository}) : super([]) {
+    extends Notifier<List<CampingRecommendationModel>> {
+  SupabaseRepository get repository =>
+      ref.read(supabaseRepositoryProvider);
+  @override
+  List<CampingRecommendationModel> build() {
     getRecommendations();
+    return [];
   }
 
   Future<void> getRecommendations() async {

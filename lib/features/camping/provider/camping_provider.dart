@@ -3,7 +3,7 @@ import 'package:to_camp/common/pagination/model/pagination_model.dart';
 import 'package:to_camp/common/pagination/model/pagination_params.dart';
 import 'package:to_camp/features/camping/model/camping_model.dart';
 import 'package:to_camp/features/camping/service/camping_service.dart';
-
+import 'package:flutter_riverpod/legacy.dart';
 final campingProvider =
     StateNotifierProvider<CampingStateNotifier, PaginationState>((
       ref,

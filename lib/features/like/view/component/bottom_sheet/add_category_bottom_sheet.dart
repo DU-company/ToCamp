@@ -9,6 +9,7 @@ import 'package:to_camp/common/theme/service/theme_service.dart';
 import 'package:to_camp/common/utils/toast_utils.dart';
 import 'package:to_camp/features/camping/model/camping_model.dart';
 import 'package:to_camp/features/like/provider/camping_like_provider.dart';
+import 'package:flutter_riverpod/legacy.dart';
 
 final categoryNameProvider = StateProvider.autoDispose((ref) => '');
 

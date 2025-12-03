@@ -14,6 +14,7 @@ class SharedCampingDetailScreen extends ConsumerWidget {
 
   final String id;
   final String name;
+
   const SharedCampingDetailScreen({
     super.key,
     required this.id,
@@ -22,9 +23,10 @@ class SharedCampingDetailScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final state = ref.watch(searchCampingProvider(name));
+    // final state = ref.watch(searchCampingProvider(name));
+    return Center();
 
-    return DefaultLayout(child: body(state, ref));
+    // return DefaultLayout(child: body(state, ref));
   }
 
   Widget body(PaginationState state, WidgetRef ref) {
@@ -36,7 +38,7 @@ class SharedCampingDetailScreen extends ConsumerWidget {
     if (state is PaginationError) {
       return ErrorMessageWidget(
         onTap: () {
-          ref.read(searchCampingProvider(name).notifier).paginate();
+          // ref.read(searchCampingProvider(name).notifier).paginate();
         },
         message: state.message,
       );

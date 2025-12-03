@@ -60,14 +60,8 @@ class CampingRecommendView extends ConsumerWidget {
               ...List.generate(recommendData.length, (index) {
                 final recommendModel = recommendData[index];
                 return InkWell(
-                  onTap: () => ref
-                      .read(searchCampingServiceProvider)
-                      .onKeywordTap(
-                        context,
-                        ref,
-                        controller,
-                        recommendModel.region,
-                      ),
+                  onTap: () {},
+
                   child: CampingRecommendCard(
                     model: recommendModel,
                     index: index,

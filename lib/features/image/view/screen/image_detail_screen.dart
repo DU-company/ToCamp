@@ -7,6 +7,7 @@ import 'package:to_camp/features/camping_detail/model/camping_detail_model.dart'
 import 'package:to_camp/features/camping_detail/provider/camping_detail_provider.dart';
 import 'package:to_camp/features/image/view/component/base_network_image.dart';
 import 'package:to_camp/features/image/view/screen/image_grid_screen.dart';
+import 'package:flutter_riverpod/legacy.dart';
 
 final showAppBarProvider = StateProvider.autoDispose((ref) => true);
 

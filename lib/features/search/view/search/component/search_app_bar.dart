@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:to_camp/common/theme/component/input_field.dart';
 import 'package:to_camp/common/utils/toast_utils.dart';
 import 'package:to_camp/features/search/service/search_camping_service.dart';
+import 'package:flutter_riverpod/legacy.dart';
 
 final searchTextEditingController = Provider(
   (ref) => TextEditingController(),
@@ -29,9 +30,9 @@ class SearchAppBar extends ConsumerWidget {
         onSubmitted: (text) {
           final isOk = checkKeyword(keyword, ref);
           if (isOk) {
-            ref
-                .read(searchCampingServiceProvider)
-                .onSearch(context, keyword);
+            // ref
+            //     .read(searchCampingServiceProvider)
+            //     .onSearch(context, keyword);
           }
         },
         controller: controller,

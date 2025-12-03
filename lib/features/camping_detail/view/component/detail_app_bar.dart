@@ -12,6 +12,7 @@ import 'package:to_camp/features/image/view/component/base_network_image.dart';
 import 'package:to_camp/features/image/view/screen/image_grid_screen.dart';
 import 'package:to_camp/features/like/view/component/like_button.dart';
 import 'package:to_camp/routes/utils/deep_link_utils.dart';
+import 'package:flutter_riverpod/legacy.dart';
 
 final imageIndexProvider = StateProvider.autoDispose<int>((ref) => 0);
 

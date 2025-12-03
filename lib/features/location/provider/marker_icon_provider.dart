@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:to_camp/common/const/data.dart';
 import 'package:to_camp/common/utils/platform_utils.dart';
+import 'package:flutter_riverpod/legacy.dart';
 
 final markerIconProvider =
     StateNotifierProvider<MarkerIconProvider, List<Uint8List>>(

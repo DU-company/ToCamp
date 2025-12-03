@@ -39,17 +39,17 @@ class HomeScreen extends StatelessWidget {
         SliverToBoxAdapter(
           child: Column(
             children: [
-              _CategoryMiniList(
-                category: '카라반',
-                label: '이색 캠핑, 카라반!',
-              ),
-              const CustomDivider(),
-              _CategoryMiniList(category: '글램핑', label: '낭만적인 글램핑!'),
-              const CustomDivider(),
-              _CategoryMiniList(
-                category: '자연휴양림',
-                label: '산 내음을 한 껏!',
-              ),
+              // _CategoryMiniList(
+              //   category: '카라반',
+              //   label: '이색 캠핑, 카라반!',
+              // ),
+              // const CustomDivider(),
+              // _CategoryMiniList(category: '글램핑', label: '낭만적인 글램핑!'),
+              // const CustomDivider(),
+              // _CategoryMiniList(
+              //   category: '자연휴양림',
+              //   label: '산 내음을 한 껏!',
+              // ),
               const CustomDivider(),
               CampingMiniList(),
               const CustomDivider(),
@@ -71,40 +71,40 @@ class HomeScreen extends StatelessWidget {
   }
 }
 
-class _CategoryMiniList extends ConsumerWidget {
-  final String category;
-  final String label;
-  const _CategoryMiniList({
-    super.key,
-    required this.category,
-    required this.label,
-  });
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final data = ref.watch(searchCampingProvider(category));
-    return MiniCardListView(
-      label1: label,
-      label2: '더 보기',
-      provider: null,
-      familyProvider: searchCampingProvider,
-      family: category,
-      onTap: () {
-        if (data is PaginationSuccess<CampingModel>) {
-          context.pushNamed(
-            CampingScreen.routeName,
-            extra: data.items,
-            pathParameters: {'title': category},
-          );
-        }
-      },
-      onRefresh: () {
-        ref.read(searchCampingProvider(category).notifier).paginate();
-      },
-      emptyString: '',
-    );
-  }
-}
+// class _CategoryMiniList extends ConsumerWidget {
+//   final String category;
+//   final String label;
+//   const _CategoryMiniList({
+//     super.key,
+//     required this.category,
+//     required this.label,
+//   });
+//
+//   @override
+//   Widget build(BuildContext context, WidgetRef ref) {
+//     final data = ref.watch(searchCampingProvider(category));
+//     return MiniCardListView(
+//       label1: label,
+//       label2: '더 보기',
+//       provider: null,
+//       familyProvider: searchCampingProvider,
+//       family: category,
+//       onTap: () {
+//         if (data is PaginationSuccess<CampingModel>) {
+//           context.pushNamed(
+//             CampingScreen.routeName,
+//             extra: data.items,
+//             pathParameters: {'title': category},
+//           );
+//         }
+//       },
+//       onRefresh: () {
+//         ref.read(searchCampingProvider(category).notifier).paginate();
+//       },
+//       emptyString: '',
+//     );
+//   }
+// }
 
 class CampingMiniList extends ConsumerWidget {
   const CampingMiniList({super.key});

@@ -3,18 +3,11 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:to_camp/common/theme/res/layout.dart';
 import 'package:to_camp/common/theme/service/theme_service.dart';
-import 'package:to_camp/features/search/model/recent_keyword_model.dart';
-import 'package:to_camp/features/search/provider/recent_keyword_provider.dart';
+import 'package:to_camp/data/model/recent_keyword_model.dart';
 
 class RecentKeywordCard extends ConsumerWidget {
-  final String keyword;
-  const RecentKeywordCard({super.key, required this.keyword});
-
-  factory RecentKeywordCard.fromModel({
-    required RecentKeywordModel model,
-  }) {
-    return RecentKeywordCard(keyword: model.keyword);
-  }
+  final RecentKeywordModel model;
+  const RecentKeywordCard({super.key, required this.model});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -30,7 +23,7 @@ class RecentKeywordCard extends ConsumerWidget {
           const SizedBox(width: 8),
           Expanded(
             child: Text(
-              keyword,
+              model.keyword,
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
               style: context.layout(
@@ -46,9 +39,9 @@ class RecentKeywordCard extends ConsumerWidget {
           ),
           GestureDetector(
             onTap: () {
-              ref
-                  .read(recentKeywordProvider.notifier)
-                  .deleteKeyword(keyword);
+              // ref
+              //     .read(recentKeywordProvider.notifier)
+              //     .deleteKeyword(keyword);
             },
             child: Icon(
               PhosphorIcons.x(),

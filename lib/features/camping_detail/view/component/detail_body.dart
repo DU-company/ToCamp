@@ -6,6 +6,7 @@ import 'package:to_camp/common/theme/service/theme_service.dart';
 import 'package:to_camp/features/camping/model/camping_model.dart';
 import 'package:to_camp/features/camping/view/component/camping_card.dart';
 import 'package:to_camp/features/like/view/component/like_button.dart';
+import 'package:flutter_riverpod/legacy.dart';
 
 final readMoreProvider = StateProvider.autoDispose((ref) => false);
 

@@ -2,6 +2,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:to_camp/common/pagination/model/pagination_model.dart';
 import 'package:to_camp/features/camping/model/camping_model.dart';
 import 'package:to_camp/features/location/service/location_camping_service.dart';
+import 'package:flutter_riverpod/legacy.dart';
 
 final locationCampingProvider =
     StateNotifierProvider<

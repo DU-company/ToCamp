@@ -2,6 +2,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:to_camp/features/location/model/location_model.dart';
 import 'package:to_camp/features/location/service/location_service.dart';
+import 'package:flutter_riverpod/legacy.dart';
 
 final locationProvider =
     StateNotifierProvider<LocationProvider, LocationState>((ref) {

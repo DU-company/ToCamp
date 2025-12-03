@@ -2,16 +2,17 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:to_camp/common/supabase/model/error_state_model.dart';
 import 'package:to_camp/common/supabase/repository/supabase_repository.dart';
 
-final errorStateProvider = StateNotifierProvider((ref) {
-  final repository = ref.read(supabaseRepositoryProvider);
-  return ErrorStateProvider(repository);
-});
+final errorStateProvider = NotifierProvider(
+  () => ErrorStateProvider(),
+);
 
-class ErrorStateProvider extends StateNotifier<ErrorStateModel?> {
-  final SupabaseRepository repository;
-
-  ErrorStateProvider(this.repository) : super(null) {
+class ErrorStateProvider extends Notifier<ErrorStateModel?> {
+  SupabaseRepository get repository =>
+      ref.read(supabaseRepositoryProvider);
+  @override
+  ErrorStateModel? build() {
     getErrorState();
+    return null;
   }
 
   Future<void> getErrorState() async {

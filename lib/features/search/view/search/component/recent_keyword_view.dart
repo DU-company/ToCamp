@@ -14,7 +14,7 @@ class RecentKeywordView extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final recentKeywords = ref.watch(recentKeywordProvider);
+    // final recentKeywords = ref.watch(recentKeywordProvider);
     final controller = ref.watch(searchTextEditingController);
     final theme = ref.watch(themeServiceProvider);
     return SliverToBoxAdapter(
@@ -30,27 +30,27 @@ class RecentKeywordView extends ConsumerWidget {
                 mobile: theme.typo.headline6,
               ),
             ),
-            if (recentKeywords.isEmpty)
-              ErrorMessageWidget(
-                message: '최근 검색 기록이 없어요!',
-                onTap: null,
-              ),
-
-            ...List.generate(recentKeywords.length, (index) {
-              final model = recentKeywords[index];
-              return InkWell(
-                onTap: () => ref
-                    .read(searchCampingServiceProvider)
-                    .onKeywordTap(
-                      context,
-                      ref,
-                      controller,
-                      model.keyword,
-                    ),
-                child: RecentKeywordCard.fromModel(model: model),
-              );
-            }),
-            CustomDivider(),
+            // if (recentKeywords.isEmpty)
+            //   ErrorMessageWidget(
+            //     message: '최근 검색 기록이 없어요!',
+            //     onTap: null,
+            //   ),
+            //
+            // ...List.generate(recentKeywords.length, (index) {
+            //   final model = recentKeywords[index];
+            //   return InkWell(
+            //     onTap: () => ref
+            //         .read(searchCampingServiceProvider)
+            //         .onKeywordTap(
+            //           context,
+            //           ref,
+            //           controller,
+            //           model.keyword,
+            //         ),
+            //     child: RecentKeywordCard.fromModel(model: model),
+            //   );
+            // }),
+            // CustomDivider(),
           ],
         ),
       ),

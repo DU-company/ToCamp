@@ -10,6 +10,7 @@ import 'package:to_camp/features/camping/model/camping_model.dart';
 import 'package:to_camp/features/camping/service/camping_service.dart';
 import 'package:to_camp/features/home/view/component/mini_card/camping_mini_card.dart';
 import 'package:to_camp/features/home/view/component/mini_card/mini_card_loading_view.dart';
+import 'package:flutter_riverpod/legacy.dart';
 
 class MiniCardListView extends ConsumerWidget {
   final String label1;

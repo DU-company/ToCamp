@@ -9,6 +9,7 @@ import 'package:to_camp/features/like/utils/like_utils.dart';
 import 'package:to_camp/features/location/model/location_model.dart';
 import 'package:to_camp/features/location/provider/marker_icon_provider.dart';
 import 'package:to_camp/features/location/service/location_camping_service.dart';
+import 'package:flutter_riverpod/legacy.dart';
 
 final cameraPositionProvider = StateProvider<CameraPosition?>(
   (ref) => null,

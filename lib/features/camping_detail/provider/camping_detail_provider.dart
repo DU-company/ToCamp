@@ -1,6 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:to_camp/features/camping_detail/model/camping_detail_model.dart';
 import 'package:to_camp/features/camping_detail/service/camping_detail_service.dart';
+import 'package:flutter_riverpod/legacy.dart';
 
 final campingDetailProvider =
     StateNotifierProvider.family<

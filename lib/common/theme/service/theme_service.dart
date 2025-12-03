@@ -1,27 +1,30 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:hive/hive.dart';
-import 'package:to_camp/common/const/data.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:to_camp/common/theme/dark_theme.dart';
 import 'package:to_camp/common/theme/foundation/app_theme.dart';
 import 'package:to_camp/common/theme/light_theme.dart';
 import 'package:to_camp/common/theme/res/layout.dart';
 
-final themeServiceProvider =
-    StateNotifierProvider<ThemeService, AppTheme>((ref) {
-      return ThemeService();
-    });
+final sharedPreferencesProvider = FutureProvider<SharedPreferences>(
+  (ref) async => await SharedPreferences.getInstance(),
+);
 
-class ThemeService extends StateNotifier<AppTheme> {
-  final box = Hive.box<bool>(THEME_BOX);
+final themeServiceProvider = NotifierProvider(() => ThemeService());
 
-  ThemeService() : super(LightTheme()) {
+class ThemeService extends Notifier<AppTheme> {
+  @override
+  AppTheme build() {
     getTheme();
+    return LightTheme();
   }
 
-  void getTheme() {
+  void getTheme() async {
+    final prefs = await ref.read(sharedPreferencesProvider.future);
+
     /// Hive에 저장된 theme 가져오기
-    final isLightTheme = box.get('isLightTheme');
+    final isLightTheme = prefs.getBool('isLightTheme');
+
     if (isLightTheme == null || isLightTheme) {
       state = LightTheme();
     } else {
@@ -30,12 +33,14 @@ class ThemeService extends StateNotifier<AppTheme> {
   }
 
   Future<void> toggleTheme() async {
+    final prefs = await ref.read(sharedPreferencesProvider.future);
+
     if (state.brightness == Brightness.light) {
       state = DarkTheme();
-      await box.put('isLightTheme', false);
+      await prefs.setBool('isLightTheme', false);
     } else {
       state = LightTheme();
-      await box.put('isLightTheme', true);
+      await prefs.setBool('isLightTheme', true);
     }
   }
 }
