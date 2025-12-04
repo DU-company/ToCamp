@@ -5,13 +5,13 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:platform_maps_flutter/platform_maps_flutter.dart';
-import 'package:to_camp/common/theme/component/custom_divider.dart';
-import 'package:to_camp/common/theme/component/tile.dart';
-import 'package:to_camp/common/theme/res/layout.dart';
-import 'package:to_camp/common/theme/service/theme_service.dart';
-import 'package:to_camp/common/utils/toast_utils.dart';
-import 'package:to_camp/features/camping/model/camping_model.dart';
-import 'package:to_camp/features/location/provider/marker_icon_provider.dart';
+import 'package:to_camp/core/theme/component/custom_divider.dart';
+import 'package:to_camp/core/theme/component/tile.dart';
+import 'package:to_camp/core/theme/res/layout.dart';
+import 'package:to_camp/core/theme/service/theme_service.dart';
+import 'package:to_camp/core/utils/toast_utils.dart';
+import 'package:to_camp/data/models/camping_model.dart';
+import 'package:to_camp/core/provider/marker_icon_provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class DetailMap extends ConsumerWidget {

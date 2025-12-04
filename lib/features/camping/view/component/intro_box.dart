@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:to_camp/common/theme/foundation/app_theme.dart';
-import 'package:to_camp/common/theme/res/layout.dart';
+import 'package:to_camp/core/theme/foundation/app_theme.dart';
+import 'package:to_camp/core/theme/res/layout.dart';
 
 class IntroBox extends StatelessWidget {
   final String lineIntro;

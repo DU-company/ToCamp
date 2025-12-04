@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:to_camp/common/theme/component/dialog/base_confirm_dialog.dart';
-import 'package:to_camp/common/utils/toast_utils.dart';
+import 'package:to_camp/core/theme/component/dialog/base_confirm_dialog.dart';
+import 'package:to_camp/core/utils/toast_utils.dart';
 import 'package:to_camp/features/like/model/camping_like_model.dart';
 import 'package:to_camp/features/like/provider/camping_like_provider.dart';
 

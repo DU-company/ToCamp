@@ -1,17 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
-import 'package:to_camp/common/const/data.dart';
-import 'package:to_camp/common/pagination/model/pagination_model.dart';
-import 'package:to_camp/common/theme/component/custom_divider.dart';
-import 'package:to_camp/common/theme/component/tile.dart';
-import 'package:to_camp/common/theme/service/theme_service.dart';
-import 'package:to_camp/features/camping/model/camping_model.dart';
-import 'package:to_camp/features/camping/view/screen/camping_screen.dart';
-import 'package:to_camp/features/camping_recent/provider/camping_recent_provider.dart';
-import 'package:to_camp/features/home/view/component/app_info.dart';
-import 'package:to_camp/routes/utils/deep_link_utils.dart';
+import 'package:to_camp/core/const/data.dart';
+import 'package:to_camp/core/theme/component/custom_divider.dart';
+import 'package:to_camp/core/theme/component/tile.dart';
+import 'package:to_camp/core/theme/service/theme_service.dart';
+import 'package:to_camp/features/camping/recent/recent_camping_view_model.dart';
+import 'package:to_camp/features/common/widgets/app_info.dart';
+import 'package:to_camp/core/utils/deep_link_utils.dart';
 
 class SettingScreen extends ConsumerWidget {
   const SettingScreen({super.key});
@@ -19,7 +15,6 @@ class SettingScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = ref.watch(themeServiceProvider);
-    final recent = ref.watch(campingRecentProvider);
 
     return Column(
       children: [
@@ -28,45 +23,33 @@ class SettingScreen extends ConsumerWidget {
             physics: ClampingScrollPhysics(),
             children: [
               Tile(
-                onTap: () {
-                  ref
-                      .read(themeServiceProvider.notifier)
-                      .toggleTheme();
-                },
                 text: '테마 변경',
                 trailing: theme.brightness == Brightness.light
                     ? PhosphorIconsBold.sun
                     : PhosphorIconsBold.moon,
+                onTap: () => ref
+                    .read(themeServiceProvider.notifier)
+                    .toggleTheme(),
               ),
               const CustomDivider(),
               Tile(
-                onTap: () {
-                  if (recent is PaginationSuccess<CampingModel>) {
-                    context.pushNamed(
-                      CampingScreen.routeName,
-                      extra: recent.items,
-                      pathParameters: {'title': '최근 본 캠핑장'},
-                    );
-                  }
-                },
                 text: '최근 본 캠핑장',
                 trailing: PhosphorIcons.tent(),
+                onTap: () => ref
+                    .read(recentCampingViewModelProvider.notifier)
+                    .onRecentCampingTap(context),
               ),
               const CustomDivider(),
               Tile(
-                onTap: () async {
-                  await DeepLinkUtils.shareEmail(
-                    context,
-                    EMAIL_ADDRESS,
-                  );
-                },
                 text: EMAIL_ADDRESS,
                 trailing: PhosphorIcons.envelopeSimple(),
+                onTap: () =>
+                    DeepLinkUtils.shareEmail(context, EMAIL_ADDRESS),
               ),
 
               const CustomDivider(),
 
-              const Tile(onTap: null, text: '버전 정보 $APP_VERSION'),
+              const Tile(text: '버전 정보 $APP_VERSION', onTap: null),
             ],
           ),
         ),

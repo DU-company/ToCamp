@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
-import 'package:to_camp/common/theme/component/bottom_sheet/base_bottom_sheet.dart';
-import 'package:to_camp/common/theme/component/primary_button.dart';
-import 'package:to_camp/common/theme/service/theme_service.dart';
+import 'package:to_camp/core/theme/component/bottom_sheet/base_bottom_sheet.dart';
+import 'package:to_camp/core/theme/component/primary_button.dart';
+import 'package:to_camp/core/theme/service/theme_service.dart';
 import 'package:to_camp/features/camping_detail/model/camping_detail_model.dart';
 import 'package:to_camp/features/like/provider/camping_like_provider.dart';
 import 'package:to_camp/features/like/service/camping_like_service.dart';

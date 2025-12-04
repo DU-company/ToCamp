@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:to_camp/common/const/data.dart';
-import 'package:to_camp/features/image/view/component/base_network_image.dart';
+import 'package:to_camp/core/const/data.dart';
+import 'package:to_camp/features/image/view/widgets/base_network_image.dart';
 
 class ImageBox extends StatelessWidget {
   final String thumbUrl;

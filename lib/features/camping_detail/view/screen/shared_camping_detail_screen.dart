@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:to_camp/common/pagination/model/pagination_model.dart';
-import 'package:to_camp/common/theme/component/error_message_widget.dart';
-import 'package:to_camp/common/view/default_layout.dart';
-import 'package:to_camp/features/camping/model/camping_model.dart';
-import 'package:to_camp/features/camping_detail/provider/camping_detail_provider.dart';
+import 'package:to_camp/core/theme/component/error_message_widget.dart';
+import 'package:to_camp/core/view/default_layout.dart';
+import 'package:to_camp/data/models/camping_model.dart';
+import 'package:to_camp/features/camping/search/search_view_model.dart';
 import 'package:to_camp/features/camping_detail/view/screen/camping_detail_loading_screen.dart';
 import 'package:to_camp/features/camping_detail/view/screen/camping_detail_screen.dart';
-import 'package:to_camp/features/search/provider/search_camping_provider.dart';
+import 'package:to_camp/core/models/pagination_state.dart';
 
 class SharedCampingDetailScreen extends ConsumerWidget {
   static String get routeName => 'shared';
@@ -23,27 +22,25 @@ class SharedCampingDetailScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    // final state = ref.watch(searchCampingProvider(name));
-    return Center();
+    final state = ref.watch(searchViewModelProvider(name));
 
-    // return DefaultLayout(child: body(state, ref));
+    return DefaultLayout(child: body(state, ref));
   }
 
-  Widget body(PaginationState state, WidgetRef ref) {
-    // 로딩위젯
-    if (state is PaginationLoading) {
-      return CampingDetailLoadingScreen();
+  Widget body(PaginationStateV2 state, WidgetRef ref) {
+    if (state is PaginationLoadingV2) {
+      return CampingDetailLoadingView();
     }
-    // 에러 위젯
-    if (state is PaginationError) {
+
+    if (state is PaginationErrorV2) {
       return ErrorMessageWidget(
-        onTap: () {
-          // ref.read(searchCampingProvider(name).notifier).paginate();
-        },
+        onTap: () => ref
+            .read(searchViewModelProvider(name).notifier)
+            .paginate(),
         message: state.message,
       );
     }
-    state as PaginationSuccess<CampingModel>;
+    state as PaginationSuccessV2<CampingModel>;
     return CampingDetailScreen(id: id);
   }
 }

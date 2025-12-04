@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
-import 'package:to_camp/common/theme/foundation/app_theme.dart';
-import 'package:to_camp/common/theme/res/layout.dart';
-import 'package:to_camp/common/theme/service/theme_service.dart';
+import 'package:to_camp/core/theme/foundation/app_theme.dart';
+import 'package:to_camp/core/theme/res/layout.dart';
+import 'package:to_camp/core/theme/service/theme_service.dart';
 
 class EtcBox extends StatelessWidget {
   final AppTheme theme;

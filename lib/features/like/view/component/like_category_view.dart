@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:to_camp/common/theme/res/layout.dart';
-import 'package:to_camp/common/theme/service/theme_service.dart';
+import 'package:to_camp/core/theme/res/layout.dart';
+import 'package:to_camp/core/theme/service/theme_service.dart';
 import 'package:to_camp/features/like/provider/camping_like_provider.dart';
 import 'package:to_camp/features/like/view/component/like_category_card.dart';
 

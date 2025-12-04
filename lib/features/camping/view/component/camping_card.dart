@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:to_camp/common/theme/res/layout.dart';
-import 'package:to_camp/common/theme/service/theme_service.dart';
-import 'package:to_camp/features/camping/model/camping_model.dart';
+import 'package:to_camp/core/theme/res/layout.dart';
+import 'package:to_camp/core/theme/service/theme_service.dart';
+import 'package:to_camp/data/models/camping_model.dart';
 import 'package:to_camp/features/camping/view/component/features_box.dart';
 import 'package:to_camp/features/camping/view/component/etc_box.dart';
 import 'package:to_camp/features/camping/view/component/image_box.dart';

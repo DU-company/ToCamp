@@ -32,7 +32,7 @@ LikeCampingEntity _$LikeCampingEntityFromJson(Map<String, dynamic> json) =>
       siteBottomCl4: json['siteBottomCl4'] as String,
       siteBottomCl5: json['siteBottomCl5'] as String,
       createdAt:
-          LikeCampingEntity._intToTime((json['createdAt'] as num).toInt()),
+          DataUtils.fromJsonIntToDate((json['createdAt'] as num).toInt()),
       categoryId: (json['categoryId'] as num).toInt(),
     );
 
@@ -61,6 +61,6 @@ Map<String, dynamic> _$LikeCampingEntityToJson(LikeCampingEntity instance) =>
       'siteBottomCl3': instance.siteBottomCl3,
       'siteBottomCl4': instance.siteBottomCl4,
       'siteBottomCl5': instance.siteBottomCl5,
-      'createdAt': LikeCampingEntity._timeToInt(instance.createdAt),
+      'createdAt': DataUtils.toJsonDateToInt(instance.createdAt),
       'categoryId': instance.categoryId,
     };

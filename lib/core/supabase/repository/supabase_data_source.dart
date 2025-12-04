@@ -1,0 +1,66 @@
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:to_camp/core/supabase/model/banner_ad_model.dart';
+import 'package:to_camp/core/supabase/model/camping_recommendation_model.dart';
+import 'package:to_camp/core/supabase/model/error_state_model.dart';
+import 'package:to_camp/core/service/supabase_provider.dart';
+
+final supabaseRepositoryProvider = Provider((ref) {
+  final supabase = ref.watch(supabaseProvider);
+  return SupabaseRepository(supabase: supabase);
+});
+
+class SupabaseRepository {
+  final SupabaseClient supabase;
+
+  SupabaseRepository({required this.supabase});
+
+  Future<List<CampingRecommendationModel>>
+  getRecommendations() async {
+    try {
+      final resp = await supabase
+          .from('camping_recommendations')
+          .select()
+          .order('priority', ascending: true)
+          .limit(10);
+
+      final models = resp
+          .map((e) => CampingRecommendationModel.fromJson(e))
+          .toList();
+
+      return models;
+    } catch (e) {
+      return [];
+    }
+  }
+
+  Future<List<BannerAdModel>> getBannerAd() async {
+    try {
+      final resp = await supabase
+          .from('banner_ad')
+          .select()
+          .order('priority', ascending: true)
+          .limit(10);
+
+      final models = resp
+          .map((e) => BannerAdModel.fromJson(e))
+          .toList();
+
+      return models;
+    } catch (e) {
+      return [];
+    }
+  }
+
+  Future<ErrorStateModel?> getErrorState() async {
+    final resp = await supabase
+        .from('error_state')
+        .select('title, content')
+        .maybeSingle();
+
+    if (resp != null) {
+      return ErrorStateModel.fromJson(resp);
+    }
+    return null;
+  }
+}

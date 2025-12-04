@@ -1,4 +1,4 @@
-import 'package:to_camp/features/camping/model/camping_model.dart';
+import 'package:to_camp/data/models/camping_model.dart';
 import 'package:to_camp/features/like/model/camping_like_model.dart';
 
 class LikeUtils {

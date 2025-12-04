@@ -16,8 +16,8 @@ class LikeScreen extends ConsumerWidget {
           child: LikeCategoryView(
             onTap: (categoryId, name) {
               context.pushNamed(
-                CampingLikeScreen.routeName,
-                queryParameters: {
+                WishlistScreen.routeName,
+                pathParameters: {
                   'id': categoryId.toString(),
                   'name': name,
                 },

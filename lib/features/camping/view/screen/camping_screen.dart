@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:to_camp/common/theme/component/custom_divider.dart';
-import 'package:to_camp/common/theme/res/layout.dart';
-import 'package:to_camp/common/theme/service/theme_service.dart';
-import 'package:to_camp/common/view/base_custom_scroll_view.dart';
-import 'package:to_camp/common/view/default_layout.dart';
-import 'package:to_camp/features/camping/model/camping_model.dart';
-import 'package:to_camp/features/camping/service/camping_service.dart';
+import 'package:to_camp/core/theme/component/custom_divider.dart';
+import 'package:to_camp/core/theme/service/theme_service.dart';
+import 'package:to_camp/core/view/base_custom_scroll_view.dart';
+import 'package:to_camp/core/view/default_layout.dart';
+import 'package:to_camp/data/models/camping_model.dart';
+import 'package:to_camp/features/camping/based_list_view_model.dart';
 import 'package:to_camp/features/camping/view/component/camping_card.dart';
 import 'package:to_camp/features/like/view/component/like_button.dart';
 
@@ -15,7 +14,7 @@ class CampingScreen extends ConsumerWidget {
 
   final List<CampingModel> items;
   final String? emptyMessage;
-  final String? title;
+  final String title;
   const CampingScreen({
     super.key,
     required this.items,
@@ -31,8 +30,7 @@ class CampingScreen extends ConsumerWidget {
     return DefaultLayout(
       child: BaseCustomScrollView(
         slivers: [
-          if (title != null)
-            SliverAppBar(title: Text(title!), floating: true),
+          SliverAppBar(title: Text(title), floating: true),
 
           if (hasData)
             SliverList.separated(
@@ -40,11 +38,10 @@ class CampingScreen extends ConsumerWidget {
               itemBuilder: (context, index) {
                 final model = items[index];
                 return GestureDetector(
-                  onTap: () {
-                    ref
-                        .read(campingServiceProvider)
-                        .onCampingCardTap(context, model);
-                  },
+                  onTap: () => ref
+                      .read(basedListViewModelProvider.notifier)
+                      .onCampingCardTap(context, model),
+
                   child: CampingCard.fromModel(
                     model: model,
                     likeButton: LikeButton(campingModel: model),

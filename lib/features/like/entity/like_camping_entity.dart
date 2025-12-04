@@ -1,5 +1,6 @@
 import 'package:json_annotation/json_annotation.dart';
-import 'package:to_camp/features/camping/model/camping_model.dart';
+import 'package:to_camp/core/utils/data_utils.dart';
+import 'package:to_camp/data/models/camping_model.dart';
 
 part 'like_camping_entity.g.dart';
 
@@ -29,7 +30,10 @@ class LikeCampingEntity {
   final String siteBottomCl4;
   final String siteBottomCl5;
 
-  @JsonKey(toJson: _timeToInt, fromJson: _intToTime)
+  @JsonKey(
+    toJson: DataUtils.toJsonDateToInt,
+    fromJson: DataUtils.fromJsonIntToDate,
+  )
   final DateTime createdAt;
   final int categoryId;
 
@@ -60,14 +64,6 @@ class LikeCampingEntity {
     required this.createdAt,
     required this.categoryId,
   });
-
-  static int _timeToInt(DateTime time) {
-    return time.millisecondsSinceEpoch;
-  }
-
-  static DateTime _intToTime(int number) {
-    return DateTime.fromMillisecondsSinceEpoch(number);
-  }
 
   factory LikeCampingEntity.fromJson(Map<String, dynamic> json) =>
       _$LikeCampingEntityFromJson(json);
