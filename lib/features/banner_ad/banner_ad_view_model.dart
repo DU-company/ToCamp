@@ -1,14 +1,14 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:to_camp/core/supabase/model/banner_ad_model.dart';
-import 'package:to_camp/core/supabase/repository/supabase_data_source.dart';
+import 'package:to_camp/data/models/banner_ad_model.dart';
+import 'package:to_camp/data/repositories/supabase/banner_ad_repository.dart';
 
 final bannerAdViewModelProvider = NotifierProvider(
   () => BannerAdViewModel(),
 );
 
 class BannerAdViewModel extends Notifier<List<BannerAdModel>> {
-  SupabaseRepository get repository =>
-      ref.read(supabaseRepositoryProvider);
+  BannerAdRepository get repository =>
+      ref.read(bannerAdRepositoryProvider);
   @override
   List<BannerAdModel> build() {
     getBannerAd();
@@ -17,7 +17,7 @@ class BannerAdViewModel extends Notifier<List<BannerAdModel>> {
 
   Future<void> getBannerAd() async {
     try {
-      final resp = await repository.getBannerAd();
+      final resp = await repository.getBannerAds();
       state = resp;
     } catch (e) {
       /// 에러 발생 시, 1개의 데이터를 반환

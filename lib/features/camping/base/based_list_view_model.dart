@@ -1,0 +1,62 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
+import 'package:to_camp/features/camping/recent/recent_camping_view_model.dart';
+import 'package:to_camp/core/models/pagination_state.dart';
+import 'package:to_camp/core/models/pagination_params.dart';
+import 'package:to_camp/core/provider/current_camping_provider.dart';
+import 'package:to_camp/data/repositories/camping_repository.dart';
+import 'package:to_camp/data/models/camping_model.dart';
+import 'package:to_camp/features/camping/base/camping_screen.dart';
+import 'package:to_camp/features/camping_detail/view/screen/camping_detail_screen.dart';
+
+final basedListViewModelProvider = NotifierProvider(
+  () => BasedListViewModel(),
+);
+
+class BasedListViewModel extends Notifier<PaginationStateV2> {
+  CampingRepository get repository =>
+      ref.read(campingRepositoryProvider);
+  @override
+  PaginationStateV2 build() {
+    paginate();
+    return PaginationLoadingV2();
+  }
+
+  Future<void> paginate({bool fetchMore = false}) async {
+    try {
+      state = PaginationLoadingV2();
+
+      final params = PaginationParams(take: 5000, pageNo: 1);
+      final resp = await repository.getBasedList(params);
+
+      state = resp;
+    } catch (e) {
+      state = PaginationErrorV2(message: e.toString());
+    }
+  }
+
+  void onCampingCardTap(BuildContext context, CampingModel model) {
+    ref.read(currentCampingProvider.notifier).state = model;
+    context.pushNamed(
+      CampingDetailScreen.routeName,
+      pathParameters: {'id': model.id},
+    );
+
+    // 최근 조회 캠핑장에 추가
+    ref
+        .read(recentCampingViewModelProvider.notifier)
+        .addRecentCamping(model);
+  }
+
+  void routeToCampingScreen(BuildContext context) {
+    if (state is PaginationSuccessV2<CampingModel>) {
+      final pState = state as PaginationSuccessV2<CampingModel>;
+      context.pushNamed(
+        CampingScreen.routeName,
+        extra: pState.items,
+        pathParameters: {'title': '이런 캠핑장은 어때요?'},
+      );
+    }
+  }
+}

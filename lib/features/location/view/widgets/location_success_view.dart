@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:to_camp/core/theme/component/error_message_widget.dart';
-import 'package:to_camp/core/theme/component/loading_widget.dart';
+import 'package:to_camp/features/common/widgets/error_message_widget.dart';
+import 'package:to_camp/features/common/widgets/loading_widget.dart';
 import 'package:to_camp/core/theme/res/layout.dart';
 import 'package:to_camp/data/models/camping_model.dart';
-import 'package:to_camp/features/camping/based_list_view_model.dart';
+import 'package:to_camp/features/camping/base/based_list_view_model.dart';
 import 'package:to_camp/features/camping/location/location_camping_view_model.dart';
-import 'package:to_camp/features/like/provider/camping_like_provider.dart';
-import 'package:to_camp/features/like/utils/like_utils.dart';
+import 'package:to_camp/features/camping/wishlist/wishlist_view_model.dart';
+import 'package:to_camp/features/camping/wishlist/utils/like_utils.dart';
 import 'package:to_camp/features/location/view/widgets/location_camping_card.dart';
 import 'package:to_camp/features/location/view/widgets/platform_map_widget.dart';
 import 'package:to_camp/features/location/view/widgets/show_card_button.dart';
@@ -25,7 +25,7 @@ class LocationSuccessView extends ConsumerWidget {
     final data = ref.watch(locationCampingViewModelProvider);
     final locationIndex = ref.watch(locationIndexProvider);
     final showCard = ref.watch(showCardProvider);
-    final likeModels = ref.watch(campingLikeProvider);
+    final wishlist = ref.watch(wishlistViewModelProvider);
 
     if (data is PaginationLoadingV2) {
       return const LoadingWidget();
@@ -44,7 +44,7 @@ class LocationSuccessView extends ConsumerWidget {
     /// 위치기반 + 좋아요 목록 합치기
     final totalModels = [
       ...data.items,
-      ...LikeUtils.getTotalLike(likeModels),
+      ...LikeUtils.getTotalLike(wishlist),
     ];
     return Stack(
       children: [

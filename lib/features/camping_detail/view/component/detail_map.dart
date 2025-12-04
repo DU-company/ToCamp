@@ -5,11 +5,11 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:platform_maps_flutter/platform_maps_flutter.dart';
-import 'package:to_camp/core/theme/component/custom_divider.dart';
-import 'package:to_camp/core/theme/component/tile.dart';
+import 'package:to_camp/features/common/widgets/custom_divider.dart';
+import 'package:to_camp/features/common/widgets/tile.dart';
 import 'package:to_camp/core/theme/res/layout.dart';
 import 'package:to_camp/core/theme/service/theme_service.dart';
-import 'package:to_camp/core/utils/toast_utils.dart';
+import 'package:to_camp/core/service/toast_utils.dart';
 import 'package:to_camp/data/models/camping_model.dart';
 import 'package:to_camp/core/provider/marker_icon_provider.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -78,7 +78,7 @@ class _Address extends ConsumerWidget {
           onTap: () {
             Clipboard.setData(ClipboardData(text: address));
             ref
-                .read(toastUtilsProvider)
+                .read(toastServiceProvider)
                 .showToast(text: '클립보드에 복사되었습니다', isError: false);
           },
           child: Icon(

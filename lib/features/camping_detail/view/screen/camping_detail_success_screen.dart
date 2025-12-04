@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:to_camp/core/theme/res/layout.dart';
-import 'package:to_camp/core/view/base_custom_scroll_view.dart';
+import 'package:to_camp/features/common/widgets/base_custom_scroll_view.dart';
 import 'package:to_camp/features/camping_detail/model/camping_detail_model.dart';
 import 'package:to_camp/features/camping_detail/view/component/detail_app_bar.dart';
 import 'package:to_camp/features/camping_detail/view/component/detail_body.dart';

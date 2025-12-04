@@ -4,7 +4,7 @@ abstract class Palette {
   /// Chromatic color (유채색)
   static Color green = const Color(0xFF72CC63);
   static Color red = const Color(0xFFFB432F);
-  static Color yellow = const Color(0xFFFEC85B);
+  static Color yellow = const Color(0xFFFFA000);
 
   /// Achromatic color (무채색)
   static Color white = const Color(0xFFFFFFFF);

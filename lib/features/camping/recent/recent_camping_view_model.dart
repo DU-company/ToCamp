@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:to_camp/data/models/camping_model.dart';
 import 'package:to_camp/data/repositories/recent_camping_repository.dart';
-import 'package:to_camp/features/camping/view/screen/camping_screen.dart';
+import 'package:to_camp/features/camping/base/camping_screen.dart';
 
 final recentCampingViewModelProvider = NotifierProvider(
   () => RecentCampingViewModel(),

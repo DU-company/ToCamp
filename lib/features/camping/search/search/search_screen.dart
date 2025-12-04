@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:to_camp/core/theme/component/custom_divider.dart';
-import 'package:to_camp/core/view/base_custom_scroll_view.dart';
-import 'package:to_camp/features/common/home_screen.dart';
+import 'package:to_camp/features/common/widgets/custom_divider.dart';
+import 'package:to_camp/features/common/widgets/base_custom_scroll_view.dart';
+import 'package:to_camp/features/home/home_screen.dart';
 import 'package:to_camp/features/camping/search/search/view/recommend_view.dart';
 import 'package:to_camp/features/camping/search/search/view/recent_keyword_view.dart';
 import 'package:to_camp/features/camping/search/search/view/widgets/search_app_bar.dart';
@@ -28,7 +28,7 @@ class SearchScreen extends StatelessWidget {
 
         /// Camping List
         SliverToBoxAdapter(child: CustomDivider()),
-        SliverToBoxAdapter(child: CampingMiniList()),
+        SliverToBoxAdapter(child: BasedMiniList()),
       ],
     );
   }

@@ -4,13 +4,13 @@ import 'package:go_router/go_router.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 import 'package:to_camp/core/const/data.dart';
-import 'package:to_camp/core/theme/component/custom_icon_button.dart';
+import 'package:to_camp/features/common/widgets/custom_icon_button.dart';
 import 'package:to_camp/core/theme/res/layout.dart';
 import 'package:to_camp/core/theme/service/theme_service.dart';
 import 'package:to_camp/features/camping_detail/model/camping_detail_model.dart';
 import 'package:to_camp/features/image/view/widgets/base_network_image.dart';
 import 'package:to_camp/features/image/view/screen/image_grid_screen.dart';
-import 'package:to_camp/features/like/view/component/like_button.dart';
+import 'package:to_camp/features/camping/wishlist/widgets/like_button.dart';
 import 'package:to_camp/core/utils/deep_link_utils.dart';
 import 'package:flutter_riverpod/legacy.dart';
 

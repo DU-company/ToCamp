@@ -10,7 +10,7 @@ final recentCampingLocalDataSourceProvider = Provider((ref) {
 });
 
 class RecentCampingLocalDataSource {
-  final table = tableRecentCamping;
+  final table = TABLE_RECENT_CAMPING;
 
   Future<List<RecentCampingEntity>> fetchRecentCampingList() async {
     final db = await AppDatabase.database;

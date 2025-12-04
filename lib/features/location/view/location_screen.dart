@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:to_camp/core/theme/component/error_message_widget.dart';
-import 'package:to_camp/core/theme/component/loading_widget.dart';
+import 'package:to_camp/features/common/widgets/error_message_widget.dart';
+import 'package:to_camp/features/common/widgets/loading_widget.dart';
 import 'package:to_camp/features/location/view/widgets/location_success_view.dart';
 import 'package:to_camp/features/location/view_model/location_state.dart';
 import 'package:to_camp/features/location/view_model/location_view_model.dart';

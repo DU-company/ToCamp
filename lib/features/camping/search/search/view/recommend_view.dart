@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:to_camp/features/camping/search/search/view_model/recommend_view_model.dart';
-import 'package:to_camp/core/theme/component/loading_widget.dart';
+import 'package:to_camp/features/common/widgets/loading_widget.dart';
 import 'package:to_camp/core/theme/res/layout.dart';
 import 'package:to_camp/core/theme/service/theme_service.dart';
 import 'package:to_camp/features/camping/search/search/view/widgets/camping_recommend_card.dart';

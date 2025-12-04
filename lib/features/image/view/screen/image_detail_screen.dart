@@ -2,7 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:to_camp/core/theme/service/theme_service.dart';
-import 'package:to_camp/core/view/default_layout.dart';
+import 'package:to_camp/features/common/layout/default_layout.dart';
 import 'package:to_camp/features/camping_detail/model/camping_detail_model.dart';
 import 'package:to_camp/features/camping_detail/provider/camping_detail_provider.dart';
 import 'package:to_camp/features/image/view/widgets/base_network_image.dart';

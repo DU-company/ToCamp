@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:to_camp/core/theme/component/custom_divider.dart';
-import 'package:to_camp/core/theme/component/error_message_widget.dart';
+import 'package:to_camp/features/common/widgets/custom_divider.dart';
+import 'package:to_camp/features/common/widgets/error_message_widget.dart';
 import 'package:to_camp/core/theme/service/theme_service.dart';
 import 'package:to_camp/features/camping/search/search/view_model/recent_keyword_view_model.dart';
 import 'package:to_camp/features/camping/search/search_result/search_result_view_model.dart';

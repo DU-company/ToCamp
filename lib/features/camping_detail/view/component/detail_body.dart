@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
-import 'package:to_camp/core/theme/component/custom_icon_button.dart';
+import 'package:to_camp/features/common/widgets/custom_icon_button.dart';
 import 'package:to_camp/core/theme/service/theme_service.dart';
 import 'package:to_camp/data/models/camping_model.dart';
-import 'package:to_camp/features/camping/view/component/camping_card.dart';
-import 'package:to_camp/features/like/view/component/like_button.dart';
+import 'package:to_camp/features/camping/base/widgets/camping_card.dart';
+import 'package:to_camp/features/camping/wishlist/widgets/like_button.dart';
 import 'package:flutter_riverpod/legacy.dart';
 
 final readMoreProvider = StateProvider.autoDispose((ref) => false);

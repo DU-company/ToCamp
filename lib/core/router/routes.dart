@@ -1,14 +1,14 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:to_camp/core/view/root_tab.dart';
+import 'package:to_camp/features/camping/wishlist/wishlist_detail_screen.dart';
+import 'package:to_camp/features/common/screen/root_tab.dart';
 import 'package:to_camp/data/models/camping_model.dart';
 import 'package:to_camp/features/camping/search/search_result/search_result_screen.dart';
-import 'package:to_camp/features/camping/view/screen/camping_screen.dart';
+import 'package:to_camp/features/camping/base/camping_screen.dart';
 import 'package:to_camp/features/camping_detail/view/screen/camping_detail_screen.dart';
 import 'package:to_camp/features/camping_detail/view/screen/shared_camping_detail_screen.dart';
 import 'package:to_camp/features/image/view/screen/image_detail_screen.dart';
 import 'package:to_camp/features/image/view/screen/image_grid_screen.dart';
-import 'package:to_camp/features/like/view/screen/camping_like_screen.dart';
 
 final routesProvider = Provider((ref) => GoRoutes());
 
@@ -39,7 +39,7 @@ class GoRoutes {
 
         /// Extra로 imgUrls 받기
         GoRoute(
-          path: 'imageGrid',
+          path: 'image-grid',
           name: ImageGridScreen.routeName,
           builder: (_, state) {
             final imgUrls = state.extra as List<String>;
@@ -47,7 +47,7 @@ class GoRoutes {
           },
         ),
         GoRoute(
-          path: 'imageDetail',
+          path: 'image-detail',
           name: ImageDetailScreen.routeName,
           builder: (_, state) {
             final imgUrls = state.extra as List<String>;
@@ -62,13 +62,14 @@ class GoRoutes {
             return SearchResultScreen(keyword: keyword);
           },
         ),
+
         GoRoute(
-          path: 'wishlist/:id/:name',
-          name: WishlistScreen.routeName,
+          path: 'wishlist-detail/:id/:name',
+          name: WishlistDetailScreen.routeName,
           builder: (_, state) {
             final id = state.pathParameters['id']!;
             final name = state.pathParameters['name']!;
-            return WishlistScreen(categoryId: id, categoryName: name);
+            return WishlistDetailScreen(id: id, name: name);
           },
         ),
         GoRoute(

@@ -2,9 +2,9 @@ import 'package:easy_debounce/easy_throttle.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
-import 'package:to_camp/core/theme/component/primary_button.dart';
+import 'package:to_camp/features/common/widgets/primary_button.dart';
 import 'package:to_camp/core/theme/service/theme_service.dart';
-import 'package:to_camp/core/utils/toast_utils.dart';
+import 'package:to_camp/core/service/toast_utils.dart';
 import 'package:to_camp/data/models/camping_model.dart';
 import 'package:to_camp/features/camping/location/location_camping_view_model.dart';
 import 'package:to_camp/core/models/pagination_state.dart';
@@ -52,7 +52,7 @@ class LocationRefreshButton extends ConsumerWidget {
           /// 응답값이 비어있거나 에러가 난다면
           if (models.isEmpty || data is PaginationFetchingErrorV2) {
             ref
-                .read(toastUtilsProvider)
+                .read(toastServiceProvider)
                 .showToast(text: '근처 캠핑장이 존재하지 않습니다.');
 
             /// 응답값이 존재하면

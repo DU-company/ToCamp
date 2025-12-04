@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:to_camp/core/theme/component/input_field.dart';
+import 'package:to_camp/features/common/widgets/input_field.dart';
 import 'package:to_camp/features/camping/search/search_result/search_result_view_model.dart';
 import 'package:flutter_riverpod/legacy.dart';
 

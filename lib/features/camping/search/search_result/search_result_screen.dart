@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:to_camp/core/theme/component/custom_divider.dart';
-import 'package:to_camp/core/theme/component/loading_widget.dart';
-import 'package:to_camp/core/view/base_custom_scroll_view.dart';
-import 'package:to_camp/core/view/default_layout.dart';
+import 'package:to_camp/features/common/widgets/custom_divider.dart';
+import 'package:to_camp/features/common/widgets/loading_widget.dart';
+import 'package:to_camp/features/common/widgets/base_custom_scroll_view.dart';
+import 'package:to_camp/features/common/layout/default_layout.dart';
 import 'package:to_camp/data/models/camping_model.dart';
 import 'package:to_camp/features/camping/search/search/view/widgets/search_app_bar.dart';
 import 'package:to_camp/features/camping/search/search_result/widgets/search_result_error_view.dart';
 import 'package:to_camp/features/camping/search/search_result/widgets/search_result_success_view.dart';
 import 'package:to_camp/features/camping/search/search_result/search_result_view_model.dart';
-import 'package:to_camp/features/common/home_screen.dart';
+import 'package:to_camp/features/home/home_screen.dart';
 
 class SearchResultScreen extends ConsumerWidget {
   static String get routeName => 'search-result';
@@ -41,7 +41,7 @@ class SearchResultScreen extends ConsumerWidget {
 
             /// Mini Card
             const SliverToBoxAdapter(child: CustomDivider()),
-            const SliverToBoxAdapter(child: CampingMiniList()),
+            const SliverToBoxAdapter(child: BasedMiniList()),
           ],
           hasBox: false,
         ),

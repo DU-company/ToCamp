@@ -11,13 +11,13 @@ final recentKeywordLocalDataSourceProvider = Provider((ref) {
 });
 
 class RecentKeywordLocalDataSource {
-  final table = tableRecentKeyword;
+  final table = TABLE_RECENT_KEYWORD;
 
   Future<List<RecentKeywordEntity>> fetchKeywords() async {
     final db = await AppDatabase.database;
 
     final resp = await db.query(
-      tableRecentKeyword,
+      TABLE_RECENT_KEYWORD,
       orderBy: 'createdAt DESC',
     );
     return resp.map((e) => RecentKeywordEntity.fromJson(e)).toList();

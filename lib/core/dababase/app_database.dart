@@ -7,7 +7,7 @@ class AppDatabase {
 
   static deleteDB() async {
     final dbPath = await getDatabasesPath();
-    final path = join(dbPath, dbName); // 기존 DB 파일 이름
+    final path = join(dbPath, DB_NAME); // 기존 DB 파일 이름
 
     await deleteDatabase(path);
     print('Database deleted successfully');
@@ -17,21 +17,21 @@ class AppDatabase {
     if (_db != null) return _db!;
 
     final dbPath = await getDatabasesPath();
-    final path = join(dbPath, dbName);
+    final path = join(dbPath, DB_NAME);
 
     _db = await openDatabase(
       path,
       version: 2,
       onCreate: (db, version) async {
         await db.execute('''
-        CREATE TABLE $tableLikeCategory (
+        CREATE TABLE $TABLE_WISHLIST_CATEGORY (
           id INTEGER PRIMARY KEY AUTOINCREMENT,
           name TEXT NOT NULL
         )
         ''');
 
         await db.execute('''
-          CREATE TABLE $tableLikeCamping (
+          CREATE TABLE $TABLE_WISHLIST_CAMPING (
             id TEXT PRIMARY KEY NOT NULL,
             thumbUrl TEXT NOT NULL,
             name TEXT NOT NULL,
@@ -57,12 +57,12 @@ class AppDatabase {
             siteBottomCl5 TEXT,
             createdAt INTEGER NOT NULL,
             categoryId INTEGER NOT NULL,
-            FOREIGN KEY (categoryId) REFERENCES $tableLikeCategory(id) ON DELETE CASCADE
+            FOREIGN KEY (categoryId) REFERENCES $TABLE_WISHLIST_CATEGORY(id) ON DELETE CASCADE
           )
           ''');
 
         await db.execute('''
-          CREATE TABLE $tableRecentCamping (
+          CREATE TABLE $TABLE_RECENT_CAMPING (
             id TEXT PRIMARY KEY NOT NULL,
             thumbUrl TEXT NOT NULL,
             name TEXT NOT NULL,
@@ -93,7 +93,7 @@ class AppDatabase {
       onUpgrade: (db, oldVersion, newVersion) async {
         if (oldVersion < 2) {
           await db.execute('''
-            CREATE TABLE $tableRecentKeyword (
+            CREATE TABLE $TABLE_RECENT_KEYWORD (
               keyword TEXT PRIMARY KEY,
               createdAt INTEGER NOT NULL
             )

@@ -4,12 +4,12 @@ import 'package:to_camp/core/theme/res/layout.dart';
 import 'package:to_camp/core/theme/service/theme_service.dart';
 import 'package:to_camp/core/utils/platform_utils.dart';
 import 'package:to_camp/data/models/camping_model.dart';
-import 'package:to_camp/features/camping/view/component/features_box.dart';
-import 'package:to_camp/features/camping/view/component/etc_box.dart';
-import 'package:to_camp/features/camping/view/component/image_box.dart';
-import 'package:to_camp/features/camping/view/component/intro_box.dart';
-import 'package:to_camp/features/camping/view/component/name_box.dart';
-import 'package:to_camp/features/like/view/component/like_button.dart';
+import 'package:to_camp/features/camping/base/widgets/features_box.dart';
+import 'package:to_camp/features/camping/base/widgets/etc_box.dart';
+import 'package:to_camp/features/camping/base/widgets/image_box.dart';
+import 'package:to_camp/features/camping/base/widgets/intro_box.dart';
+import 'package:to_camp/features/camping/base/widgets/name_box.dart';
+import 'package:to_camp/features/camping/wishlist/widgets/like_button.dart';
 
 class LocationCampingCard extends ConsumerWidget {
   final CampingModel model;

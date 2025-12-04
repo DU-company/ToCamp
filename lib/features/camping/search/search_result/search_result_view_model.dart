@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_riverpod/legacy.dart';
 import 'package:go_router/go_router.dart';
-import 'package:to_camp/core/utils/toast_utils.dart';
+import 'package:to_camp/core/service/toast_utils.dart';
 import 'package:to_camp/data/models/camping_model.dart';
-import 'package:to_camp/features/camping/based_list_view_model.dart';
+import 'package:to_camp/features/camping/base/based_list_view_model.dart';
 import 'package:to_camp/features/camping/search/search/view/widgets/search_app_bar.dart';
 import 'package:to_camp/features/camping/search/search/view_model/recent_keyword_view_model.dart';
 import 'package:to_camp/features/camping/search/search_result/search_result_screen.dart';
@@ -62,7 +62,7 @@ class SearchResultViewModel
           .read(recentKeywordViewModelProvider.notifier)
           .addKeyword(keyword);
     } catch (e) {
-      ref.read(toastUtilsProvider).showToast(text: e.toString());
+      ref.read(toastServiceProvider).showToast(text: e.toString());
     }
   }
 

@@ -4,9 +4,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:platform_maps_flutter/platform_maps_flutter.dart';
 import 'package:to_camp/data/models/camping_model.dart';
 import 'package:to_camp/features/camping/location/location_camping_view_model.dart';
-import 'package:to_camp/features/like/model/camping_like_model.dart';
-import 'package:to_camp/features/like/provider/camping_like_provider.dart';
-import 'package:to_camp/features/like/utils/like_utils.dart';
+import 'package:to_camp/data/models/wishlist_model.dart';
+import 'package:to_camp/features/camping/wishlist/utils/like_utils.dart';
+import 'package:to_camp/features/camping/wishlist/wishlist_view_model.dart';
 import 'package:to_camp/features/location/view_model/location_state.dart';
 import 'package:to_camp/core/provider/marker_icon_provider.dart';
 import 'package:flutter_riverpod/legacy.dart';
@@ -48,7 +48,7 @@ class _PlatformMapWidgetState extends ConsumerState<PlatformMapWidget>
   Widget build(BuildContext context) {
     final markerIcons = ref.watch(markerIconProvider);
     final mapController = ref.watch(mapControllerProvider);
-    final likeModels = ref.watch(campingLikeProvider);
+    final wishlist = ref.watch(wishlistViewModelProvider);
 
     return PlatformMap(
       myLocationEnabled: true,
@@ -89,7 +89,7 @@ class _PlatformMapWidgetState extends ConsumerState<PlatformMapWidget>
           ? {}
           : Set.from(
               setMarkersFromModels(
-                likeModels,
+                wishlist,
                 markerIcons,
                 mapController,
               ),
@@ -98,14 +98,14 @@ class _PlatformMapWidgetState extends ConsumerState<PlatformMapWidget>
   }
 
   List<Marker> setMarkersFromModels(
-    List<CampingLikeModel> likeModels,
+    List<WishlistModel> wishlist,
     List<Uint8List> markerIcons,
     PlatformMapController? mapController,
   ) {
     final models = widget.models;
     return List.generate(models.length, (index) {
       final model = models[index];
-      final isLiked = LikeUtils.checkIsLiked(likeModels, model);
+      final isLiked = LikeUtils.checkIsLiked(wishlist, model);
       return Marker(
         markerId: MarkerId(model.id),
         icon: BitmapDescriptor.fromBytes(

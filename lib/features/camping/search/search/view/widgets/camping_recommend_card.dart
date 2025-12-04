@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:to_camp/core/supabase/model/camping_recommendation_model.dart';
+import 'package:to_camp/data/models/recommendation_model.dart';
 import 'package:to_camp/core/theme/res/layout.dart';
 import 'package:to_camp/core/theme/service/theme_service.dart';
 
 class CampingRecommendCard extends ConsumerWidget {
-  final CampingRecommendationModel model;
+  final RecommendationModel model;
   final int index;
   const CampingRecommendCard({
     super.key,
