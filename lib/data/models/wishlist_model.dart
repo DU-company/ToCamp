@@ -1,6 +1,6 @@
 import 'package:to_camp/data/models/camping_model.dart';
 import 'package:to_camp/data/entities/wishlist_camping_entity.dart';
-import 'package:to_camp/data/entities/wishlist_category_entity.dart';
+import 'package:to_camp/data/entities/wishlist_entity.dart';
 
 /// 화면에 보여줄 카테고리 덩어리
 class WishlistModel {
@@ -17,7 +17,7 @@ class WishlistModel {
   });
 
   factory WishlistModel.fromQuery(
-    WishlistCategoryEntity wishlistCategory,
+    WishlistEntity wishlistCategory,
     List<WishlistCampingEntity> wishlistCampings,
   ) {
     final campingModels = wishlistCampings

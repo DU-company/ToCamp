@@ -51,6 +51,38 @@ class _CampingDataSource implements CampingDataSource {
   }
 
   @override
+  Future<ApiResponse<CampingImageEntity>> fetchImageList(
+      PaginationParams params) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    queryParameters.addAll(params.toJson());
+    final _headers = <String, dynamic>{};
+    final Map<String, dynamic>? _data = null;
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<ApiResponse<CampingImageEntity>>(Options(
+      method: 'GET',
+      headers: _headers,
+      extra: _extra,
+    )
+            .compose(
+              _dio.options,
+              '/imageList',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(
+                baseUrl: _combineBaseUrls(
+              _dio.options.baseUrl,
+              baseUrl,
+            ))));
+    final value = ApiResponse<CampingImageEntity>.fromJson(
+      _result.data!,
+      (json) => CampingImageEntity.fromJson(json as Map<String, dynamic>),
+    );
+    return value;
+  }
+
+  @override
   Future<ApiResponse<CampingModel>> fetchLocationBasedList(
       PaginationParams params) async {
     const _extra = <String, dynamic>{};

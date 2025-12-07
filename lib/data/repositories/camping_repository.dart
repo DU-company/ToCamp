@@ -2,6 +2,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:to_camp/core/exception/camping_exception.dart';
 import 'package:to_camp/core/exception/location_exception.dart';
 import 'package:to_camp/core/exception/search_exception.dart';
+import 'package:to_camp/data/models/camping_detail_model.dart';
 import 'package:to_camp/data/models/camping_model.dart';
 import 'package:to_camp/core/models/pagination_state.dart';
 import 'package:to_camp/core/models/pagination_params.dart';
@@ -17,7 +18,7 @@ class CampingRepository {
 
   CampingRepository({required this.campingDataSource});
 
-  Future<PaginationSuccessV2<CampingModel>> getBasedList(
+  Future<PaginationSuccess<CampingModel>> getBasedList(
     PaginationParams params,
   ) async {
     try {
@@ -26,13 +27,36 @@ class CampingRepository {
       final items = resp.items;
       final hasMore = items.length >= params.take;
 
-      return PaginationSuccessV2(items: items, hasMore: hasMore);
+      return PaginationSuccess(items: items, hasMore: hasMore);
     } catch (e) {
       throw PaginationException();
     }
   }
 
-  Future<PaginationSuccessV2<CampingModel>> getSearchList(
+  /// 상세 정보
+  Future<CampingDetailModel> getCampingDetail(
+    PaginationParams params,
+    CampingModel campingModel,
+  ) async {
+    try {
+      final imgUrls = await _getImageList(params);
+      return CampingDetailModel(
+        campingModel: campingModel,
+        imgUrls: imgUrls,
+      );
+    } catch (e) {
+      throw CampingDetailException();
+    }
+  }
+
+  Future<List<String>> _getImageList(PaginationParams params) async {
+    final resp = await campingDataSource.fetchImageList(params);
+    final imgUrls = resp.items.map((e) => e.imageUrl).toList();
+    return imgUrls;
+  }
+
+  /// 검색
+  Future<PaginationSuccess<CampingModel>> getSearchList(
     PaginationParams params,
   ) async {
     try {
@@ -41,13 +65,14 @@ class CampingRepository {
       final items = resp.items;
       final hasMore = items.length >= params.take;
 
-      return PaginationSuccessV2(items: items, hasMore: hasMore);
+      return PaginationSuccess(items: items, hasMore: hasMore);
     } catch (e) {
       throw SearchCampingException(params.keyword!);
     }
   }
 
-  Future<PaginationSuccessV2<CampingModel>> getLocationBasedList(
+  /// 위치 기반
+  Future<PaginationSuccess<CampingModel>> getLocationBasedList(
     PaginationParams params,
   ) async {
     try {
@@ -58,7 +83,7 @@ class CampingRepository {
       final items = resp.items;
       final hasMore = items.length >= params.take;
 
-      return PaginationSuccessV2(items: items, hasMore: hasMore);
+      return PaginationSuccess(items: items, hasMore: hasMore);
     } catch (e) {
       print(e);
 

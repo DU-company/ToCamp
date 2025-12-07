@@ -1,14 +1,14 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:to_camp/features/camping/wishlist/wishlist_detail_screen.dart';
-import 'package:to_camp/features/common/screen/root_tab.dart';
+import 'package:to_camp/presentation/camping/wishlist/wishlist_detail_screen.dart';
+import 'package:to_camp/presentation/common/screen/root_tab.dart';
 import 'package:to_camp/data/models/camping_model.dart';
-import 'package:to_camp/features/camping/search/search_result/search_result_screen.dart';
-import 'package:to_camp/features/camping/base/camping_screen.dart';
-import 'package:to_camp/features/camping_detail/view/screen/camping_detail_screen.dart';
-import 'package:to_camp/features/camping_detail/view/screen/shared_camping_detail_screen.dart';
-import 'package:to_camp/features/image/view/screen/image_detail_screen.dart';
-import 'package:to_camp/features/image/view/screen/image_grid_screen.dart';
+import 'package:to_camp/presentation/camping/search/search_result/search_result_screen.dart';
+import 'package:to_camp/presentation/camping/base/camping_screen.dart';
+import 'package:to_camp/presentation/camping/detail/screen/camping_detail_screen.dart';
+import 'package:to_camp/presentation/camping/detail/screen/shared_camping_detail_screen.dart';
+import 'package:to_camp/presentation/image/screen/image_detail_screen.dart';
+import 'package:to_camp/presentation/image/screen/image_grid_screen.dart';
 
 final routesProvider = Provider((ref) => GoRoutes());
 

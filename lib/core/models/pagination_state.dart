@@ -1,36 +1,38 @@
-abstract class PaginationStateV2 {}
+abstract class PaginationState {}
 
-class PaginationLoadingV2 extends PaginationStateV2 {}
+class PaginationLoading extends PaginationState {}
 
-class PaginationErrorV2 extends PaginationStateV2 {
+class PaginationError extends PaginationState {
   final String message;
 
-  PaginationErrorV2({required this.message});
+  PaginationError({required this.message});
 }
 
-class PaginationSuccessV2<T> extends PaginationStateV2 {
+class PaginationSuccess<T> extends PaginationState {
   final List<T> items;
   final bool hasMore;
 
-  PaginationSuccessV2({required this.items, required this.hasMore});
+  PaginationSuccess({required this.items, required this.hasMore});
 
-  PaginationSuccessV2<T> copyWith({List<T>? items, bool? hasMore}) {
-    return PaginationSuccessV2<T>(
+  PaginationSuccess<T> copyWith({List<T>? items, bool? hasMore}) {
+    return PaginationSuccess<T>(
       items: items ?? this.items,
       hasMore: hasMore ?? this.hasMore,
     );
   }
 }
 
-class PaginationFetchingErrorV2<T> extends PaginationSuccessV2<T> {
-  PaginationFetchingErrorV2({
+class PaginationFetchingError<T> extends PaginationSuccess<T> {
+  final String message;
+  PaginationFetchingError({
     required super.items,
     required super.hasMore,
+    required this.message,
   });
 }
 
-class PaginationFetchingMoreV2<T> extends PaginationSuccessV2<T> {
-  PaginationFetchingMoreV2({
+class PaginationFetchingMore<T> extends PaginationSuccess<T> {
+  PaginationFetchingMore({
     required super.items,
     required super.hasMore,
   });

@@ -1,7 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:to_camp/core/exception/location_exception.dart';
-import 'package:to_camp/features/location/view_model/location_state.dart';
+import 'package:to_camp/presentation/camping/location/view_model/location_state.dart';
 
 final locationServiceProvider = Provider<LocationService>((ref) {
   return LocationService();

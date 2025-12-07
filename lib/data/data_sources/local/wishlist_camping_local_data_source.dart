@@ -2,55 +2,51 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:to_camp/core/const/data.dart';
 import 'package:to_camp/core/dababase/app_database.dart';
 import 'package:to_camp/data/entities/wishlist_camping_entity.dart';
-import 'package:to_camp/data/entities/wishlist_category_entity.dart';
+import 'package:to_camp/data/entities/wishlist_entity.dart';
 
 final wishlistLocalDataSourceProvider = Provider(
   (ref) => WishlistLocalDataSource(),
 );
 
 class WishlistLocalDataSource {
-  final categoryTable = TABLE_WISHLIST_CATEGORY;
+  final wishlistTable = TABLE_WISHLIST_CATEGORY;
   final campingTable = TABLE_WISHLIST_CAMPING;
 
-  ///==================================Category=====================================
+  ///=========================Wishlist=========================
 
-  /// 모든 카테고리 목록 가져오기
-  Future<List<WishlistCategoryEntity>> fetchCategories() async {
+  /// 모든 위시리스트 목록 가져오기
+  Future<List<WishlistEntity>> fetchAllWishlist() async {
     final db = await AppDatabase.database;
-    final resp = await db.query(categoryTable, orderBy: 'id DESC');
-    return resp
-        .map((e) => WishlistCategoryEntity.fromJson(e))
-        .toList();
+    final resp = await db.query(wishlistTable, orderBy: 'id DESC');
+    return resp.map((e) => WishlistEntity.fromJson(e)).toList();
   }
 
   /// 새로운 카테고리 생성
-  Future<int> insertCategory(
-    WishlistCategoryEntity wishlistCategory,
-  ) async {
+  Future<int> insertWishlist(WishlistEntity wishlistCategory) async {
     final db = await AppDatabase.database;
-    return await db.insert(categoryTable, wishlistCategory.toJson());
+    return await db.insert(wishlistTable, wishlistCategory.toJson());
   }
 
   /// 카테고리 삭제
-  Future<int> deleteCategory(int id) async {
+  Future<int> deleteWishlist(int id) async {
     final db = await AppDatabase.database;
     return await db.delete(
-      categoryTable,
+      wishlistTable,
       where: 'id = ?',
       whereArgs: [id],
     );
   }
 
-  /// ==================================Items=====================================
+  /// =========================Items============================
 
-  Future<List<WishlistCampingEntity>> fetchWishlistByCategory({
-    required int categoryId,
+  Future<List<WishlistCampingEntity>> fetchCampingList({
+    required int wishlistId,
   }) async {
     final db = await AppDatabase.database;
     final resp = await db.query(
       campingTable,
       where: 'categoryId = ?',
-      whereArgs: [categoryId],
+      whereArgs: [wishlistId],
       orderBy: 'createdAt DESC', // 최신순
     );
     return resp

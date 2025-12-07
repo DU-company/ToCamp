@@ -13,7 +13,7 @@ const LOGO_WHITE = 'asset/img/logo_white.svg';
 const MARKER = 'asset/img/marker.png';
 const MARKER_PINK = 'asset/img/marker_pink.png';
 
-/// Sqflite
+/// Sqflite(Don't Change!!)
 const TABLE_WISHLIST_CATEGORY = 'like_categories';
 const TABLE_WISHLIST_CAMPING = 'like_campings';
 const TABLE_RECENT_CAMPING = 'recent_campings';
