@@ -21,5 +21,5 @@ const TABLE_RECENT_KEYWORD = 'recent_keywords';
 const DB_NAME = 'tocamp.db';
 
 /// ETC
-const APP_VERSION = 'v2.0.6';
+const APP_VERSION = 'v2.1.0';
 const EMAIL_ADDRESS = 'du0788754@gmail.com';
