@@ -3,11 +3,9 @@ import 'package:flutter/services.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-import 'package:to_camp/common/theme/service/theme_service.dart';
-import 'package:to_camp/features/search/model/recent_keyword_model.dart';
-import 'package:to_camp/routes/app_router.dart';
-import 'common/const/data.dart';
-import 'package:hive_flutter/hive_flutter.dart';
+import 'package:to_camp/core/const/data.dart';
+import 'package:to_camp/core/theme/service/theme_service.dart';
+import 'package:to_camp/core/router/app_router.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -21,11 +19,6 @@ void main() async {
     url: SUPABASE_URL,
     anonKey: SUPABASE_ANON_KEY,
   );
-
-  await Hive.initFlutter();
-  Hive.registerAdapter(RecentKeywordModelAdapter());
-  await Hive.openBox<RecentKeywordModel>(RECENT_KEYWORD_BOX);
-  await Hive.openBox<bool>(THEME_BOX);
 
   runApp(const ProviderScope(child: _APP()));
 }
