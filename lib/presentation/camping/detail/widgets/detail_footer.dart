@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:to_camp/data/models/camping_detail_model.dart';
+import 'package:to_camp/data/models/camping_model.dart';
 import 'package:to_camp/presentation/common/widgets/bottom_sheet/base_bottom_sheet.dart';
 import 'package:to_camp/presentation/common/widgets/primary_button.dart';
 import 'package:to_camp/core/theme/service/theme_service.dart';
@@ -22,8 +23,11 @@ class DetailFooter extends ConsumerWidget {
     final campingModel = detailModel.campingModel;
 
     /// Boolean
-    final isLiked = WishlistUtils.checkIsLiked(wishlist, campingModel);
-    final hasDomain =
+    final isLiked = WishlistUtils.checkIsLiked(
+      wishlist,
+      campingModel,
+    );
+    final hasLink =
         campingModel.homepage.isNotEmpty ||
         campingModel.resveUrl.isNotEmpty;
 
@@ -38,7 +42,7 @@ class DetailFooter extends ConsumerWidget {
           Expanded(
             child: PrimaryButton(
               text: '예약 사이트',
-              onPressed: hasDomain ? onTapLink : null,
+              onPressed: hasLink ? onTapLink : null,
               padding: 20,
             ),
           ),
@@ -46,14 +50,8 @@ class DetailFooter extends ConsumerWidget {
           /// Like
           const SizedBox(width: 8),
           PrimaryButton(
-            onPressed: () => ref
-                .read(wishlistViewModelProvider.notifier)
-                .onLikePressed(
-                  context: context,
-                  isLiked: isLiked,
-                  campingModel: campingModel,
-                ),
-
+            onPressed: () =>
+                onLikePressed(context, ref, isLiked, campingModel),
             icon: isLiked
                 ? PhosphorIconsFill.heart
                 : PhosphorIconsBold.heart,
@@ -61,6 +59,7 @@ class DetailFooter extends ConsumerWidget {
             foregroundColor: isLiked
                 ? theme.color.secondary
                 : theme.color.subtext,
+            borderColor: theme.color.onHintContainer,
             padding: 20,
           ),
         ],
@@ -80,5 +79,20 @@ class DetailFooter extends ConsumerWidget {
       Uri.parse(url),
       mode: LaunchMode.inAppBrowserView,
     );
+  }
+
+  void onLikePressed(
+    BuildContext context,
+    WidgetRef ref,
+    bool isLiked,
+    CampingModel campingModel,
+  ) {
+    ref
+        .read(wishlistViewModelProvider.notifier)
+        .onLikePressed(
+          context: context,
+          isLiked: isLiked,
+          campingModel: campingModel,
+        );
   }
 }

@@ -30,7 +30,7 @@ class PrimaryButton extends ConsumerWidget {
       style: OutlinedButton.styleFrom(
         side: BorderSide(
           color: borderColor ?? Colors.transparent,
-          width: 0.5,
+          width: 1,
         ),
         splashFactory: InkSparkle.splashFactory,
         backgroundColor: backgroundColor ?? theme.color.primary,
