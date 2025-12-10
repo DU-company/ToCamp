@@ -27,25 +27,22 @@ class PrimaryButton extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = ref.watch(themeServiceProvider);
     return OutlinedButton(
+      onPressed: onPressed,
       style: OutlinedButton.styleFrom(
-        side: BorderSide(
-          color: borderColor ?? Colors.transparent,
-          width: 1,
-        ),
-        splashFactory: InkSparkle.splashFactory,
-        backgroundColor: backgroundColor ?? theme.color.primary,
-        foregroundColor: foregroundColor ?? theme.color.onPrimary,
+        /// Shape
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(radius),
         ),
-        padding: EdgeInsets.symmetric(
-          horizontal: padding,
-          vertical: padding,
-        ),
+        padding: EdgeInsets.all(padding),
+
+        /// Color
+        splashFactory: InkSparkle.splashFactory,
+        backgroundColor: backgroundColor ?? theme.color.primary,
+        foregroundColor: foregroundColor ?? theme.color.onPrimary,
         disabledBackgroundColor: theme.color.inactiveContainer,
         disabledForegroundColor: theme.color.onInactiveContainer,
+        side: BorderSide(color: borderColor ?? Colors.transparent),
       ),
-      onPressed: onPressed,
       child: Row(
         mainAxisSize: MainAxisSize.min,
         mainAxisAlignment: MainAxisAlignment.center,

@@ -80,13 +80,13 @@ class _RootTabState extends ConsumerState<RootTab>
 
   void showNoticeDialog(NoticeModel noticeModel) {
     showDialog(
+      barrierDismissible: false,
       context: context,
       builder: (context) {
         return BaseConfirmDialog(
-          title: noticeModel.content,
+          title: noticeModel.title,
           content: noticeModel.content,
-          confirmMessage: '확인했습니다.',
-          cancelMessage: '닫기',
+          confirmMessage: '네, 확인했어요',
           onConfirm: () => context.pop(),
         );
       },

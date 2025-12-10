@@ -9,16 +9,16 @@ class BaseConfirmDialog extends ConsumerWidget {
   final String title;
   final String? content;
   final String confirmMessage;
-  final String cancelMessage;
   final VoidCallback onConfirm;
+  final String? cancelMessage;
 
   const BaseConfirmDialog({
     super.key,
     required this.title,
     this.content,
     required this.confirmMessage,
-    required this.cancelMessage,
     required this.onConfirm,
+    this.cancelMessage,
   });
 
   @override
@@ -29,12 +29,15 @@ class BaseConfirmDialog extends ConsumerWidget {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         mainAxisSize: MainAxisSize.min,
         children: [
+          /// Title
           Text(
             title,
             style: theme.typo.headline3,
             textAlign: TextAlign.center,
           ),
           const SizedBox(height: 16),
+
+          /// Content
           if (content != null)
             Text(
               content!,
@@ -44,22 +47,25 @@ class BaseConfirmDialog extends ConsumerWidget {
               textAlign: TextAlign.center,
             ),
           if (content != null) const SizedBox(height: 32),
+
+          /// Confirm Button
           PrimaryButton(
-            radius: 8,
-            onPressed: onConfirm,
             text: confirmMessage,
-            padding: 16,
-          ),
-          const SizedBox(height: 8),
-          PrimaryButton(
+            onPressed: onConfirm,
             radius: 8,
-            onPressed: () => context.pop(),
-            text: cancelMessage,
-            backgroundColor: theme.color.surface,
-            foregroundColor: theme.color.text,
-            borderColor: theme.color.subtext,
-            padding: 16,
           ),
+
+          /// Cancel Button
+          if (cancelMessage != null) const SizedBox(height: 8),
+          if (cancelMessage != null)
+            PrimaryButton(
+              text: cancelMessage,
+              onPressed: () => context.pop(),
+              backgroundColor: theme.color.surface,
+              foregroundColor: theme.color.text,
+              borderColor: theme.color.subtext,
+              radius: 8,
+            ),
         ],
       ),
     );
