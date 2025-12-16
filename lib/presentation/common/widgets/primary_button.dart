@@ -41,7 +41,10 @@ class PrimaryButton extends ConsumerWidget {
         foregroundColor: foregroundColor ?? theme.color.onPrimary,
         disabledBackgroundColor: theme.color.inactiveContainer,
         disabledForegroundColor: theme.color.onInactiveContainer,
-        side: BorderSide(color: borderColor ?? Colors.transparent),
+        side: BorderSide(
+          color: borderColor ?? Colors.transparent,
+          width: 0.5,
+        ),
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,

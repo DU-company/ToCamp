@@ -50,6 +50,7 @@ class AddWishlistBottomSheet extends ConsumerWidget {
           /// Submit Button
           const SizedBox(height: 8),
           PrimaryButton(
+            text: '위시리스트 만들기',
             onPressed: categoryName.trim().isEmpty
                 ? null
                 : () {
@@ -57,7 +58,6 @@ class AddWishlistBottomSheet extends ConsumerWidget {
                         .read(wishlistViewModelProvider.notifier)
                         .onCreateWishlist(context, campingModel);
                   },
-            text: '위시리스트 만들기',
           ),
         ],
       ),

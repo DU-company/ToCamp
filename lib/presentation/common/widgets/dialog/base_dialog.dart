@@ -14,11 +14,7 @@ class BaseDialog extends ConsumerWidget {
         borderRadius: BorderRadius.circular(16),
       ),
       backgroundColor: theme.color.surface,
-      constraints: BoxConstraints(minWidth: 400, maxWidth: 500),
-      child: Padding(
-        padding: const EdgeInsets.all(24.0),
-        child: child,
-      ),
+      child: Padding(padding: const EdgeInsets.all(16), child: child),
     );
   }
 }

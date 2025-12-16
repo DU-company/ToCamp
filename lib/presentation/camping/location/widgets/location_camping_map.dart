@@ -80,6 +80,7 @@ class _LocationCampingMap extends ConsumerState<LocationCampingMap>
       return Marker(
         markerId: MarkerId(model.id),
         icon: markerIcon,
+
         position: LatLng(model.lat, model.lng),
         onTap: () => _onTapMarker(models, model),
         consumeTapEvents: true,
@@ -117,7 +118,6 @@ class _LocationCampingMap extends ConsumerState<LocationCampingMap>
   void _onCameraIdle(PlatformMapController? mapController) {
     if (mapController != null) {
       ref.read(showRefreshProvider.notifier).state = true;
-      print('dd');
     }
   }
 

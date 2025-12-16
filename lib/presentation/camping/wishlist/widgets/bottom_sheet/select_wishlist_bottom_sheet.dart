@@ -35,7 +35,6 @@ class SelectWishlistBottomSheet extends ConsumerWidget {
             child: PrimaryButton(
               onPressed: () => onCreateTap(context),
               text: '위시리스트 만들기',
-              padding: 16,
             ),
           ),
         ],
