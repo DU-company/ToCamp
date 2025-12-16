@@ -35,10 +35,14 @@ class SearchViewModel extends Notifier<PaginationState> {
         keyword: keyword,
       );
       final resp = await repository.getSearchList(params);
-      ref.read(selectedCampingProvider.notifier).state =
-          resp.items.firstOrNull;
+      final items = [...resp.items];
+      items.shuffle();
 
-      state = resp;
+      state = resp.copyWith(items: items);
+
+      // For SharedCamping
+      ref.read(selectedCampingProvider.notifier).state =
+          items.firstOrNull;
     } catch (e) {
       state = PaginationError(message: e.toString());
     }

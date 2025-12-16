@@ -29,8 +29,10 @@ class BasedListViewModel extends Notifier<PaginationState> {
 
       final params = PaginationParams(take: 5000, pageNo: 1);
       final resp = await repository.getBasedList(params);
+      final items = resp.items;
+      items.shuffle();
 
-      state = resp;
+      state = resp.copyWith(items: items);
     } catch (e) {
       state = PaginationError(message: e.toString());
     }
