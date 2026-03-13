@@ -27,23 +27,25 @@ class Tile extends ConsumerWidget {
       child: InkWell(
         onTap: onTap,
         child: Padding(
-          padding: padding ?? const EdgeInsets.all(16.0),
+          padding: padding ?? const EdgeInsets.all(12.0),
           child: Row(
             children: [
-              if (icon != null) Icon(icon),
+              if (icon != null)
+                Icon(icon, color: color ?? theme.color.text),
               if (icon != null) SizedBox(width: 8),
               Expanded(
                 child: Text(
                   text,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
-                  style: theme.typo.headline6.copyWith(
+                  style: theme.typo.subtitle1.copyWith(
                     color: color ?? theme.color.text,
                     fontWeight: theme.typo.regular,
                   ),
                 ),
               ),
-              if (trailing != null) Icon(trailing),
+              if (trailing != null)
+                Icon(trailing, color: color ?? theme.color.text),
             ],
           ),
         ),

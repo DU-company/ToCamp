@@ -37,7 +37,8 @@ class LocationCampingSuccessView extends ConsumerWidget {
 
     final hasItem = totalModels.isNotEmpty;
 
-    final isValidIndex = locationIndex < totalModels.length; // 필요할까?
+    // 필요할까? >> 지도에서 좋아요 해제하면 totalItems의 range가 줄어들기 때문에
+    final isValidIndex = locationIndex < totalModels.length;
     final targetModel = !hasItem
         ? null
         : totalModels[isValidIndex ? locationIndex : 0];

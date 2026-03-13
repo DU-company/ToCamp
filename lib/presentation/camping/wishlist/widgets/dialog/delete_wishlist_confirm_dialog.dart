@@ -15,8 +15,9 @@ class DeleteWishlistConfirmDialog extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return BaseConfirmDialog(
-      title: '${wishlistModel.name} 위시리스트를\n삭제하시겠습니까?',
-      content: '해당 위시리스트에 속해 있는\n캠핑장들도 삭제됩니다.',
+      title: '위시리스트 삭제',
+      content:
+          '"${wishlistModel.name}" 위시리스트를 삭제하실건가요?\n이 작업은 되돌릴 수 없어요!',
       confirmMessage: '위시리스트 삭제',
       cancelMessage: '취소',
       onConfirm: () {
@@ -25,6 +26,7 @@ class DeleteWishlistConfirmDialog extends ConsumerWidget {
             .deleteCategory(wishlistModel);
         context.pop();
       },
+      isWarning: true,
     );
   }
 }

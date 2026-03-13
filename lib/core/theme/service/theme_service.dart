@@ -56,6 +56,7 @@ final themeDataProvider = Provider<ThemeData>((ref) {
     appBarTheme: AppBarTheme(
       backgroundColor: theme.color.surface,
       elevation: 0,
+      titleSpacing: 0,
       centerTitle: false,
       scrolledUnderElevation: 0,
       iconTheme: IconThemeData(color: theme.color.text),
