@@ -39,13 +39,10 @@ class FeaturesAndAddressBox extends StatelessWidget {
             maxLines: maxLine,
             overflow: TextOverflow.ellipsis,
             style: context.layout(
+              mobile: theme.typo.subtitle2.copyWith(
+                color: theme.color.onHintContainer,
+              ),
               theme.typo.subtitle1.copyWith(
-                color: theme.color.onHintContainer,
-              ),
-              tablet: theme.typo.headline6.copyWith(
-                color: theme.color.onHintContainer,
-              ),
-              desktop: theme.typo.headline5.copyWith(
                 color: theme.color.onHintContainer,
               ),
             ),
@@ -56,15 +53,11 @@ class FeaturesAndAddressBox extends StatelessWidget {
         Text(
           pAddress,
           style: context.layout(
-            theme.typo.subtitle1.copyWith(
+            mobile: theme.typo.subtitle1.copyWith(
               color: theme.color.subtext,
+              fontWeight: theme.typo.semiBold,
             ),
-            tablet: theme.typo.headline6.copyWith(
-              color: theme.color.subtext,
-            ),
-            desktop: theme.typo.headline5.copyWith(
-              color: theme.color.subtext,
-            ),
+            theme.typo.headline6.copyWith(color: theme.color.subtext),
           ),
         ),
         const SizedBox(height: 8),

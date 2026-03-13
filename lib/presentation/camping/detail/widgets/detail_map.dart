@@ -35,6 +35,7 @@ class DetailMap extends ConsumerWidget {
           _Map(model: model),
           const SizedBox(height: 8),
           _Tel(model: model),
+          const SizedBox(height: 8),
         ],
       ),
     );
@@ -55,7 +56,7 @@ class _Address extends ConsumerWidget {
       children: [
         /// Location Icon
         Icon(
-          PhosphorIconsBold.mapPinArea,
+          PhosphorIcons.mapPin(),
           color: theme.color.primary,
           size: 28,
         ),
@@ -84,7 +85,7 @@ class _Address extends ConsumerWidget {
                 .showToast(text: '클립보드에 복사되었습니다', isError: false);
           },
           child: Icon(
-            PhosphorIconsBold.copy,
+            PhosphorIcons.copySimple(),
             color: theme.color.subtext,
             size: 28,
           ),

@@ -28,7 +28,8 @@ class ShowCardButton extends ConsumerWidget {
         left: 12,
       ),
       child: PrimaryButton(
-        padding: 12,
+        padding: 8,
+        radius: 12,
         text: showCard ? '목록' : null,
         icon: showCard
             ? PhosphorIcons.list()

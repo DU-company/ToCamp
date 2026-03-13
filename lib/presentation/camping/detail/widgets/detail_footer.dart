@@ -54,7 +54,7 @@ class DetailFooter extends ConsumerWidget {
             backgroundColor: theme.color.surface,
             foregroundColor: isLiked
                 ? theme.color.secondary
-                : theme.color.subtext,
+                : theme.color.onHintContainer,
             borderColor: theme.color.onHintContainer,
           ),
         ],

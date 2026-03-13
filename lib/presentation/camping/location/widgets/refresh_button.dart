@@ -16,7 +16,8 @@ class LocationRefreshButton extends ConsumerWidget {
       child: Align(
         alignment: Alignment.topCenter,
         child: PrimaryButton(
-          padding: 12,
+          padding: 8,
+          radius: 12,
           onPressed: ref
               .read(locationCampingViewModelProvider.notifier)
               .onTapRefresh,
