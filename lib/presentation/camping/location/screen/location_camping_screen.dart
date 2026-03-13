@@ -10,7 +10,7 @@ import 'package:to_camp/core/models/pagination_state.dart';
 
 /// 받아온 위치 정보로 지도를 띄우는 화면
 class LocationCampingScreen extends ConsumerWidget {
-  final LocationSuccess location;
+  final LocationState location;
   const LocationCampingScreen({super.key, required this.location});
 
   @override

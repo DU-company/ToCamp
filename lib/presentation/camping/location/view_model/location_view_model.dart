@@ -11,15 +11,20 @@ class LocationViewModel extends Notifier<LocationState> {
 
   @override
   LocationState build() {
+    state = LocationLoading();
     getCurrentLocation();
-    return LocationLoading();
+    return state;
   }
 
   Future<void> getCurrentLocation() async {
     try {
       state = LocationLoading();
-      final resp = await service.getLocation();
-      state = resp;
+
+      final position = await service.getCurrentPosition();
+      state = LocationSuccess(
+        lat: position.latitude,
+        lng: position.longitude,
+      );
     } catch (e, s) {
       state = LocationError(message: e.toString());
     }

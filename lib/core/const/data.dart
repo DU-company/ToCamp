@@ -21,5 +21,7 @@ const TABLE_RECENT_KEYWORD = 'recent_keywords';
 const DB_NAME = 'tocamp.db';
 
 /// ETC
+const LAT_OF_SEOUL = 37.566535;
+const LNG_OF_SEOUL = 126.9779692;
 const APP_VERSION = 'v2.1.0';
 const EMAIL_ADDRESS = 'du0788754@gmail.com';

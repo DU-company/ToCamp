@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_riverpod/legacy.dart';
 import 'package:platform_maps_flutter/platform_maps_flutter.dart';
+import 'package:to_camp/core/const/data.dart';
 import 'package:to_camp/core/provider/marker_icon_provider.dart';
 import 'package:to_camp/data/models/camping_model.dart';
 import 'package:to_camp/data/models/wishlist_model.dart';
@@ -25,7 +26,7 @@ final mapControllerProvider = StateProvider<PlatformMapController?>(
 final locationIndexProvider = StateProvider<int>((ref) => 0);
 
 class LocationCampingMap extends ConsumerStatefulWidget {
-  final LocationSuccess location;
+  final LocationState location;
   final List<CampingModel> models;
   const LocationCampingMap({
     super.key,
@@ -44,6 +45,20 @@ class _LocationCampingMap extends ConsumerState<LocationCampingMap>
   // TODO: implement wantKeepAlive
   bool get wantKeepAlive => true;
 
+  late LatLng initialLatLng;
+
+  @override
+  void initState() {
+    super.initState();
+    if (widget.location is LocationSuccess) {
+      final location = widget.location as LocationSuccess;
+      initialLatLng = LatLng(location.lat, location.lng);
+    } else {
+      // 서울의 lat lng
+      initialLatLng = const LatLng(LAT_OF_SEOUL, LNG_OF_SEOUL);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     super.build(context);
@@ -53,7 +68,7 @@ class _LocationCampingMap extends ConsumerState<LocationCampingMap>
 
     return CustomMapView(
       initialCameraPosition: CameraPosition(
-        target: LatLng(widget.location.lat, widget.location.lng),
+        target: initialLatLng,
         zoom: 12,
       ),
       markers: Set.from(setMarkersFromModels(wishlist, markerIcons)),

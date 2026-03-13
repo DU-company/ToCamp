@@ -6,8 +6,9 @@ import 'package:to_camp/presentation/camping/location/screen/location_camping_sc
 import 'package:to_camp/presentation/camping/location/view_model/location_state.dart';
 import 'package:to_camp/presentation/camping/location/view_model/location_view_model.dart';
 
+/// TODO : Location 및 LocationCamping 의 ViewModel 합치기?
+
 /// GPS로 지도 화면을 보여주는 화면
-/// TODO : Location 및 LocationCamping 의 ViewModel 합치기
 class LocationScreen extends ConsumerWidget {
   const LocationScreen({super.key});
 
@@ -16,18 +17,9 @@ class LocationScreen extends ConsumerWidget {
     final locationState = ref.watch(locationViewModelProvider);
 
     if (locationState is LocationLoading) {
-      return LoadingWidget();
-    }
-    if (locationState is LocationError) {
-      return ErrorMessageWidget(
-        message: locationState.message,
-        onTap: () => ref
-            .read(locationViewModelProvider.notifier)
-            .getCurrentLocation(),
-      );
+      return const LoadingWidget();
     }
 
-    locationState as LocationSuccess;
     return LocationCampingScreen(location: locationState);
   }
 }

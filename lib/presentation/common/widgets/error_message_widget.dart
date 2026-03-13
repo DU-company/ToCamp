@@ -4,6 +4,7 @@ import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:to_camp/presentation/common/widgets/custom_icon_button.dart';
 import 'package:to_camp/core/theme/service/theme_service.dart';
 import 'package:to_camp/presentation/camping/location/view_model/location_view_model.dart';
+import 'package:to_camp/presentation/common/widgets/primary_button.dart';
 
 class ErrorMessageWidget extends ConsumerWidget {
   final String message;
@@ -33,10 +34,12 @@ class ErrorMessageWidget extends ConsumerWidget {
           ),
           const SizedBox(height: 16),
           if (onTap != null)
-            CustomIconButton(
-              onTap: onTap,
+            PrimaryButton(
+              onPressed: () {},
               icon: PhosphorIcons.arrowClockwise(),
-              size: 28,
+              text: '새로고침',
+              backgroundColor: theme.color.surface,
+              borderColor: theme.color.onHintContainer,
             ),
         ],
       ),

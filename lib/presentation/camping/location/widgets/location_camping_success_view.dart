@@ -14,7 +14,7 @@ import 'package:to_camp/presentation/common/layout/default_layout.dart';
 
 class LocationCampingSuccessView extends ConsumerWidget {
   final PaginationSuccess<CampingModel> state;
-  final LocationSuccess location;
+  final LocationState location;
   const LocationCampingSuccessView({
     super.key,
     required this.state,

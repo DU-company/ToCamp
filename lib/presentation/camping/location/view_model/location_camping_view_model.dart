@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:platform_maps_flutter/platform_maps_flutter.dart';
+import 'package:to_camp/core/const/data.dart';
 import 'package:to_camp/core/models/pagination_params.dart';
 import 'package:to_camp/core/service/toast_service.dart';
 import 'package:to_camp/data/models/camping_model.dart';
@@ -21,8 +22,6 @@ final locationCampingViewModelProvider = NotifierProvider(
 class LocationCampingViewModel extends Notifier<PaginationState> {
   CampingRepository get repository =>
       ref.read(campingRepositoryProvider);
-  // LocationService get locationService =>
-  //     ref.read(locationServiceProvider);
 
   @override
   PaginationState build() {
@@ -31,10 +30,13 @@ class LocationCampingViewModel extends Notifier<PaginationState> {
   }
 
   Future<void> paginate({bool fetchMore = false}) async {
+    const radius = 20000.0;
+    const take = 30;
+
     PaginationParams params = PaginationParams(
-      take: 30,
+      take: take,
       pageNo: 0,
-      radius: 20000,
+      radius: radius,
     );
 
     try {
@@ -56,20 +58,30 @@ class LocationCampingViewModel extends Notifier<PaginationState> {
         params = params.copyWith(
           lat: cameraPosition.target.latitude,
           lng: cameraPosition.target.longitude,
-          radius: LocationUtils.radiusByZoom(cameraPosition.zoom),
-          take: LocationUtils.takeByZoom(cameraPosition.zoom),
+          radius: radius,
+          take: take,
+          // radius: LocationUtils.radiusByZoom(cameraPosition.zoom),
+          // take: LocationUtils.takeByZoom(cameraPosition.zoom),
         );
 
         /// 그렇지 않으면 초기 페이지네이션
       } else {
         final location = ref.read(locationViewModelProvider);
 
-        /// Success가 아니면?
-        location as LocationSuccess;
-        params = params.copyWith(
-          lat: location.lat,
-          lng: location.lng,
-        );
+        // 위치 정보를 받아왔다면 내 주변 기준
+        if (location is LocationSuccess) {
+          params = params.copyWith(
+            lat: location.lat,
+            lng: location.lng,
+          );
+
+          // 에러가 났다면 서울 기준
+        } else {
+          params = params.copyWith(
+            lat: LAT_OF_SEOUL,
+            lng: LNG_OF_SEOUL,
+          );
+        }
       }
 
       final resp = await repository.getLocationBasedList(params);
