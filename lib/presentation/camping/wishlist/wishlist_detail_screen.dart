@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:to_camp/core/theme/service/theme_service.dart';
+import 'package:to_camp/data/models/wishlist_model.dart';
 import 'package:to_camp/presentation/camping/base/camping_screen.dart';
+import 'package:to_camp/presentation/camping/wishlist/widgets/dialog/delete_wishlist_confirm_dialog.dart';
 import 'package:to_camp/presentation/camping/wishlist/wishlist_view_model.dart';
 import 'package:collection/collection.dart';
 import 'package:to_camp/presentation/common/widgets/bottom_sheet/base_bottom_sheet.dart';
@@ -39,13 +42,23 @@ class WishlistDetailScreen extends ConsumerWidget {
             mainAxisSize: MainAxisSize.min,
             children: [
               Tile(
-                onTap: () {},
                 text: '이름 변경',
+                onTap: () {},
                 icon: PhosphorIcons.pencilSimpleLine(),
               ),
               Tile(
-                onTap: () {},
                 text: '위시리스트 삭제',
+                onTap: () {
+                  context.pop();
+                  showDialog(
+                    context: context,
+                    builder: (context) => DeleteWishlistConfirmDialog(
+                      wishlistModel: wishlist.firstWhere(
+                        (e) => e.id.toString() == id,
+                      ),
+                    ),
+                  );
+                },
                 icon: PhosphorIcons.trashSimple(),
                 color: theme.color.secondary,
               ),
