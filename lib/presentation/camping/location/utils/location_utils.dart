@@ -12,16 +12,6 @@ class LocationUtils {
     }
   }
 
-  static int takeByZoom(double zoom) {
-    if (zoom > 12.0) {
-      return 40;
-    } else if (zoom > 9.0) {
-      return 60;
-    } else {
-      return 80;
-    }
-  }
-
   static List<CampingModel> sortByDistance(
     List<CampingModel> models,
     double lat,

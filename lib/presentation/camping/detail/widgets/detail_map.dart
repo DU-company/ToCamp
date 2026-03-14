@@ -1,11 +1,9 @@
 import 'package:flutter/foundation.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:platform_maps_flutter/platform_maps_flutter.dart';
-import 'package:to_camp/presentation/camping/location/widgets/location_camping_map.dart';
 import 'package:to_camp/presentation/common/widgets/custom_divider.dart';
 import 'package:to_camp/presentation/common/widgets/custom_map_view.dart';
 import 'package:to_camp/presentation/common/widgets/tile.dart';

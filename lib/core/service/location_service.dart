@@ -9,9 +9,8 @@ final locationServiceProvider = Provider<LocationService>((ref) {
 
 class LocationService {
   Future<Position> getCurrentPosition() async {
+    await _checkPermission();
     try {
-      await _checkPermission();
-
       return await Geolocator.getCurrentPosition(
         locationSettings: const LocationSettings(
           timeLimit: Duration(seconds: 3),

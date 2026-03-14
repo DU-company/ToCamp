@@ -125,17 +125,17 @@ class _LocationMiniList extends ConsumerWidget {
     if (locationState is LocationLoading) {
       return LoadingWidget();
     }
-    if (locationState is LocationError) {
-      return ErrorMessageWidget(
-        message: locationState.message,
-        onTap: () => ref
-            .read(locationViewModelProvider.notifier)
-            .getCurrentLocation(),
-      );
-    }
+    // if (locationState is LocationError) {
+    //   return ErrorMessageWidget(
+    //     message: locationState.message,
+    //     onTap: () => ref
+    //         .read(locationViewModelProvider.notifier)
+    //         .getCurrentLocation(),
+    //   );
+    // }
 
     /// 위치 정보가 존재할때만 paginate 가능
-    locationState as LocationSuccess;
+    // locationState as LocationSuccess;
     final locationCampingState = ref.watch(
       locationCampingViewModelProvider,
     );
