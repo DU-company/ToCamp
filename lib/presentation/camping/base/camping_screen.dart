@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:to_camp/presentation/common/widgets/custom_divider.dart';
 import 'package:to_camp/core/theme/service/theme_service.dart';
 import 'package:to_camp/presentation/common/widgets/base_custom_scroll_view.dart';
@@ -15,11 +16,13 @@ class CampingScreen extends ConsumerWidget {
   final List<CampingModel> items;
   final String? emptyMessage;
   final String title;
+  final VoidCallback? onPressed;
   const CampingScreen({
     super.key,
     required this.items,
     required this.title,
     this.emptyMessage,
+    this.onPressed,
   });
 
   @override
@@ -30,7 +33,19 @@ class CampingScreen extends ConsumerWidget {
     return DefaultLayout(
       child: BaseCustomScrollView(
         slivers: [
-          SliverAppBar(title: Text(title), floating: true),
+          SliverAppBar(
+            title: Text(title),
+            floating: true,
+
+            /// Options
+            actions: [
+              if (onPressed != null)
+                IconButton(
+                  onPressed: onPressed,
+                  icon: Icon(PhosphorIconsBold.dotsThreeVertical),
+                ),
+            ],
+          ),
 
           if (hasData)
             SliverList.separated(

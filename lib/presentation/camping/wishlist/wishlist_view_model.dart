@@ -102,7 +102,7 @@ class WishlistViewModel extends Notifier<List<WishlistModel>> {
 
       ref
           .read(toastServiceProvider)
-          .showToast(text: '"$name"에 추가되었습니다.', isError: false);
+          .showToast(text: '"$name"에 추가되었습니다', isError: false);
       context.pop();
     } catch (e) {
       ref.read(toastServiceProvider).showToast(text: e.toString());

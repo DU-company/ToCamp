@@ -1,11 +1,9 @@
 import 'package:flutter/foundation.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:platform_maps_flutter/platform_maps_flutter.dart';
-import 'package:to_camp/presentation/camping/location/widgets/location_camping_map.dart';
 import 'package:to_camp/presentation/common/widgets/custom_divider.dart';
 import 'package:to_camp/presentation/common/widgets/custom_map_view.dart';
 import 'package:to_camp/presentation/common/widgets/tile.dart';
@@ -35,6 +33,7 @@ class DetailMap extends ConsumerWidget {
           _Map(model: model),
           const SizedBox(height: 8),
           _Tel(model: model),
+          const SizedBox(height: 8),
         ],
       ),
     );
@@ -55,7 +54,7 @@ class _Address extends ConsumerWidget {
       children: [
         /// Location Icon
         Icon(
-          PhosphorIconsBold.mapPinArea,
+          PhosphorIcons.mapPin(),
           color: theme.color.primary,
           size: 28,
         ),
@@ -84,7 +83,7 @@ class _Address extends ConsumerWidget {
                 .showToast(text: '클립보드에 복사되었습니다', isError: false);
           },
           child: Icon(
-            PhosphorIconsBold.copy,
+            PhosphorIcons.copySimple(),
             color: theme.color.subtext,
             size: 28,
           ),

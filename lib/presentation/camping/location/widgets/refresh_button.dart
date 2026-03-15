@@ -6,7 +6,8 @@ import 'package:to_camp/core/theme/service/theme_service.dart';
 import 'package:to_camp/presentation/camping/location/view_model/location_camping_view_model.dart';
 
 class LocationRefreshButton extends ConsumerWidget {
-  const LocationRefreshButton({super.key});
+  final VoidCallback onRefresh;
+  const LocationRefreshButton({super.key, required this.onRefresh});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -16,10 +17,9 @@ class LocationRefreshButton extends ConsumerWidget {
       child: Align(
         alignment: Alignment.topCenter,
         child: PrimaryButton(
-          padding: 12,
-          onPressed: ref
-              .read(locationCampingViewModelProvider.notifier)
-              .onTapRefresh,
+          padding: 8,
+          radius: 12,
+          onPressed: onRefresh,
           text: '이 지역 재탐색',
           icon: PhosphorIconsBold.arrowClockwise,
           foregroundColor: theme.color.primary,

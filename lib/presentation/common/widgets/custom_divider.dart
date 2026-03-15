@@ -9,7 +9,7 @@ class CustomDivider extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = ref.watch(themeServiceProvider);
     return Padding(
-      padding: EdgeInsets.all(8.0),
+      padding: EdgeInsets.all(4.0),
       child: Divider(color: theme.color.onHintContainer),
     );
   }

@@ -8,44 +8,49 @@ final locationServiceProvider = Provider<LocationService>((ref) {
 });
 
 class LocationService {
-  LocationService();
+  Future<Position> getCurrentPosition() async {
+    await _checkPermission();
+    try {
+      return await Geolocator.getCurrentPosition(
+        locationSettings: const LocationSettings(
+          timeLimit: Duration(seconds: 3),
+          accuracy: LocationAccuracy.medium,
+        ),
+      );
+    } catch (e) {
+      final last = await Geolocator.getLastKnownPosition();
+      if (last != null) return last;
 
-  Future<Position> requestPermission() async {
-    bool isLocationEnabled;
-    LocationPermission permission;
-
-    /// GPS 사용 가능 여부 체크
-    isLocationEnabled = await Geolocator.isLocationServiceEnabled();
-    if (!isLocationEnabled) {
-      throw GPSNotEnabledException();
+      rethrow;
     }
-
-    /// 위치 권한 허용 여부 체크
-    permission = await Geolocator.checkPermission();
-    if (permission == LocationPermission.denied) {
-      permission = await Geolocator.requestPermission();
-      if (permission == LocationPermission.denied) {
-        throw LocationPermissionDeniedException();
-      }
-    }
-    if (permission == LocationPermission.deniedForever) {
-      throw LocationPermissionDeniedException();
-    }
-
-    /// 위 단계를 모두 통과하면 위치 권한을 사용할 수 있는 환경임.
-    return await Geolocator.getCurrentPosition();
   }
 
-  Future<LocationSuccess> getLocation() async {
-    try {
-      final position = await requestPermission();
+  Future<void> _checkPermission() async {
+    // GPS Check
+    final isLocationEnabled =
+        await Geolocator.isLocationServiceEnabled();
+    if (!isLocationEnabled) {
+      throw LocationServiceException();
+    }
 
-      return LocationSuccess(
-        lat: position.latitude,
-        lng: position.longitude,
-      );
-    } catch (e, s) {
-      throw FetchLocationException();
+    // Permission Check
+    try {
+      final permission = await Geolocator.checkPermission();
+
+      if (permission == LocationPermission.denied) {
+        final newPermission = await Geolocator.requestPermission();
+
+        if (newPermission == LocationPermission.denied ||
+            newPermission == LocationPermission.deniedForever) {
+          throw LocationPermissionDeniedException();
+        }
+      }
+
+      if (permission == LocationPermission.deniedForever) {
+        throw LocationPermissionDeniedException();
+      }
+    } catch (e) {
+      throw LocationPermissionDeniedException();
     }
   }
 }

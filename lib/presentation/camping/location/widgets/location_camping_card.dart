@@ -26,7 +26,7 @@ class LocationCampingCard extends ConsumerWidget {
         likeButton: LikeButton(
           campingModel: model,
           position: 0,
-          size: 28,
+          size: 24,
         ),
       ),
       nameBox: NameBox(name: model.name, theme: theme),

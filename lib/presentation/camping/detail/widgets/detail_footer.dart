@@ -32,10 +32,7 @@ class DetailFooter extends ConsumerWidget {
         campingModel.resveUrl.isNotEmpty;
 
     return BaseBottomSheet(
-      padding: const EdgeInsets.symmetric(
-        horizontal: 8,
-        vertical: 12,
-      ),
+      padding: const EdgeInsets.all(12),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -43,7 +40,6 @@ class DetailFooter extends ConsumerWidget {
             child: PrimaryButton(
               text: '예약 사이트',
               onPressed: hasLink ? onTapLink : null,
-              padding: 20,
             ),
           ),
 
@@ -58,9 +54,8 @@ class DetailFooter extends ConsumerWidget {
             backgroundColor: theme.color.surface,
             foregroundColor: isLiked
                 ? theme.color.secondary
-                : theme.color.subtext,
+                : theme.color.onHintContainer,
             borderColor: theme.color.onHintContainer,
-            padding: 20,
           ),
         ],
       ),

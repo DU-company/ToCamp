@@ -13,7 +13,7 @@ class NameBox extends StatelessWidget {
       name,
       maxLines: 2,
       style: context.layout(
-        theme.typo.headline6,
+        theme.typo.headline5,
         tablet: theme.typo.headline3,
         desktop: theme.typo.headline1,
       ),

@@ -11,6 +11,7 @@ class BaseConfirmDialog extends ConsumerWidget {
   final String confirmMessage;
   final VoidCallback onConfirm;
   final String? cancelMessage;
+  final bool isWarning;
 
   const BaseConfirmDialog({
     super.key,
@@ -19,6 +20,7 @@ class BaseConfirmDialog extends ConsumerWidget {
     required this.confirmMessage,
     required this.onConfirm,
     this.cancelMessage,
+    this.isWarning = false,
   });
 
   @override
@@ -30,29 +32,25 @@ class BaseConfirmDialog extends ConsumerWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           /// Title
-          Text(
-            title,
-            style: theme.typo.headline3,
-            textAlign: TextAlign.center,
-          ),
-          const SizedBox(height: 16),
+          Text(title, style: theme.typo.headline3),
+          const SizedBox(height: 8),
 
           /// Content
           if (content != null)
             Text(
               content!,
-              style: theme.typo.headline6.copyWith(
+              style: theme.typo.subtitle1.copyWith(
                 color: theme.color.onHintContainer,
               ),
-              textAlign: TextAlign.center,
             ),
-          if (content != null) const SizedBox(height: 32),
+          if (content != null) const SizedBox(height: 16),
 
           /// Confirm Button
           PrimaryButton(
             text: confirmMessage,
             onPressed: onConfirm,
             radius: 8,
+            backgroundColor: isWarning ? theme.color.secondary : null,
           ),
 
           /// Cancel Button

@@ -100,19 +100,18 @@ class _IconWithLabel extends ConsumerWidget {
             Icon(
               icon,
               color: theme.color.primary,
-              size: context.layout(28, mobile: 24),
+              size: context.layout(28, mobile: 20),
             ),
-            const SizedBox(width: 4),
+            const SizedBox(width: 2),
             Text(
               label,
 
               style: context.layout(
-                theme.typo.headline6.copyWith(
+                theme.typo.subtitle1.copyWith(
                   color: theme.color.primary,
                 ),
-                mobile: theme.typo.subtitle1.copyWith(
+                mobile: theme.typo.subtitle2.copyWith(
                   color: theme.color.primary,
-                  fontWeight: theme.typo.semiBold,
                 ),
               ),
             ),
@@ -140,12 +139,9 @@ class _SiteType extends ConsumerWidget {
     return Text(
       '$type $siteCount',
       style: context.layout(
-        theme.typo.headline6.copyWith(
+        theme.typo.subtitle1.copyWith(color: theme.color.primary),
+        mobile: theme.typo.subtitle2.copyWith(
           color: theme.color.primary,
-        ),
-        mobile: theme.typo.subtitle1.copyWith(
-          color: theme.color.primary,
-          fontWeight: theme.typo.semiBold,
         ),
       ),
     );
