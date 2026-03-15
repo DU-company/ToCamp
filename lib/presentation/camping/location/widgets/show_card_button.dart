@@ -22,14 +22,14 @@ class ShowCardButton extends ConsumerWidget {
     final safeAreaBottom = MediaQuery.of(context).padding.bottom;
     return Padding(
       padding: EdgeInsets.only(
-        bottom: showCard ? 0 : safeAreaBottom + 88,
+        bottom: showCard ? 0 : safeAreaBottom + 80,
         right: 12,
         left: 12,
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          SizedBox(width: 48),
+          const SizedBox(width: 48),
           PrimaryButton(
             padding: 8,
             radius: 12,

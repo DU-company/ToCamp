@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:platform_maps_flutter/platform_maps_flutter.dart';
+import 'package:to_camp/core/service/toast_service.dart';
+import 'package:to_camp/presentation/camping/location/widgets/dialog/gps_enable_dialog.dart';
+import 'package:to_camp/presentation/camping/location/widgets/dialog/location_permission_dialog.dart';
 import 'package:to_camp/presentation/common/widgets/loading_widget.dart';
 import 'package:to_camp/presentation/camping/location/screen/location_camping_screen.dart';
 import 'package:to_camp/presentation/camping/location/view_model/location_state.dart';
@@ -18,6 +22,7 @@ class LocationScreen extends ConsumerStatefulWidget {
 
 class _LocationScreenState extends ConsumerState<LocationScreen>
     with WidgetsBindingObserver {
+  @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
@@ -48,41 +53,49 @@ class _LocationScreenState extends ConsumerState<LocationScreen>
       return const LoadingWidget();
     }
 
-    return LocationCampingScreen(location: locationState);
+    return LocationCampingScreen(
+      location: locationState,
+      onTapMyLocation: (mapController) =>
+          _onTapMyLocation(locationState, mapController),
+    );
   }
 
-  void _onTapMyLocation(LocationState location) {
-    // final mapController = ref.read(mapControllerProvider);
+  void _onTapMyLocation(
+    LocationState location,
+    PlatformMapController mapController,
+  ) {
     // LocationState 가 success면 내 위치로 카메라 이동
-    // if (mapController != null) {
     if (location is LocationSuccess) {
-      // mapController.animateCamera(
-      //   CameraUpdate.newLatLngZoom(
-      //     LatLng(pLocation.lat, pLocation.lng),
-      //     13,
-      //   ),
-      // );
+      mapController.animateCamera(
+        CameraUpdate.newLatLngZoom(
+          LatLng(location.lat, location.lng),
+          13,
+        ),
+      );
       // Error인 경우에는 다이얼로그
     } else {
       final pLocation = location as LocationError;
       if (pLocation.errorType ==
           DeviceLocationErrorType.locationService) {
-        // showDialog(
-        //   context: context,
-        //   builder: (context) => GpsEnableDialog(),
-        // );
+        showDialog(
+          context: context,
+          builder: (context) => GpsEnableDialog(),
+        );
       } else if (pLocation.errorType ==
           DeviceLocationErrorType.permissionDenied) {
-        // showDialog(
-        //   context: context,
-        //   builder: (context) =>
-        //       LocationPermissionDialog(onResume: () {}),
-        // );
+        showDialog(
+          context: context,
+          builder: (context) => LocationPermissionDialog(
+            onResume: () {
+              isResumed = true;
+            },
+          ),
+        );
       } else {
-        // ...
+        ref
+            .read(toastServiceProvider)
+            .showToast(text: '일시적으로 위치를 가져올 수 없습니다');
       }
     }
   }
-
-  // }
 }

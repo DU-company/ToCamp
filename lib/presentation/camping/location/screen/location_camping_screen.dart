@@ -1,5 +1,3 @@
-import 'package:easy_debounce/easy_throttle.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_riverpod/legacy.dart';
@@ -8,9 +6,12 @@ import 'package:platform_maps_flutter/platform_maps_flutter.dart';
 import 'package:to_camp/core/const/data.dart';
 import 'package:to_camp/core/provider/marker_icon_provider.dart';
 import 'package:to_camp/core/service/toast_service.dart';
-import 'package:to_camp/data/models/wishlist_model.dart';
 import 'package:to_camp/presentation/camping/base/based_list_view_model.dart';
 import 'package:to_camp/presentation/camping/base/camping_screen.dart';
+import 'package:to_camp/presentation/camping/location/utils/location_utils.dart';
+import 'package:to_camp/presentation/camping/location/view_model/location_view_model.dart';
+import 'package:to_camp/presentation/camping/location/widgets/dialog/gps_enable_dialog.dart';
+import 'package:to_camp/presentation/camping/location/widgets/dialog/location_permission_dialog.dart';
 import 'package:to_camp/presentation/camping/location/widgets/location_camping_card.dart';
 import 'package:to_camp/presentation/camping/location/widgets/refresh_button.dart';
 import 'package:to_camp/presentation/camping/location/widgets/show_card_button.dart';
@@ -23,16 +24,19 @@ import 'package:to_camp/presentation/camping/location/view_model/location_campin
 import 'package:to_camp/presentation/camping/location/view_model/location_state.dart';
 import 'package:to_camp/core/models/pagination_state.dart';
 
-/// TODO : 에러든 로딩이든 성공이든 일단 지도는 떠 있어야 함!
-///
-///
 final cameraPositionProvider = StateProvider<CameraPosition?>(
   (ref) => null,
 );
 
 class LocationCampingScreen extends ConsumerStatefulWidget {
   final LocationState location;
-  const LocationCampingScreen({super.key, required this.location});
+  final void Function(PlatformMapController controller)
+  onTapMyLocation;
+  const LocationCampingScreen({
+    super.key,
+    required this.location,
+    required this.onTapMyLocation,
+  });
 
   @override
   ConsumerState<LocationCampingScreen> createState() =>
@@ -43,10 +47,11 @@ class _LocationCampingScreenState
     extends ConsumerState<LocationCampingScreen>
     with AutomaticKeepAliveClientMixin {
   bool showRefresh = false;
-  bool showCard = false;
+  bool showCard = true;
+  bool userDrag = false;
   int locationIndex = 0;
+
   late final PlatformMapController mapController;
-  List<CampingModel> totalItems = [];
 
   @override
   // TODO: implement wantKeepAlive
@@ -66,31 +71,48 @@ class _LocationCampingScreenState
     }
   }
 
+  // home에서 Pagination이 끝나지 않았다면,showCard를 해주기 위해서
+  listenLocationCampingState() {
+    ref.listen(locationCampingViewModelProvider, (p, n) {
+      if (p is! PaginationSuccess &&
+          n is PaginationSuccess<CampingModel> &&
+          n.items.isNotEmpty) {
+        onTapMarker(models: n.items, targetModel: n.items.first);
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     super.build(context);
+    listenLocationCampingState();
+
     final markerIcons = ref.watch(markerIconProvider);
     final wishlist = ref.watch(wishlistViewModelProvider);
     final locationCampingState = ref.watch(
       locationCampingViewModelProvider,
     );
-    if (locationCampingState is PaginationSuccess<CampingModel>) {
-      totalItems = [
-        ...locationCampingState.items,
-        ...WishlistUtils.extractCampingList(wishlist),
-      ];
-    }
+    print(locationCampingState);
+    final totalModels =
+        locationCampingState is PaginationSuccess<CampingModel>
+        ? [
+            ...locationCampingState.items,
+            ...WishlistUtils.extractCampingList(wishlist),
+          ]
+        : <CampingModel>[];
 
-    final hasItem = totalItems.isNotEmpty;
+    final hasItem = totalModels.isNotEmpty;
 
     // 필요할까? >> 지도에서 좋아요 해제하면 totalItems의 range가 줄어들기 때문에
-    final isValidIndex = locationIndex < totalItems.length;
-    final targetItem = !hasItem
+    final isValidIndex = locationIndex < totalModels.length;
+    final targetModel = !hasItem
         ? null
-        : totalItems[isValidIndex ? locationIndex : 0];
+        : totalModels[isValidIndex ? locationIndex : 0];
 
     return DefaultLayout(
-      isLoading: locationCampingState is PaginationFetchingMore,
+      isLoading:
+          locationCampingState is PaginationFetchingMore ||
+          locationCampingState is PaginationLoading,
       bottomNavigationBar: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
@@ -99,8 +121,9 @@ class _LocationCampingScreenState
             ShowCardButton(
               showCard: showCard,
               onTapShowCard: () =>
-                  onTapShowCard(totalItems, targetItem!),
-              onTapMyLocation: () {},
+                  onTapShowCard(totalModels, targetModel!),
+              onTapMyLocation: () =>
+                  widget.onTapMyLocation(mapController),
             ),
 
           /// CampingCard
@@ -108,10 +131,10 @@ class _LocationCampingScreenState
           if (hasItem && showCard)
             Flexible(
               child: GestureDetector(
-                child: LocationCampingCard(model: targetItem!),
+                child: LocationCampingCard(model: targetModel!),
                 onTap: () => ref
                     .read(basedListViewModelProvider.notifier)
-                    .onCampingCardTap(context, targetItem),
+                    .onCampingCardTap(context, targetModel),
               ),
             ),
         ],
@@ -124,13 +147,29 @@ class _LocationCampingScreenState
               zoom: 12,
             ),
             markers: Set.from(
-              setMarkersFromModels(wishlist, markerIcons),
+              LocationUtils.createMarkers(
+                totalModels: totalModels,
+                wishlist: wishlist,
+                markerIcons: markerIcons,
+                onTap: (model) => onTapMarker(
+                  models: totalModels,
+                  targetModel: model,
+                ),
+              ),
             ),
-            onMapCreated: _onMapCreated,
-            onCameraMoveStarted: _onCameraMoveStarted,
-            onCameraMove: (cameraPosition) =>
-                _onCameraMove(cameraPosition),
-            onCameraIdle: _onCameraIdle,
+            onMapCreated: (controller) =>
+                onMapCreated(controller, totalModels),
+            onCameraMoveStarted: () => setState(() {
+              showCard = false;
+            }),
+            onCameraMove: (cameraPosition) {
+              ref.read(cameraPositionProvider.notifier).state =
+                  cameraPosition;
+            },
+
+            onCameraIdle: () => setState(() {
+              showRefresh = true;
+            }),
           ),
           if (showRefresh)
             LocationRefreshButton(onRefresh: onTapRefresh),
@@ -139,56 +178,18 @@ class _LocationCampingScreenState
     );
   }
 
-  List<Marker> setMarkersFromModels(
-    List<WishlistModel> wishlist,
-    List<Uint8List> markerIcons,
-  ) {
-    if (markerIcons.isEmpty) return [];
-
-    return List.generate(totalItems.length, (index) {
-      final model = totalItems[index];
-      final isLiked = WishlistUtils.checkIsLiked(wishlist, model);
-      final markerIcon = BitmapDescriptor.fromBytes(
-        markerIcons[isLiked ? 1 : 0],
-      );
-      return Marker(
-        markerId: MarkerId(model.id),
-        icon: markerIcon,
-
-        position: LatLng(model.lat, model.lng),
-        onTap: () =>
-            onTapMarker(models: totalItems, targetModel: model),
-        consumeTapEvents: true,
-        infoWindow: InfoWindow(
-          title: model.name,
-          snippet: model.address,
-        ),
-      );
-    });
-  }
-
-  void _onCameraMove(CameraPosition cameraPosition) {
-    ref.read(cameraPositionProvider.notifier).state = cameraPosition;
-  }
-
-  void _onMapCreated(PlatformMapController controller) async {
-    await Future.delayed(const Duration(milliseconds: 200));
+  void onMapCreated(
+    PlatformMapController controller,
+    List<CampingModel> totalModels,
+  ) async {
     mapController = controller;
-    if (totalItems.isNotEmpty) {
-      controller.showMarkerInfoWindow(MarkerId(totalItems.first.id));
+    await Future.delayed(Duration(milliseconds: 333));
+    if (totalModels.isNotEmpty) {
+      onTapMarker(
+        models: totalModels,
+        targetModel: totalModels.first,
+      );
     }
-  }
-
-  void _onCameraIdle() {
-    setState(() {
-      showRefresh = true;
-    });
-  }
-
-  void _onCameraMoveStarted() {
-    setState(() {
-      showCard = false;
-    });
   }
 
   Future<void> onTapMarker({
@@ -238,43 +239,37 @@ class _LocationCampingScreenState
     }
   }
 
-  void onTapRefresh() {
-    EasyThrottle.throttle(
-      'location_refresh',
-      Duration(seconds: 2),
-      () async {
-        await ref
-            .read(locationCampingViewModelProvider.notifier)
-            .paginate(isReFetch: true);
+  Future<void> onTapRefresh() async {
+    await ref
+        .read(locationCampingViewModelProvider.notifier)
+        .paginate(isReFetch: true);
 
-        final state = ref.read(locationCampingViewModelProvider);
+    final state = ref.read(locationCampingViewModelProvider);
 
-        if (state is PaginationSuccess<CampingModel>) {
-          final models = state.items;
+    if (state is PaginationSuccess<CampingModel>) {
+      final models = state.items;
 
-          /// 에러가 난다면
-          if (state is PaginationFetchingError) {
-            final pState = state as PaginationFetchingError;
-            ref
-                .read(toastServiceProvider)
-                .showToast(text: pState.message);
+      /// 에러가 난다면
+      if (state is PaginationFetchingError) {
+        final pState = state as PaginationFetchingError;
+        ref
+            .read(toastServiceProvider)
+            .showToast(text: pState.message);
 
-            /// 응닶값이 비어있다면
-          } else if (models.isEmpty) {
-            ref
-                .read(toastServiceProvider)
-                .showToast(text: '근처 캠핑장이 존재하지 않습니다.');
+        /// 응닶값이 비어있다면
+      } else if (models.isEmpty) {
+        ref
+            .read(toastServiceProvider)
+            .showToast(text: '근처 캠핑장을 찾을 수 없어요');
 
-            /// 응답값이 존재하면
-          } else {
-            onTapMarker(models: models, targetModel: models.first);
-          }
-          await Future.delayed(Duration(milliseconds: 222));
-          setState(() {
-            showRefresh = false;
-          });
-        }
-      },
-    );
+        /// 응답값이 존재하면
+      } else {
+        onTapMarker(models: models, targetModel: models.first);
+      }
+      await Future.delayed(Duration(milliseconds: 222));
+      setState(() {
+        showRefresh = false;
+      });
+    }
   }
 }

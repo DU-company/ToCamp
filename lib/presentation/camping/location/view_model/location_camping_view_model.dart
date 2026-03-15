@@ -1,6 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:to_camp/core/const/data.dart';
 import 'package:to_camp/core/models/pagination_params.dart';
+import 'package:to_camp/core/service/toast_service.dart';
 import 'package:to_camp/data/models/camping_model.dart';
 import 'package:to_camp/data/repositories/camping_repository.dart';
 import 'package:to_camp/presentation/camping/location/screen/location_camping_screen.dart';
@@ -19,8 +20,9 @@ class LocationCampingViewModel extends Notifier<PaginationState> {
 
   @override
   PaginationState build() {
+    state = PaginationLoading();
     paginate();
-    return PaginationLoading();
+    return state;
   }
 
   Future<void> paginate({bool isReFetch = false}) async {
@@ -63,12 +65,13 @@ class LocationCampingViewModel extends Notifier<PaginationState> {
             lng: location.lng,
           );
 
-          // 에러가 났다면 서울 기준
+          // 권한 등의 에러가 났다면 빈 상태값
         } else {
-          params = params.copyWith(
-            lat: LAT_OF_SEOUL,
-            lng: LNG_OF_SEOUL,
+          state = PaginationSuccess(
+            items: <CampingModel>[],
+            hasMore: false,
           );
+          return;
         }
       }
 
