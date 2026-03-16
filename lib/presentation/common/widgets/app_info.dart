@@ -27,22 +27,27 @@ class AppInfo extends ConsumerWidget {
               theme.brightness == Brightness.light
                   ? LOGO_BLACK
                   : LOGO_WHITE,
-              height: 42,
+              height: 28,
+              color: theme.color.subtext,
               fit: BoxFit.cover,
             ),
-            const SizedBox(height: 8.0),
+            const SizedBox(height: 4.0),
             Text(
               '상호명 : 디유(DU) | 대표 : 백승훈 \n'
               '문의 : du0788754@gmail.com',
-              style: theme.typo.body1,
+              style: theme.typo.body2.copyWith(
+                color: theme.color.subtext,
+              ),
             ),
-            const SizedBox(height: 8.0),
+            const SizedBox(height: 4.0),
             Text(
               '투캠은 통신판매 중개자로서 통신판매의 당사자가 아니며,\n'
               '상품의 예약,이용 및 환불 등과 관련된 의무와 책임은 각 판매자에게 있습니다.',
-              style: theme.typo.body1,
+              style: theme.typo.body2.copyWith(
+                color: theme.color.subtext,
+              ),
             ),
-            SizedBox(height: Platform.isAndroid ? 30 : 60),
+            SizedBox(height: Platform.isAndroid ? 30 : 42),
           ],
         ),
       ),
