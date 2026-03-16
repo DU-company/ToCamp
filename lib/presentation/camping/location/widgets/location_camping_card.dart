@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:to_camp/core/theme/res/layout.dart';
 import 'package:to_camp/core/theme/service/theme_service.dart';
 import 'package:to_camp/data/models/camping_model.dart';
+import 'package:to_camp/presentation/camping/base/widgets/address_box.dart';
 import 'package:to_camp/presentation/camping/base/widgets/features_box.dart';
 import 'package:to_camp/presentation/camping/base/widgets/etc_box.dart';
 import 'package:to_camp/presentation/camping/base/widgets/image_box.dart';
@@ -18,130 +19,50 @@ class LocationCampingCard extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = ref.watch(themeServiceProvider);
 
-    return _ResponsiveLocationCampingCard(
-      imageBox: ImageBox(
-        radius: 12,
-        thumbUrl: model.thumbUrl,
-        aspectRatio: 1.2,
-        likeButton: LikeButton(
-          campingModel: model,
-          position: 0,
-          size: 24,
-        ),
-      ),
-      nameBox: NameBox(name: model.name, theme: theme),
-      introBox: IntroBox(
-        lineIntro: model.lineIntro,
-        intro: model.intro,
-        theme: theme,
-        maxLine: 3,
-      ),
-      addressBox: FeaturesAndAddressBox(
-        sbrsCl: model.sbrsCl,
-        posblFcltyCl: model.posblFcltyCl,
-        theme: theme,
-        doNm: model.doNm,
-        address: model.address,
-        sigunguNm: model.sigunguNm,
-        maxLine: 1,
-      ),
-      etcBox: EtcBox(
-        theme: theme,
-        pet: model.pet,
-        fire: model.fire,
-        caravan: model.caravan,
-        siteBottomCl1: model.siteBottomCl1,
-        siteBottomCl2: model.siteBottomCl2,
-        siteBottomCl3: model.siteBottomCl3,
-        siteBottomCl4: model.siteBottomCl4,
-        siteBottomCl5: model.siteBottomCl5,
-      ),
-    );
-  }
-}
-
-/// 반응형 UI
-class _ResponsiveLocationCampingCard extends ConsumerWidget {
-  final Widget imageBox;
-  final Widget nameBox;
-  final Widget introBox;
-  final Widget addressBox;
-  final Widget etcBox;
-  const _ResponsiveLocationCampingCard({
-    super.key,
-    required this.imageBox,
-    required this.nameBox,
-    required this.introBox,
-    required this.addressBox,
-    required this.etcBox,
-  });
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final theme = ref.watch(themeServiceProvider);
     final size = MediaQuery.of(context).size;
     final safeAreaBottom = MediaQuery.of(context).padding.bottom;
 
     return Container(
-      width: context.layout(null, desktop: size.width / 2.5),
+      height: context.layout(200, mobile: 100),
+      width: context.layout(null, desktop: size.width / 2),
       decoration: BoxDecoration(
         color: theme.color.surface,
         borderRadius: BorderRadius.circular(12),
       ),
       margin: EdgeInsets.only(
         right: 12,
-        left: context.layout(12, desktop: null),
+        left: context.layout(12, tablet: null, desktop: null),
         bottom: safeAreaBottom + 88,
       ),
       padding: const EdgeInsets.all(8),
 
-      child: context.layout(
-        /// Mobile & Tablet
-        Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
+      child: IntrinsicHeight(
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Row(
+            Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Expanded(
-                  flex: 3,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [nameBox, introBox],
-                  ),
+                NameBox(name: model.name, theme: theme),
+                AddressBox(
+                  doNm: model.doNm,
+                  sigunguNm: model.sigunguNm,
+                  address: model.address,
+                  isDetail: false,
                 ),
-                const SizedBox(width: 4),
-                Expanded(flex: 2, child: imageBox),
               ],
             ),
-            addressBox,
-            etcBox,
-          ],
-        ),
-
-        /// Desktop
-        desktop: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            IntrinsicHeight(
-              child: Row(
-                children: [
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: [nameBox, const Spacer(), addressBox],
-                    ),
-                  ),
-                  const SizedBox(width: 4),
-                  Expanded(child: imageBox),
-                ],
+            Spacer(),
+            ImageBox(
+              radius: 6,
+              thumbUrl: model.thumbUrl,
+              aspectRatio: 1,
+              likeButton: LikeButton(
+                campingModel: model,
+                position: 0,
+                size: 24,
               ),
             ),
-            const SizedBox(height: 8),
-            etcBox,
-            introBox,
           ],
         ),
       ),

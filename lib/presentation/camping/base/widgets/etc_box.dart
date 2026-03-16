@@ -38,6 +38,7 @@ class EtcBox extends StatelessWidget {
       crossAxisAlignment: WrapCrossAlignment.center,
       runSpacing: 4,
       spacing: 4,
+
       children: [
         if (isFireAllowed)
           _IconWithLabel(icon: PhosphorIcons.campfire(), label: '화로'),
