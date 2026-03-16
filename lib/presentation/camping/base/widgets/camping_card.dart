@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:to_camp/core/theme/res/layout.dart';
 import 'package:to_camp/core/theme/service/theme_service.dart';
 import 'package:to_camp/data/models/camping_model.dart';
+import 'package:to_camp/presentation/camping/base/widgets/address_box.dart';
 import 'package:to_camp/presentation/camping/base/widgets/etc_box.dart';
 import 'package:to_camp/presentation/camping/base/widgets/features_box.dart';
 import 'package:to_camp/presentation/camping/base/widgets/image_box.dart';
@@ -113,10 +114,12 @@ class CampingCard extends ConsumerWidget {
         theme: theme,
         maxLine: readMore ? 100 : 5,
       ),
-      addressBox: FeaturesAndAddressBox(
+      featureBox: FeatureBox(
         sbrsCl: sbrsCl,
         posblFcltyCl: posblFcltyCl,
         theme: theme,
+      ),
+      addressBox: AddressBox(
         doNm: doNm,
         sigunguNm: sigunguNm,
         address: address,
@@ -142,6 +145,7 @@ class _ResponsiveCampingCard extends StatelessWidget {
   final Widget imageBox;
   final Widget nameBox;
   final Widget introBox;
+  final Widget featureBox;
   final Widget addressBox;
   final Widget etcBox;
   final bool isDetail;
@@ -150,6 +154,7 @@ class _ResponsiveCampingCard extends StatelessWidget {
     required this.imageBox,
     required this.nameBox,
     required this.introBox,
+    required this.featureBox,
     required this.addressBox,
     required this.etcBox,
     required this.isDetail,
@@ -166,19 +171,20 @@ class _ResponsiveCampingCard extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Expanded(
-                flex: 3,
+                flex: 2,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    Expanded(child: nameBox),
+                    nameBox,
+                    featureBox,
                     addressBox,
                     etcBox,
                     if (isDetail) introBox,
                   ],
                 ),
               ),
-              const SizedBox(width: 4),
-              if (!isDetail) Expanded(flex: 2, child: imageBox),
+              const SizedBox(width: 16),
+              if (!isDetail) Expanded(child: imageBox),
             ],
           ),
         ),
@@ -190,6 +196,7 @@ class _ResponsiveCampingCard extends StatelessWidget {
             if (!isDetail) imageBox,
             const SizedBox(height: 8),
             nameBox,
+            featureBox,
             addressBox,
             etcBox,
             if (isDetail) introBox,

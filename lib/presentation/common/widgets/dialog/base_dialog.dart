@@ -10,6 +10,7 @@ class BaseDialog extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = ref.watch(themeServiceProvider);
     return Dialog(
+      constraints: const BoxConstraints(maxWidth: 360),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(16),
       ),

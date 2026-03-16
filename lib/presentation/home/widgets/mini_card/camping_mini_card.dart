@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:to_camp/core/theme/service/theme_service.dart';
 import 'package:to_camp/data/models/camping_model.dart';
+import 'package:to_camp/presentation/camping/base/widgets/address_box.dart';
 import 'package:to_camp/presentation/camping/base/widgets/image_box.dart';
 import 'package:to_camp/presentation/camping/base/widgets/name_box.dart';
 import 'package:to_camp/presentation/camping/wishlist/widgets/like_button.dart';
@@ -32,13 +33,11 @@ class CampingMiniCard extends ConsumerWidget {
             NameBox(name: campingModel.name, theme: theme),
 
             Expanded(
-              child: Text(
-                '${campingModel.doNm} ${campingModel.sigunguNm}',
-                maxLines: 2,
-                style: theme.typo.subtitle2.copyWith(
-                  color: theme.color.subtext,
-                  fontWeight: theme.typo.semiBold,
-                ),
+              child: AddressBox(
+                doNm: campingModel.doNm,
+                sigunguNm: campingModel.sigunguNm,
+                address: campingModel.address,
+                isDetail: false,
               ),
             ),
           ],

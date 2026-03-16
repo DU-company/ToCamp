@@ -6,6 +6,7 @@ import 'package:platform_maps_flutter/platform_maps_flutter.dart';
 import 'package:to_camp/core/const/data.dart';
 import 'package:to_camp/core/provider/marker_icon_provider.dart';
 import 'package:to_camp/core/service/toast_service.dart';
+import 'package:to_camp/core/theme/res/layout.dart';
 import 'package:to_camp/presentation/camping/base/based_list_view_model.dart';
 import 'package:to_camp/presentation/camping/base/camping_screen.dart';
 import 'package:to_camp/presentation/camping/location/utils/location_utils.dart';
@@ -92,7 +93,6 @@ class _LocationCampingScreenState
     final locationCampingState = ref.watch(
       locationCampingViewModelProvider,
     );
-    print(locationCampingState);
     final totalModels =
         locationCampingState is PaginationSuccess<CampingModel>
         ? [
@@ -113,31 +113,40 @@ class _LocationCampingScreenState
       isLoading:
           locationCampingState is PaginationFetchingMore ||
           locationCampingState is PaginationLoading,
-      bottomNavigationBar: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          /// Show Card / List Button
-          if (hasItem)
-            ShowCardButton(
-              showCard: showCard,
-              onTapShowCard: () =>
-                  onTapShowCard(totalModels, targetModel!),
-              onTapMyLocation: () =>
-                  widget.onTapMyLocation(mapController),
-            ),
-
-          /// CampingCard
-          const SizedBox(height: 4),
-          if (hasItem && showCard)
-            Flexible(
-              child: GestureDetector(
-                child: LocationCampingCard(model: targetModel!),
-                onTap: () => ref
-                    .read(basedListViewModelProvider.notifier)
-                    .onCampingCardTap(context, targetModel),
+      bottomNavigationBar: Align(
+        alignment: Alignment.bottomRight,
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            /// Show Card / List Button
+            if (hasItem)
+              SizedBox(
+                width: context.layout(
+                  null,
+                  desktop: MediaQuery.of(context).size.width / 2,
+                ),
+                child: ShowCardButton(
+                  showCard: showCard,
+                  onTapShowCard: () =>
+                      onTapShowCard(totalModels, targetModel!),
+                  onTapMyLocation: () =>
+                      widget.onTapMyLocation(mapController),
+                ),
               ),
-            ),
-        ],
+
+            /// CampingCard
+            const SizedBox(height: 4),
+            if (hasItem && showCard)
+              Flexible(
+                child: GestureDetector(
+                  child: LocationCampingCard(model: targetModel!),
+                  onTap: () => ref
+                      .read(basedListViewModelProvider.notifier)
+                      .onCampingCardTap(context, targetModel),
+                ),
+              ),
+          ],
+        ),
       ),
       child: Stack(
         children: [
