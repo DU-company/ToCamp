@@ -3,8 +3,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:retrofit/http.dart';
 import 'package:to_camp/core/dio/dio.dart';
 import 'package:to_camp/core/models/pagination_params.dart';
-import 'package:to_camp/data/entities/camping_image_entity.dart';
 import 'package:to_camp/data/models/api_response.dart';
+import 'package:to_camp/data/models/camping_image_model.dart';
 import 'package:to_camp/data/models/camping_model.dart';
 
 part 'camping_data_source.g.dart';
@@ -28,7 +28,7 @@ abstract class CampingDataSource {
   );
 
   @GET('/imageList')
-  Future<ApiResponse<CampingImageEntity>> fetchImageList(
+  Future<ApiResponse<CampingImageModel>> fetchImageList(
     @Queries() PaginationParams params,
   );
 
