@@ -78,9 +78,7 @@ class _Address extends ConsumerWidget {
           borderRadius: BorderRadius.circular(50),
           onTap: () {
             Clipboard.setData(ClipboardData(text: address));
-            ref
-                .read(toastServiceProvider)
-                .showToast(text: '클립보드에 복사되었습니다', isError: false);
+            ToastService.show(text: '클립보드에 복사되었습니다');
           },
           child: Icon(
             PhosphorIcons.copySimple(),

@@ -261,15 +261,15 @@ class _LocationCampingScreenState
       /// 에러가 난다면
       if (state is PaginationFetchingError) {
         final pState = state as PaginationFetchingError;
-        ref
-            .read(toastServiceProvider)
-            .showToast(text: pState.message);
+
+        ToastService.show(text: pState.message, isError: true);
 
         /// 응닶값이 비어있다면
       } else if (models.isEmpty) {
-        ref
-            .read(toastServiceProvider)
-            .showToast(text: '근처 캠핑장을 찾을 수 없어요');
+        ToastService.show(
+          text: '근처 캠핑장을 찾을 수 없어요',
+          isError: true,
+        );
 
         /// 응답값이 존재하면
       } else {

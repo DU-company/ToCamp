@@ -9,18 +9,14 @@ import 'package:to_camp/presentation/home/home_screen.dart';
 
 class DeleteCategoryConfirmDialog extends ConsumerWidget {
   final LikeCategoryModel model;
-  const DeleteCategoryConfirmDialog({
-    super.key,
-    required this.model,
-  });
+  const DeleteCategoryConfirmDialog({super.key, required this.model});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return BaseConfirmDialog(
-      title: '위시리스트 삭제',
-      content:
-          '"${model.categoryName}" 위시리스트를 삭제하실건가요?\n이 작업은 되돌릴 수 없어요!',
-      confirmMessage: '위시리스트 삭제',
+      title: '카테고리 삭제',
+      content: '카테고리를 삭제하실건가요?\n이 작업은 되돌릴 수 없어요.',
+      confirmMessage: '카테고리 삭제',
       cancelMessage: '취소',
       onConfirm: () {
         ref

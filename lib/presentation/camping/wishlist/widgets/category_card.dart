@@ -7,7 +7,10 @@ import 'package:to_camp/data/models/like_category_model.dart';
 
 class WishlistCard extends ConsumerWidget {
   final LikeCategoryModel model;
-  const WishlistCard({super.key, required this.model});
+  const WishlistCard.LikeCategoryCard({
+    super.key,
+    required this.model,
+  });
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -31,7 +34,7 @@ class WishlistCard extends ConsumerWidget {
           /// Title
           const SizedBox(height: 2),
           Text(
-            model.categoryName,
+            model.name,
             textAlign: TextAlign.start,
             maxLines: 2,
             overflow: TextOverflow.ellipsis,

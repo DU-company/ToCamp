@@ -32,15 +32,16 @@ class BaseConfirmDialog extends ConsumerWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           /// Title
-          Text(title, style: theme.typo.headline3),
+          Text(title, style: theme.typo.headline2),
           const SizedBox(height: 8),
 
           /// Content
           if (content != null)
             Text(
               content!,
-              style: theme.typo.subtitle1.copyWith(
+              style: theme.typo.headline6.copyWith(
                 color: theme.color.onHintContainer,
+                fontWeight: theme.typo.regular,
               ),
             ),
           if (content != null) const SizedBox(height: 16),
@@ -49,8 +50,9 @@ class BaseConfirmDialog extends ConsumerWidget {
           PrimaryButton(
             text: confirmMessage,
             onPressed: onConfirm,
-            radius: 8,
             backgroundColor: isWarning ? theme.color.secondary : null,
+            radius: 8,
+            padding: 16,
           ),
 
           /// Cancel Button
@@ -63,6 +65,7 @@ class BaseConfirmDialog extends ConsumerWidget {
               foregroundColor: theme.color.text,
               borderColor: theme.color.subtext,
               radius: 8,
+              padding: 16,
             ),
         ],
       ),

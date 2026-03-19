@@ -92,9 +92,10 @@ class _LocationScreenState extends ConsumerState<LocationScreen>
           ),
         );
       } else {
-        ref
-            .read(toastServiceProvider)
-            .showToast(text: '일시적으로 위치를 가져올 수 없습니다');
+        ToastService.show(
+          text: '일시적으로 위치를 가져올 수 없습니다',
+          isError: true,
+        );
       }
     }
   }

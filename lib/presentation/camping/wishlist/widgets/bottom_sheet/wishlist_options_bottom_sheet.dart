@@ -28,7 +28,7 @@ class WishlistOptionsBottomSheet extends ConsumerWidget {
             icon: PhosphorIcons.pencilSimpleLine(),
           ),
           Tile(
-            text: '위시리스트 삭제',
+            text: '카테고리 삭제',
             onTap: onTapDelete,
             icon: PhosphorIcons.trashSimple(),
             color: theme.color.secondary,

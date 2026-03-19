@@ -1,21 +1,16 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:to_camp/core/theme/foundation/app_theme.dart';
+import 'package:to_camp/core/theme/light_theme.dart';
+import 'package:to_camp/core/theme/res/palette.dart';
 import 'package:to_camp/core/theme/service/theme_service.dart';
 
-final toastServiceProvider = Provider(
-  (ref) => ToastService(ref: ref),
-);
-
-class ToastService {
-  final Ref ref;
-
-  ToastService({required this.ref});
-
-  Future<void> showToast({
+abstract class ToastService {
+  static Future<void> show({
     required String text,
-    bool isError = true,
+    bool isError = false,
   }) async {
-    final theme = ref.read(themeServiceProvider);
+    final theme = LightTheme();
 
     final msg = text;
 
@@ -28,10 +23,13 @@ class ToastService {
           ? theme.color.tertiary
           : theme.color.primary,
       gravity: ToastGravity.CENTER,
+      toastLength: Toast.LENGTH_LONG,
+      timeInSecForIosWeb: 1,
     );
   }
 
   static DateTime? currentBackPressTime;
+
   static Future<bool> onWillPop(WidgetRef ref) async {
     DateTime now = DateTime.now();
 
@@ -40,9 +38,7 @@ class ToastService {
             const Duration(seconds: 2)) {
       currentBackPressTime = now;
 
-      ref
-          .read(toastServiceProvider)
-          .showToast(text: "'뒤로' 버튼을 한 번 더 누르면 종료됩니다.");
+      show(text: "'뒤로' 버튼을 한 번 더 누르면 종료됩니다");
       return false;
     }
     return true;

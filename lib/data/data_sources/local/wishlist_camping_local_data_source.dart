@@ -29,6 +29,20 @@ class WishlistLocalDataSource {
     return await db.insert(categoryTable, categoryEntity.toJson());
   }
 
+  /// 카테고리 "이름" 수정
+  Future<void> updateCategory({
+    required int categoryId,
+    required String name,
+  }) async {
+    final db = await AppDatabase.database;
+    await db.update(
+      categoryTable,
+      {'name': name},
+      where: 'id = ?',
+      whereArgs: [categoryId],
+    );
+  }
+
   /// 카테고리 삭제
   Future<int> deleteCategory(int categoryId) async {
     final db = await AppDatabase.database;
@@ -60,9 +74,7 @@ class WishlistLocalDataSource {
     return await db.insert(campingTable, entity.toJson());
   }
 
-  Future<int> deleteLikeCamping({
-    required String campingId,
-  }) async {
+  Future<int> deleteLikeCamping({required String campingId}) async {
     final db = await AppDatabase.database;
     final resp = await db.delete(
       campingTable,

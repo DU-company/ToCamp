@@ -14,7 +14,7 @@ class WishlistUtils {
     return false;
   }
 
-  /// 모든 카테고리의 캠핑장들을 쭉 나열
+  /// 모든 카테고리의 캠핑장들을 쭉 나열 (Map에서 사용)
   static List<CampingModel> extractCampingList(
     List<LikeCategoryModel> categoryList,
   ) {

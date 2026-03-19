@@ -64,12 +64,12 @@ class GoRoutes {
         ),
 
         GoRoute(
-          path: 'wishlist-detail/:id/:name',
+          path: 'wishlist-detail/:id',
           name: LikeCategoryScreen.routeName,
           builder: (_, state) {
             final id = state.pathParameters['id']!;
-            final name = state.pathParameters['name']!;
-            return LikeCategoryScreen(id: id, name: name);
+            // final name = state.pathParameters['name']!;
+            return LikeCategoryScreen(id: id);
           },
         ),
         GoRoute(

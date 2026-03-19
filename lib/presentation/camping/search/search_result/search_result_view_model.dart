@@ -62,7 +62,7 @@ class SearchResultViewModel
           .read(recentKeywordViewModelProvider.notifier)
           .addKeyword(keyword);
     } catch (e) {
-      ref.read(toastServiceProvider).showToast(text: e.toString());
+      ToastService.show(text: e.toString(), isError: true);
     }
   }
 

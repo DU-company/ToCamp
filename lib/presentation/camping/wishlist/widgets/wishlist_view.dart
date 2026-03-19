@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
+import 'package:to_camp/core/service/toast_service.dart';
 import 'package:to_camp/core/theme/res/layout.dart';
 import 'package:to_camp/core/theme/service/theme_service.dart';
 import 'package:to_camp/data/models/camping_model.dart';
 import 'package:to_camp/data/models/like_category_model.dart';
+import 'package:to_camp/presentation/camping/wishlist/like_category_screen.dart';
 import 'package:to_camp/presentation/camping/wishlist/widgets/dialog/delete_wishlist_confirm_dialog.dart';
 import 'package:to_camp/presentation/camping/wishlist/wishlist_view_model.dart';
 import 'package:to_camp/presentation/camping/wishlist/widgets/category_card.dart';
@@ -48,7 +51,7 @@ class WishlistGridView extends ConsumerWidget {
                     vertical: MediaQuery.of(context).size.height / 3,
                   ),
                   child: Text(
-                    '카테고리가 존재하지 않습니다.',
+                    '위시리스트가 비어있습니다.',
                     style: theme.typo.subtitle1,
                   ),
                 ),
@@ -69,22 +72,21 @@ class WishlistGridView extends ConsumerWidget {
             ),
             itemCount: wishlist.length,
             itemBuilder: (context, index) {
-              final wishlistModel = wishlist[index];
+              final categoryModel = wishlist[index];
 
               return GestureDetector(
                 behavior: HitTestBehavior.opaque,
                 onLongPress: isAdding
                     ? null
-                    : () => onLongPress(context, wishlistModel),
-                onTap: () => ref
-                    .read(wishlistViewModelProvider.notifier)
-                    .onTapCategory(
-                      isAdding: isAdding,
-                      context: context,
-                      wishlistModel: wishlistModel,
-                      campingModel: campingModel,
-                    ),
-                child: WishlistCard(model: wishlistModel),
+                    : () => showDeleteDialog(context, categoryModel),
+                onTap: () => handleTapCategory(
+                  context: context,
+                  ref: ref,
+                  categoryModel: categoryModel,
+                ),
+                child: WishlistCard.LikeCategoryCard(
+                  model: categoryModel,
+                ),
               );
             },
           ),
@@ -93,7 +95,7 @@ class WishlistGridView extends ConsumerWidget {
     );
   }
 
-  void onLongPress(
+  void showDeleteDialog(
     BuildContext context,
     LikeCategoryModel categoryModel,
   ) {
@@ -102,5 +104,29 @@ class WishlistGridView extends ConsumerWidget {
       builder: (context) =>
           DeleteCategoryConfirmDialog(model: categoryModel),
     );
+  }
+
+  void handleTapCategory({
+    required BuildContext context,
+    required WidgetRef ref,
+    required LikeCategoryModel categoryModel,
+  }) {
+    final vm = ref.read(wishlistViewModelProvider.notifier);
+
+    if (isAdding) {
+      vm.addToCategory(
+        categoryId: categoryModel.id,
+        campingModel: campingModel!,
+      );
+      ToastService.show(
+        text: '"${categoryModel.name}"에 추가되었습니다',
+      );
+      context.pop();
+    } else {
+      context.pushNamed(
+        LikeCategoryScreen.routeName,
+        pathParameters: {'id': '${categoryModel.id}'},
+      );
+    }
   }
 }

@@ -5,7 +5,7 @@ import 'package:to_camp/core/service/toast_service.dart';
 import 'package:to_camp/data/models/camping_model.dart';
 import 'package:to_camp/data/models/like_category_model.dart';
 import 'package:to_camp/data/repositories/wishlist_repository.dart';
-import 'package:to_camp/presentation/camping/wishlist/widgets/bottom_sheet/add_category_bottom_sheet.dart';
+import 'package:to_camp/presentation/camping/wishlist/widgets/bottom_sheet/category_form_bottom_sheet.dart';
 import 'package:to_camp/presentation/camping/wishlist/widgets/bottom_sheet/select_category_bottom_sheet.dart';
 import 'package:to_camp/presentation/camping/wishlist/like_category_screen.dart';
 
@@ -48,7 +48,7 @@ class WishlistViewModel extends Notifier<List<LikeCategoryModel>> {
         useSafeArea: true,
         context: context,
         builder: (context) {
-          return SelectWishlistBottomSheet(
+          return SelectCategoryBottomSheet(
             campingModel: campingModel,
             isLiked: isLiked,
           );
@@ -57,72 +57,54 @@ class WishlistViewModel extends Notifier<List<LikeCategoryModel>> {
     }
   }
 
-  Future<void> onTapCategory({
-    required bool isAdding,
-    required BuildContext context,
-    required LikeCategoryModel wishlistModel,
-    CampingModel? campingModel,
+  Future<void> addToCategory({
+    required int categoryId,
+    required CampingModel campingModel,
   }) async {
-    /// 카테고리에 추가하는 상황인지 검토
-    if (isAdding) {
-      context.pop();
-      await repository.addToCategory(
-        wishlistModel.categoryId,
-        campingModel!,
-      );
-      getWishlist();
-
-      ref
-          .read(toastServiceProvider)
-          .showToast(
-            text: '"${wishlistModel.categoryName}"에 추가되었습니다',
-            isError: false,
-          );
-    } else {
-      context.pushNamed(
-        LikeCategoryScreen.routeName,
-        pathParameters: {
-          'id': '${wishlistModel.categoryId}',
-          "name": wishlistModel.categoryName,
-        },
-      );
-    }
+    await repository.addToCategory(categoryId, campingModel);
+    getWishlist();
   }
 
   /// 새로운 카테고리 생성 후, 캠핑장 삽입
-  Future<void> createCategory(
-    BuildContext context,
-    CampingModel campingModel,
-  ) async {
-    try {
-      final name = ref.read(likeCategoryNameProvider);
-      _validateName(name);
+  Future<void> createCategory({
+    required String name,
+    required CampingModel campingModel,
+  }) async {
+    _validateName(name);
 
-      final wishlist = await repository.createCategory(
-        campingModel,
-        name,
-      );
+    final newCategory = await repository.createCategory(
+      campingModel,
+      name,
+    );
 
-      /// 상태에 해당 카테고리 추가
-      state = [wishlist, ...state];
+    /// 상태에 해당 카테고리 추가
+    state = [newCategory, ...state];
+  }
 
-      ref
-          .read(toastServiceProvider)
-          .showToast(text: '"$name"에 추가되었습니다', isError: false);
-      context.pop();
-    } catch (e) {
-      ref.read(toastServiceProvider).showToast(text: e.toString());
-    }
+  Future<void> editCategoryName({
+    required int categoryId,
+    required String name,
+  }) async {
+    _validateName(name);
+
+    await repository.updateCategory(
+      categoryId: categoryId,
+      name: name,
+    );
+
+    final newItems = state.map(
+      (e) => e.id == categoryId ? e.copyWith(name: name) : e,
+    );
+
+    /// 상태에 변경된 카테고리 적용
+    state = [...newItems];
   }
 
   Future<void> deleteCategory(LikeCategoryModel model) async {
-    await repository.deleteCategory(model.categoryId);
-    state = state
-        .where((e) => e.categoryId != model.categoryId)
-        .toList();
-    ref
-        .read(toastServiceProvider)
-        .showToast(text: '"${model.categoryName}" 카테고리가 삭제되었습니다');
+    await repository.deleteCategory(model.id);
+    state = state.where((e) => e.id != model.id).toList();
+
+    ToastService.show(text: '"${model.name}" 카테고리가 삭제되었습니다');
   }
 
   void _validateName(String name) {

@@ -4,14 +4,14 @@ import 'package:go_router/go_router.dart';
 import 'package:to_camp/presentation/common/widgets/bottom_sheet/base_bottom_sheet.dart';
 import 'package:to_camp/presentation/common/widgets/primary_button.dart';
 import 'package:to_camp/data/models/camping_model.dart';
-import 'package:to_camp/presentation/camping/wishlist/widgets/bottom_sheet/add_category_bottom_sheet.dart';
+import 'package:to_camp/presentation/camping/wishlist/widgets/bottom_sheet/category_form_bottom_sheet.dart';
 import 'package:to_camp/presentation/camping/wishlist/widgets/wishlist_view.dart';
 
-class SelectWishlistBottomSheet extends ConsumerWidget {
+class SelectCategoryBottomSheet extends ConsumerWidget {
   final CampingModel campingModel;
   final bool isLiked;
 
-  const SelectWishlistBottomSheet({
+  const SelectCategoryBottomSheet({
     super.key,
     required this.campingModel,
     required this.isLiked,
@@ -34,8 +34,8 @@ class SelectWishlistBottomSheet extends ConsumerWidget {
             padding: EdgeInsets.all(8.0),
             child: PrimaryButton(
               radius: 8,
-              onPressed: () => onCreateTap(context),
-              text: '위시리스트 만들기',
+              onPressed: () => showFormBottomSheet(context),
+              text: '카테고리 만들기',
             ),
           ),
         ],
@@ -43,7 +43,7 @@ class SelectWishlistBottomSheet extends ConsumerWidget {
     );
   }
 
-  void onCreateTap(BuildContext context) {
+  void showFormBottomSheet(BuildContext context) {
     context.pop();
     showModalBottomSheet(
       context: context,
@@ -53,7 +53,10 @@ class SelectWishlistBottomSheet extends ConsumerWidget {
           padding: EdgeInsets.only(
             bottom: MediaQuery.of(context).viewInsets.bottom,
           ),
-          child: AddCategoryBottomSheet(campingModel: campingModel),
+          child: CategoryFormBottomSheet(
+            isEdit: false,
+            campingModel: campingModel,
+          ),
         );
       },
     );

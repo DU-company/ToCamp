@@ -43,8 +43,8 @@ class WishlistRepository {
     final id = await _createCategory(name);
     await addToCategory(id, campingModel);
     return LikeCategoryModel(
-      categoryId: id,
-      categoryName: name,
+      id: id,
+      name: name,
       items: [campingModel],
     );
   }
@@ -54,6 +54,16 @@ class WishlistRepository {
     final entity = LikeCategoryEntity(name: name);
     final id = await dataSource.insertCategory(entity);
     return id;
+  }
+
+  Future<void> updateCategory({
+    required int categoryId,
+    required String name,
+  }) async {
+    await dataSource.updateCategory(
+      categoryId: categoryId,
+      name: name,
+    );
   }
 
   Future<void> deleteCategory(int categoryId) async {

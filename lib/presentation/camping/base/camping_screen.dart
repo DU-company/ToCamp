@@ -68,7 +68,8 @@ class CampingScreen extends ConsumerWidget {
             ),
 
           if (!hasData && emptyMessage != null)
-            SliverToBoxAdapter(
+            SliverFillRemaining(
+              fillOverscroll: true,
               child: Center(
                 child: Text(
                   emptyMessage!,
