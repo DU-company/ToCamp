@@ -4,7 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:to_camp/presentation/common/widgets/bottom_sheet/base_bottom_sheet.dart';
 import 'package:to_camp/presentation/common/widgets/primary_button.dart';
 import 'package:to_camp/data/models/camping_model.dart';
-import 'package:to_camp/presentation/camping/wishlist/widgets/bottom_sheet/add_wishlist_bottom_sheet.dart';
+import 'package:to_camp/presentation/camping/wishlist/widgets/bottom_sheet/add_category_bottom_sheet.dart';
 import 'package:to_camp/presentation/camping/wishlist/widgets/wishlist_view.dart';
 
 class SelectWishlistBottomSheet extends ConsumerWidget {
@@ -24,7 +24,7 @@ class SelectWishlistBottomSheet extends ConsumerWidget {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Expanded(
-            child: WishlistView(
+            child: WishlistGridView(
               isAdding: true,
               campingModel: campingModel,
             ),
@@ -53,7 +53,7 @@ class SelectWishlistBottomSheet extends ConsumerWidget {
           padding: EdgeInsets.only(
             bottom: MediaQuery.of(context).viewInsets.bottom,
           ),
-          child: AddWishlistBottomSheet(campingModel: campingModel),
+          child: AddCategoryBottomSheet(campingModel: campingModel),
         );
       },
     );

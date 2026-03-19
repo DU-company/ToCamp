@@ -3,15 +3,15 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:to_camp/presentation/common/screen/root_tab.dart';
 import 'package:to_camp/presentation/common/widgets/dialog/base_confirm_dialog.dart';
-import 'package:to_camp/data/models/wishlist_model.dart';
+import 'package:to_camp/data/models/like_category_model.dart';
 import 'package:to_camp/presentation/camping/wishlist/wishlist_view_model.dart';
 import 'package:to_camp/presentation/home/home_screen.dart';
 
-class DeleteWishlistConfirmDialog extends ConsumerWidget {
-  final WishlistModel wishlistModel;
-  const DeleteWishlistConfirmDialog({
+class DeleteCategoryConfirmDialog extends ConsumerWidget {
+  final LikeCategoryModel model;
+  const DeleteCategoryConfirmDialog({
     super.key,
-    required this.wishlistModel,
+    required this.model,
   });
 
   @override
@@ -19,13 +19,13 @@ class DeleteWishlistConfirmDialog extends ConsumerWidget {
     return BaseConfirmDialog(
       title: '위시리스트 삭제',
       content:
-          '"${wishlistModel.name}" 위시리스트를 삭제하실건가요?\n이 작업은 되돌릴 수 없어요!',
+          '"${model.categoryName}" 위시리스트를 삭제하실건가요?\n이 작업은 되돌릴 수 없어요!',
       confirmMessage: '위시리스트 삭제',
       cancelMessage: '취소',
       onConfirm: () {
         ref
             .read(wishlistViewModelProvider.notifier)
-            .deleteCategory(wishlistModel);
+            .deleteCategory(model);
         context.pop();
         context.goNamed(RootTab.routeName);
       },

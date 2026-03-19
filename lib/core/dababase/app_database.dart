@@ -24,14 +24,14 @@ class AppDatabase {
       version: 2,
       onCreate: (db, version) async {
         await db.execute('''
-        CREATE TABLE $TABLE_WISHLIST_CATEGORY (
+        CREATE TABLE $TABLE_LIKE_CATEGORY (
           id INTEGER PRIMARY KEY AUTOINCREMENT,
           name TEXT NOT NULL
         )
         ''');
 
         await db.execute('''
-          CREATE TABLE $TABLE_WISHLIST_CAMPING (
+          CREATE TABLE $TABLE_LIKE_CAMPING (
             id TEXT PRIMARY KEY NOT NULL,
             thumbUrl TEXT NOT NULL,
             name TEXT NOT NULL,
@@ -57,7 +57,7 @@ class AppDatabase {
             siteBottomCl5 TEXT,
             createdAt INTEGER NOT NULL,
             categoryId INTEGER NOT NULL,
-            FOREIGN KEY (categoryId) REFERENCES $TABLE_WISHLIST_CATEGORY(id) ON DELETE CASCADE
+            FOREIGN KEY (categoryId) REFERENCES $TABLE_LIKE_CATEGORY(id) ON DELETE CASCADE
           )
           ''');
 

@@ -1,9 +1,9 @@
 import 'package:to_camp/data/models/camping_model.dart';
-import 'package:to_camp/data/models/wishlist_model.dart';
+import 'package:to_camp/data/models/like_category_model.dart';
 
 class WishlistUtils {
   static bool checkIsLiked(
-    List<WishlistModel> wishlistModels,
+    List<LikeCategoryModel> wishlistModels,
     CampingModel targetModel,
   ) {
     for (final wishlistModel in wishlistModels) {
@@ -14,13 +14,13 @@ class WishlistUtils {
     return false;
   }
 
-  /// WishlistModel -> CampingModel 추출
+  /// 모든 카테고리의 캠핑장들을 쭉 나열
   static List<CampingModel> extractCampingList(
-    List<WishlistModel> wishlistModels,
+    List<LikeCategoryModel> categoryList,
   ) {
     List<CampingModel> totalModels = [];
-    for (final wishlistModel in wishlistModels) {
-      totalModels.addAll(wishlistModel.items);
+    for (final category in categoryList) {
+      totalModels.addAll(category.items);
     }
     return totalModels;
   }

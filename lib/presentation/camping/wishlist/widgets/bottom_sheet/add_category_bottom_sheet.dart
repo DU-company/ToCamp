@@ -9,11 +9,11 @@ import 'package:to_camp/data/models/camping_model.dart';
 import 'package:to_camp/presentation/camping/wishlist/wishlist_view_model.dart';
 import 'package:flutter_riverpod/legacy.dart';
 
-final wishlistNameProvider = StateProvider.autoDispose((ref) => '');
+final likeCategoryNameProvider = StateProvider.autoDispose((ref) => '');
 
-class AddWishlistBottomSheet extends ConsumerWidget {
+class AddCategoryBottomSheet extends ConsumerWidget {
   final CampingModel campingModel;
-  const AddWishlistBottomSheet({
+  const AddCategoryBottomSheet({
     super.key,
     required this.campingModel,
   });
@@ -21,7 +21,7 @@ class AddWishlistBottomSheet extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = ref.watch(themeServiceProvider);
-    final categoryName = ref.watch(wishlistNameProvider);
+    final categoryName = ref.watch(likeCategoryNameProvider);
 
     return BaseBottomSheet(
       padding: EdgeInsets.symmetric(horizontal: 8, vertical: 32),
@@ -31,7 +31,7 @@ class AddWishlistBottomSheet extends ConsumerWidget {
         children: [
           Text(
             textAlign: TextAlign.center,
-            '위시리스트 이름을 작성해 주세요.',
+            '카테고리 이름을 작성해 주세요.',
             style: theme.typo.subtitle1.copyWith(
               fontWeight: theme.typo.semiBold,
               color: theme.color.onHintContainer,
@@ -43,20 +43,20 @@ class AddWishlistBottomSheet extends ConsumerWidget {
             maxLine: 1,
             hint: 'ex) 글램핑',
             onChanged: (text) {
-              ref.read(wishlistNameProvider.notifier).state = text;
+              ref.read(likeCategoryNameProvider.notifier).state = text;
             },
           ),
 
           /// Submit Button
           const SizedBox(height: 8),
           PrimaryButton(
-            text: '위시리스트 만들기',
+            text: '카테고리 만들기',
             onPressed: categoryName.trim().isEmpty
                 ? null
                 : () {
                     ref
                         .read(wishlistViewModelProvider.notifier)
-                        .onCreateWishlist(context, campingModel);
+                        .createCategory(context, campingModel);
                   },
           ),
         ],

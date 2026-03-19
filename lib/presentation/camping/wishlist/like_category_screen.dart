@@ -1,19 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:to_camp/data/models/wishlist_model.dart';
+import 'package:to_camp/data/models/like_category_model.dart';
 import 'package:to_camp/presentation/camping/base/camping_screen.dart';
+import 'package:to_camp/presentation/camping/wishlist/widgets/bottom_sheet/add_category_bottom_sheet.dart';
 import 'package:to_camp/presentation/camping/wishlist/widgets/bottom_sheet/wishlist_options_bottom_sheet.dart';
 import 'package:to_camp/presentation/camping/wishlist/widgets/dialog/delete_wishlist_confirm_dialog.dart';
 import 'package:to_camp/presentation/camping/wishlist/wishlist_view_model.dart';
 import 'package:collection/collection.dart';
 
-class WishlistDetailScreen extends ConsumerWidget {
-  static String get routeName => 'wishlist-detail';
+class LikeCategoryScreen extends ConsumerWidget {
+  static String get routeName => 'like-category';
 
   final String id;
   final String name;
-  const WishlistDetailScreen({
+  const LikeCategoryScreen({
     super.key,
     required this.id,
     required this.name,
@@ -23,14 +24,16 @@ class WishlistDetailScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final wishlist = ref.watch(wishlistViewModelProvider);
 
-    final items = wishlist
-        .firstWhereOrNull((e) => e.id.toString() == id)
-        ?.items;
+    final category = wishlist.firstWhereOrNull(
+      (e) => e.categoryId.toString() == id,
+    );
+
+    final likedItems = category?.items;
 
     return CampingScreen(
-      items: items ?? [],
+      items: likedItems ?? [],
       title: name,
-      emptyMessage: '위시리스트가 비어있어요!',
+      emptyMessage: '카테고리가 비어있어요!',
       onPressed: () =>
           showWishlistOptionsBottomSheet(context, wishlist),
     );
@@ -38,28 +41,39 @@ class WishlistDetailScreen extends ConsumerWidget {
 
   void showWishlistOptionsBottomSheet(
     BuildContext context,
-    List<WishlistModel> wishlist,
+    List<LikeCategoryModel> categories,
   ) {
     showModalBottomSheet(
       context: context,
       builder: (context) => WishlistOptionsBottomSheet(
-        onTapDelete: () => _deleteWishlist(context, wishlist),
+        onTapEditName: () {},
+        onTapDelete: () => _deleteCategory(context, categories),
       ),
     );
   }
 
-  void _deleteWishlist(
+  void _deleteCategory(
     BuildContext context,
-    List<WishlistModel> wishlist,
+    List<LikeCategoryModel> categories,
   ) {
     context.pop();
     showDialog(
       context: context,
-      builder: (context) => DeleteWishlistConfirmDialog(
-        wishlistModel: wishlist.firstWhere(
-          (e) => e.id.toString() == id,
+      builder: (context) => DeleteCategoryConfirmDialog(
+        model: categories.firstWhere(
+          (e) => e.categoryId.toString() == id,
         ),
       ),
+    );
+  }
+
+  void _editCategoryName(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      builder: (context) =>
+      /// TODO : HandleBottomSheet로 바꾸기?
+      /// 그리고 여기서는 model이 필요없음. 옵셔널 파라미터로 바꾼 뒤, 분기처리하기
+          AddCategoryBottomSheet(campingModel: campingModel),
     );
   }
 }

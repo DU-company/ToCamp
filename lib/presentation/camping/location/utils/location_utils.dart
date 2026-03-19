@@ -2,7 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:platform_maps_flutter/platform_maps_flutter.dart';
 import 'package:to_camp/data/models/camping_model.dart';
-import 'package:to_camp/data/models/wishlist_model.dart';
+import 'package:to_camp/data/models/like_category_model.dart';
 import 'package:to_camp/presentation/camping/wishlist/utils/wishlist_utils.dart';
 
 class LocationUtils {
@@ -42,7 +42,7 @@ class LocationUtils {
 
   static List<Marker> createMarkers({
     required List<CampingModel> totalModels,
-    required List<WishlistModel> wishlist,
+    required List<LikeCategoryModel> wishlist,
     required List<Uint8List> markerIcons,
     required Function(CampingModel model) onTap,
   }) {

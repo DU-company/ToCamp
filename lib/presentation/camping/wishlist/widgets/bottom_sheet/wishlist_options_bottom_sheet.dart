@@ -7,9 +7,11 @@ import 'package:to_camp/presentation/common/widgets/tile.dart';
 
 class WishlistOptionsBottomSheet extends ConsumerWidget {
   final VoidCallback onTapDelete;
+  final VoidCallback onTapEditName;
   const WishlistOptionsBottomSheet({
     super.key,
     required this.onTapDelete,
+    required this.onTapEditName,
   });
 
   @override
@@ -20,11 +22,11 @@ class WishlistOptionsBottomSheet extends ConsumerWidget {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          // Tile(
-          //   text: '이름 변경',
-          //   onTap: () {},
-          //   icon: PhosphorIcons.pencilSimpleLine(),
-          // ),
+          Tile(
+            text: '이름 변경',
+            onTap: onTapEditName,
+            icon: PhosphorIcons.pencilSimpleLine(),
+          ),
           Tile(
             text: '위시리스트 삭제',
             onTap: onTapDelete,

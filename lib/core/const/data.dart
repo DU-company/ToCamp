@@ -14,8 +14,8 @@ const MARKER = 'asset/img/marker.png';
 const MARKER_PINK = 'asset/img/marker_pink.png';
 
 /// Sqflite(Don't Change!!)
-const TABLE_WISHLIST_CATEGORY = 'like_categories';
-const TABLE_WISHLIST_CAMPING = 'like_campings';
+const TABLE_LIKE_CATEGORY = 'like_categories';
+const TABLE_LIKE_CAMPING = 'like_campings';
 const TABLE_RECENT_CAMPING = 'recent_campings';
 const TABLE_RECENT_KEYWORD = 'recent_keywords';
 const DB_NAME = 'tocamp.db';

@@ -2,10 +2,10 @@ import 'package:json_annotation/json_annotation.dart';
 import 'package:to_camp/core/utils/data_utils.dart';
 import 'package:to_camp/data/models/camping_model.dart';
 
-part 'wishlist_camping_entity.g.dart';
+part 'like_camping_entity.g.dart';
 
 @JsonSerializable()
-class WishlistCampingEntity {
+class LikeCampingEntity {
   final String id;
   final String thumbUrl;
   final String name;
@@ -37,7 +37,7 @@ class WishlistCampingEntity {
   final DateTime createdAt;
   final int categoryId;
 
-  WishlistCampingEntity({
+  LikeCampingEntity({
     required this.id,
     required this.thumbUrl,
     required this.name,
@@ -65,16 +65,16 @@ class WishlistCampingEntity {
     required this.categoryId,
   });
 
-  factory WishlistCampingEntity.fromJson(Map<String, dynamic> json) =>
-      _$WishlistCampingEntityFromJson(json);
+  factory LikeCampingEntity.fromJson(Map<String, dynamic> json) =>
+      _$LikeCampingEntityFromJson(json);
 
-  Map<String, dynamic> toJson() => _$WishlistCampingEntityToJson(this);
+  Map<String, dynamic> toJson() => _$LikeCampingEntityToJson(this);
 
-  factory WishlistCampingEntity.fromCampingModel({
+  factory LikeCampingEntity.fromCampingModel({
     required CampingModel model,
     required int categoryId,
   }) {
-    return WishlistCampingEntity(
+    return LikeCampingEntity(
       id: model.id,
       thumbUrl: model.thumbUrl,
       name: model.name,

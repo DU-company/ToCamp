@@ -9,7 +9,7 @@ class WishlistScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return const Column(
       children: [
-        Expanded(child: WishlistView(isAdding: false)),
+        Expanded(child: WishlistGridView(isAdding: false)),
         SizedBox(height: 80),
       ],
     );

@@ -3,15 +3,15 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:to_camp/core/theme/res/layout.dart';
 import 'package:to_camp/core/theme/service/theme_service.dart';
 import 'package:to_camp/data/models/camping_model.dart';
-import 'package:to_camp/data/models/wishlist_model.dart';
+import 'package:to_camp/data/models/like_category_model.dart';
 import 'package:to_camp/presentation/camping/wishlist/widgets/dialog/delete_wishlist_confirm_dialog.dart';
 import 'package:to_camp/presentation/camping/wishlist/wishlist_view_model.dart';
-import 'package:to_camp/presentation/camping/wishlist/widgets/wishlist_card.dart';
+import 'package:to_camp/presentation/camping/wishlist/widgets/category_card.dart';
 
-class WishlistView extends ConsumerWidget {
+class WishlistGridView extends ConsumerWidget {
   final bool isAdding;
   final CampingModel? campingModel;
-  const WishlistView({required this.isAdding, this.campingModel});
+  const WishlistGridView({required this.isAdding, this.campingModel});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -48,7 +48,7 @@ class WishlistView extends ConsumerWidget {
                     vertical: MediaQuery.of(context).size.height / 3,
                   ),
                   child: Text(
-                    '위시리스트가 존재하지 않습니다.',
+                    '카테고리가 존재하지 않습니다.',
                     style: theme.typo.subtitle1,
                   ),
                 ),
@@ -78,13 +78,13 @@ class WishlistView extends ConsumerWidget {
                     : () => onLongPress(context, wishlistModel),
                 onTap: () => ref
                     .read(wishlistViewModelProvider.notifier)
-                    .onCardTap(
+                    .onTapCategory(
                       isAdding: isAdding,
                       context: context,
                       wishlistModel: wishlistModel,
                       campingModel: campingModel,
                     ),
-                child: WishlistCard(wishlistModel: wishlistModel),
+                child: WishlistCard(model: wishlistModel),
               );
             },
           ),
@@ -95,12 +95,12 @@ class WishlistView extends ConsumerWidget {
 
   void onLongPress(
     BuildContext context,
-    WishlistModel wishlistModel,
+    LikeCategoryModel categoryModel,
   ) {
     showDialog(
       context: context,
       builder: (context) =>
-          DeleteWishlistConfirmDialog(wishlistModel: wishlistModel),
+          DeleteCategoryConfirmDialog(model: categoryModel),
     );
   }
 }

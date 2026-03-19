@@ -1,9 +1,10 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:to_camp/data/data_sources/local/wishlist_camping_local_data_source.dart';
-import 'package:to_camp/data/entities/wishlist_camping_entity.dart';
-import 'package:to_camp/data/entities/wishlist_entity.dart';
+import 'package:to_camp/data/entities/like_camping_entity.dart';
+import 'package:to_camp/data/entities/like_category_entity.dart';
 import 'package:to_camp/data/models/camping_model.dart';
-import 'package:to_camp/data/models/wishlist_model.dart';
+import 'package:to_camp/data/models/like_category_model.dart';
 
 final wishlistRepositoryProvider = Provider((ref) {
   final dataSource = ref.read(wishlistLocalDataSourceProvider);
@@ -15,59 +16,63 @@ class WishlistRepository {
 
   WishlistRepository(this.dataSource);
 
-  Future<List<WishlistModel>> getAllWishlist() async {
+  Future<List<LikeCategoryModel>> getAllCategories() async {
     /// 카테고리 먼저 가져온 후
-    final wishlists = await dataSource.fetchAllWishlist();
+    final categories = await dataSource.fetchAllCategories();
 
-    List<WishlistModel> items = [];
-    for (final wishlist in wishlists) {
+    List<LikeCategoryModel> items = [];
+    for (final category in categories) {
       /// 각 카테고리에 속해있는 캠핑장 리스트를 받아온다.
-      final campingList = await dataSource.fetchCampingList(
-        wishlistId: wishlist.id!,
+      final campingList = await dataSource.fetchLikeCampingList(
+        categoryId: category.id!,
       );
 
-      /// 데이터 저장
-      final item = WishlistModel.fromQuery(wishlist, campingList);
+      /// Model로 파싱
+      final item = LikeCategoryModel.fromQuery(category, campingList);
       items.add(item);
     }
 
     return items;
   }
 
-  /// 새로운 위시리스트 생성 후 캠핑장 까지 삽입
-  Future<WishlistModel> createWishlist(
+  /// 새로운 카테고리 생성 후 캠핑장 까지 삽입
+  Future<LikeCategoryModel> createCategory(
     CampingModel campingModel,
     String name,
   ) async {
-    final id = await _createWishlist(name);
-    await addToWishlist(id, campingModel);
-    return WishlistModel(id: id, name: name, items: [campingModel]);
+    final id = await _createCategory(name);
+    await addToCategory(id, campingModel);
+    return LikeCategoryModel(
+      categoryId: id,
+      categoryName: name,
+      items: [campingModel],
+    );
   }
 
-  /// 새로운 위시리스트 생성
-  Future<int> _createWishlist(String name) async {
-    final entity = WishlistEntity(name: name);
-    final id = await dataSource.insertWishlist(entity);
+  /// 새로운 카테고리 생성
+  Future<int> _createCategory(String name) async {
+    final entity = LikeCategoryEntity(name: name);
+    final id = await dataSource.insertCategory(entity);
     return id;
   }
 
-  Future<void> deleteWishlist(int id) async {
-    await dataSource.deleteWishlist(id);
+  Future<void> deleteCategory(int categoryId) async {
+    await dataSource.deleteCategory(categoryId);
   }
 
-  /// 특정 위시리스트에 캠핑장 추가
-  Future<void> addToWishlist(
-    int wishlistId,
+  /// 특정 카테고리에 캠핑장 추가
+  Future<void> addToCategory(
+    int categoryId,
     CampingModel model,
   ) async {
-    final entity = WishlistCampingEntity.fromCampingModel(
-      categoryId: wishlistId,
+    final entity = LikeCampingEntity.fromCampingModel(
+      categoryId: categoryId,
       model: model,
     );
-    await dataSource.insertWishlistCamping(entity);
+    await dataSource.insertLikeCamping(entity);
   }
 
-  Future<void> removeFromWishlist(String id) async {
-    await dataSource.deleteWishlistCamping(campingId: id);
+  Future<void> removeFromCategory(String campingId) async {
+    await dataSource.deleteLikeCamping(campingId: campingId);
   }
 }

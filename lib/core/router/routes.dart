@@ -1,6 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:to_camp/presentation/camping/wishlist/wishlist_detail_screen.dart';
+import 'package:to_camp/presentation/camping/wishlist/like_category_screen.dart';
 import 'package:to_camp/presentation/common/screen/root_tab.dart';
 import 'package:to_camp/data/models/camping_model.dart';
 import 'package:to_camp/presentation/camping/search/search_result/search_result_screen.dart';
@@ -65,11 +65,11 @@ class GoRoutes {
 
         GoRoute(
           path: 'wishlist-detail/:id/:name',
-          name: WishlistDetailScreen.routeName,
+          name: LikeCategoryScreen.routeName,
           builder: (_, state) {
             final id = state.pathParameters['id']!;
             final name = state.pathParameters['name']!;
-            return WishlistDetailScreen(id: id, name: name);
+            return LikeCategoryScreen(id: id, name: name);
           },
         ),
         GoRoute(

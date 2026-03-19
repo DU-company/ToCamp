@@ -4,7 +4,7 @@ import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:to_camp/presentation/common/widgets/custom_icon_button.dart';
 import 'package:to_camp/core/theme/service/theme_service.dart';
 import 'package:to_camp/data/models/camping_model.dart';
-import 'package:to_camp/presentation/camping/wishlist/widgets/bottom_sheet/select_wishlist_bottom_sheet.dart';
+import 'package:to_camp/presentation/camping/wishlist/widgets/bottom_sheet/select_category_bottom_sheet.dart';
 import 'package:to_camp/presentation/camping/wishlist/wishlist_view_model.dart';
 import 'package:to_camp/presentation/camping/wishlist/utils/wishlist_utils.dart';
 
