@@ -45,8 +45,9 @@ class WishlistCard extends ConsumerWidget {
           const SizedBox(height: 2),
           Text(
             '${model.items.length}개 저장됨',
-            style: theme.typo.subtitle1.copyWith(
+            style: theme.typo.body1.copyWith(
               color: theme.color.subtext,
+              fontWeight: theme.typo.regular
             ),
           ),
         ],

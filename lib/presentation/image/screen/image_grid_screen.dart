@@ -35,7 +35,7 @@ class ImageGridScreen extends ConsumerWidget {
                 extra: imgUrls,
               );
             },
-            child: BaseNetworkImage(imgUrl: imgUrl, memSize: 300),
+            child: BaseNetworkImage(imgUrl: imgUrl, memSize: 200),
           );
         },
       ),

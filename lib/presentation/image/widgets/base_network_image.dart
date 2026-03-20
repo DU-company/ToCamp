@@ -38,7 +38,7 @@ class BaseNetworkImage extends StatelessWidget {
       },
       errorWidget: (context, url, error) {
         return const ErrorMessageWidget(
-          message: 'ERROR',
+          message: 'NO_IMAGE',
           onTap: null,
         );
       },
