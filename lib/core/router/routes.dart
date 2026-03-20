@@ -73,7 +73,7 @@ class GoRoutes {
           },
         ),
         GoRoute(
-          path: 'shared',
+          path: 'share',
           name: SharedCampingDetailScreen.routeName,
           builder: (_, state) {
             final id = state.uri.queryParameters['id']!;
@@ -88,10 +88,11 @@ class GoRoutes {
   String? redirectLogic(GoRouterState state) {
     final uri = state.uri;
     print(uri);
-    if (uri.host == 'shared') {
+    if (uri.host == 'share') {
       final id = uri.queryParameters['id'];
       final name = uri.queryParameters['name'];
-      return '/shared?id=$id&name=$name';
+
+      return '/share?id=$id&name=$name';
     } else {
       return null;
     }

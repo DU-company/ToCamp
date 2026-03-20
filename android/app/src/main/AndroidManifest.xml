@@ -30,8 +30,7 @@
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
                 <data
-                    android:scheme="tocamp"
-                    android:host="shared" />
+                    android:scheme="tocamp"/>
             </intent-filter>
             <!-- 앱 스킴 설정 끝 -->
 

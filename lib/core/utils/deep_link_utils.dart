@@ -13,7 +13,6 @@ abstract class DeepLinkUtils {
     final uri = getShortLink(model);
     final params = ShareParams(
       uri: uri,
-      subject: '투캠에서 확인해보세요!',
       sharePositionOrigin: box!.localToGlobal(Offset.zero) & box.size,
     );
     await SharePlus.instance.share(params);
@@ -33,11 +32,15 @@ abstract class DeepLinkUtils {
   }
 
   static Uri getShortLink(CampingModel model) {
-    final String baseUrl = SUPABASE_URL;
+    const String baseUrl = 'https://tocamp.vercel.app';
 
     final uri = Uri.parse(baseUrl).replace(
-      path: 'functions/v1/share_camp_site',
-      queryParameters: {'id': model.id, 'name': model.name},
+      path: 'share',
+      queryParameters: {
+        'id': model.id,
+        'name': model.name,
+        'thumbUrl': model.thumbUrl,
+      },
     );
 
     print(uri);
