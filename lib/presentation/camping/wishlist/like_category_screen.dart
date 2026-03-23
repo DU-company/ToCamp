@@ -73,9 +73,15 @@ class LikeCategoryScreen extends ConsumerWidget {
     context.pop();
     showModalBottomSheet(
       context: context,
-      builder: (context) => CategoryFormBottomSheet(
-        isEdit: true,
-        categoryModel: category,
+      isScrollControlled: true,
+      builder: (context) => Padding(
+        padding: EdgeInsets.only(
+          bottom: MediaQuery.of(context).viewInsets.bottom,
+        ),
+        child: CategoryFormBottomSheet(
+          isEdit: true,
+          categoryModel: category,
+        ),
       ),
     );
   }

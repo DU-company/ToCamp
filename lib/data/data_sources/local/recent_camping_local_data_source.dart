@@ -38,6 +38,7 @@ class RecentCampingLocalDataSource {
     await db.delete(table, where: 'id = ?', whereArgs: [id]);
   }
 
+  /// 초과분에 의한 삭제
   Future<void> _deleteByOverflow(Database db, String id) async {
     final countResp = await db.rawQuery(
       '''
@@ -51,7 +52,7 @@ class RecentCampingLocalDataSource {
     if (length > 30) {
       await db.rawDelete('''
       DELETE FROM $table
-      WHERE id (
+      WHERE id = (
         SELECT id FROM $table
         ORDER BY createdAt ASC
         LIMIT 1

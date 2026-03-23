@@ -16,7 +16,7 @@ class LightTheme implements AppTheme {
 
     /// Text
     text: Palette.black,
-    subtext: Palette.grey700,
+    subtext: Palette.grey600,
 
     /// Toast
     toastContainer: Palette.black.withValues(alpha: 0.85),

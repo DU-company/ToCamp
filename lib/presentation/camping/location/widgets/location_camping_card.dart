@@ -40,19 +40,20 @@ class LocationCampingCard extends ConsumerWidget {
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                NameBox(name: model.name, theme: theme),
-                AddressBox(
-                  doNm: model.doNm,
-                  sigunguNm: model.sigunguNm,
-                  address: model.address,
-                  isDetail: false,
-                ),
-              ],
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  NameBox(name: model.name, theme: theme),
+                  AddressBox(
+                    doNm: model.doNm,
+                    sigunguNm: model.sigunguNm,
+                    address: model.address,
+                    isDetail: false,
+                  ),
+                ],
+              ),
             ),
-            Spacer(),
             ImageBox(
               radius: 6,
               thumbUrl: model.thumbUrl,

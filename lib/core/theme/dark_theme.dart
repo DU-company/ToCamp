@@ -17,7 +17,7 @@ class DarkTheme implements AppTheme {
 
     /// Text
     text: Palette.grey100,
-    subtext: Palette.grey500,
+    subtext: Palette.grey400,
 
     ///Toast
     toastContainer: Palette.grey100.withValues(alpha: 0.85),
