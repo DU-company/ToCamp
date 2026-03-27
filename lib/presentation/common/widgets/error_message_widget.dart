@@ -18,31 +18,28 @@ class ErrorMessageWidget extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = ref.watch(themeServiceProvider);
-    return Padding(
-      padding: const EdgeInsets.symmetric(
-        horizontal: 8.0,
-        vertical: 16,
-      ),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          Text(
-            message,
-            style: theme.typo.subtitle1,
-            textAlign: TextAlign.center,
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        Text(
+          message,
+          style: theme.typo.subtitle1.copyWith(
+            color: theme.color.subtext,
           ),
-          const SizedBox(height: 16),
-          if (onTap != null)
-            PrimaryButton(
-              onPressed: () {},
-              icon: PhosphorIcons.arrowClockwise(),
-              text: '새로고침',
-              backgroundColor: theme.color.surface,
-              borderColor: theme.color.onHintContainer,
-            ),
-        ],
-      ),
+          textAlign: TextAlign.center,
+        ),
+        const SizedBox(height: 16),
+        if (onTap != null)
+          PrimaryButton(
+            onPressed: onTap,
+            icon: PhosphorIcons.arrowClockwise(),
+            text: '새로고침',
+            backgroundColor: theme.color.surface,
+            foregroundColor: theme.color.subtext,
+            borderColor: theme.color.onHintContainer,
+          ),
+      ],
     );
   }
 }
